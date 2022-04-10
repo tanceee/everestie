@@ -1,0 +1,188 @@
+id,code,name,user_type_id:id,reconcile,chart_template_id:id
+101,101,Kapitali i paguar,account.data_account_type_equity,FALSE,l10n_al_chart_template_generic
+102,102,Kapitali i nenshkruar i papaguar,account.data_account_type_equity,FALSE,l10n_al_chart_template_generic
+103,103,Aksione te thesarit,account.data_account_type_equity,FALSE,l10n_al_chart_template_generic
+104,104,Prime te lidhura me kapitalin,account.data_account_type_equity,FALSE,l10n_al_chart_template_generic
+105,105,Zbritje te lidhura me kapitalin,account.data_account_type_equity,FALSE,l10n_al_chart_template_generic
+106,106,Rezerva nga rivleresimi,account.data_account_type_equity,FALSE,l10n_al_chart_template_generic
+107,107,Rezerva te tjera,account.data_account_type_equity,FALSE,l10n_al_chart_template_generic
+108,108,Fitimi/Humbja e pashperndare,account.data_unaffected_earnings,FALSE,l10n_al_chart_template_generic
+109,109,Rezultati i ushtrimit,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+201,201,Emri i mirë,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+203,203,Shpenzime të kerkim -zhvillimit,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+205,205,"Koncensione dhe të drejta të ngjashme, licensa, maka, programe informatike, te drejta dhe llogari te ngjashme",account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+208,208,Të tjera AA jomateriale,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+211,211,Toka,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+212,212,Ndertesa,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+213,213,"Instalime teknike, makineri, pajisje,instrumente dhe vegla pune",account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+214,214,Ndertime mbi token te tjetrit,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+215,215,Mjete transporti,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+2181,2181,Mobilje dhe pajisje zyre,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+2182,2182,Pajisje informative,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+2188,2188,Te tjera,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+231,231,AA materiale ne proces,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+232,232,AA jomateriale ne proces,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+2801,2801,Amortizim per emrin e mire,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+2803,2803,Për shpenzimet e zhvillimit,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+2805,2805,"Amortizim per koncensione dhe të drejta të ngjashme, licensa",account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+2808,2808,Amortizim per të tjera AA jomateriale,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+2811,2811,Amortizim per AA materiale,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+2812,2812,Amortizim per ndertesat,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+2813,2813,"Amortizim per instalime teknike,makineri,pajisje",account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+2815,2815,Amortizimi per mjete transporti,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+2818,2818,Amortizimi për të tjera AA materiale,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+28181,28181,Amortizimi per mobilje dhe paisje zyre,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+28182,28182,Per pajisjet informative,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+28188,28188,Per te tjerat,account.data_account_type_fixed_assets,FALSE,l10n_al_chart_template_generic
+311,311,Materiale te para,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+312,312,Materiale te tjera,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+3123,3123,Materiale ndihmes,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+3124,3124,Lëndë djegëse,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+3125,3125,Pjesë ndërrimi,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+3126,3126,Materiale ambalazhimi,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+3127,3127,Materiale të tjera,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+326,326,Amballazh i kthyeshem(qarkullues),account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+327,327,Inventar i imet,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+331,331,Prodhime ne proces,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+332,332,Punime ne proces,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+333,333,Sherbime ne proces,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+341,341,Produkte të gatshëm,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+342,342,Produkte te ndërmjetëm,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+347,347,Nënprodukte dhe produkte mbeturinë,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+351,351,Mallra,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+371,371,Materiale te para,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+372,372,Materiale te tjera,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+3723,3723,Materiale ndihmese,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+3724,3724,Lende djegese,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+3725,3725,Pjese nderimi,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+3726,3726,Material ambalazhimi,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+3727,3727,Inventar i imet,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+374,374,Produkte te gatshem,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+375,375,Mallra per shitje,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+395,395,Zhvlerësimi i mallrave për shitje,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+401,401,"Furnitore per mallra, produkte dhe sherbime",account.data_account_type_payable,TRUE,l10n_al_chart_template_generic
+402,402,Furnitore efekte per tu paguar,account.data_account_type_payable,TRUE,l10n_al_chart_template_generic
+409,409,Paradhenie per furnizim,account.data_account_type_receivable,TRUE,l10n_al_chart_template_generic
+411,411,"Kliente per mallra,produkte dhe sherbime",account.data_account_type_receivable,TRUE,l10n_al_chart_template_generic
+413,413,Kliente -efekte per tu arketuar,account.data_account_type_receivable,TRUE,l10n_al_chart_template_generic
+419,419,Parapagime të dhëna,account.data_account_type_receivable,TRUE,l10n_al_chart_template_generic
+421,421,Detyrime per paga dhe shperblime,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+423,423,Paradhënie për punonjësit,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+427,427,Personeli-detyrime te kerkuara,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+431,431,Sigurime shoqërore dhe shëndetsore,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+438,438,Detyrime të tjera,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+441,441,Akciza,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+442,442,Tatim mbi të ardhurat e punonjesve,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+443,443,Tatime të tjera për punonjësit,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+444,444,Tatim mbi fitimin,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+4453,4453,Shteti- TVSH për tu paguar,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+4454,4454,Shteti- TVSH për tu marrë,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+4456,4456,Shteti – TVSH e zbritshme,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+4457,4457,Shteti – TVSH e pagueshme,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+4458,4458,Shteti – TVSH për tu rregulluar,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+447,447,Të tjera tatime pët’u paguar dhe për t’u kthyer,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+449,449,Tatimi në burim,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+455,455,Të drejta dhe detyrime ndaj ortakëve dhe aksionerëve,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+457,457,Dividentë për t’u paguar,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+461,461,Huamarrje afatshkurtëra ,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+467,467,"Debitorë të tjerë, kreditorë të tjerë",account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+469,469,Huadhënie afatshkurtër,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+481,481,Shpenzime te Llogaritura,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+486,486,Shpenzime te perjudhave te ardhme,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+487,487,Te ardhura te llogaritura,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+488,488,Te ardhura te periudhave te ardhme,account.data_account_type_current_liabilities,FALSE,l10n_al_chart_template_generic
+5121,5121,"Vlera monetare ne bank, në lekë",account.data_account_type_liquidity,FALSE,l10n_al_chart_template_generic
+5124,5124,"Vlera monetare ne bank, në monedha të huaja",account.data_account_type_liquidity,FALSE,l10n_al_chart_template_generic
+519,519,Llogari bankare të zbuluara (Overdrafte bankare),account.data_account_type_liquidity,FALSE,l10n_al_chart_template_generic
+5311,5311,"Vlera monetare ne arke, në lekë",account.data_account_type_liquidity,FALSE,l10n_al_chart_template_generic
+5314,5314,"Vlera monetare bank, në monedha të huaja",account.data_account_type_liquidity,FALSE,l10n_al_chart_template_generic
+5411,5411,Huadhenie në lekë,account.data_account_type_liquidity,FALSE,l10n_al_chart_template_generic
+5412,5412,Huadhenie në monedha te huaja,account.data_account_type_liquidity,FALSE,l10n_al_chart_template_generic
+5421,5421,"Huamarrje, në lekë",account.data_account_type_liquidity,FALSE,l10n_al_chart_template_generic
+5422,5422,"Huamarrje ,në monedha të huaja",account.data_account_type_liquidity,FALSE,l10n_al_chart_template_generic
+543,543,Letra me vlerë të blera (të mbajtura deri në maturim),account.data_account_type_liquidity,FALSE,l10n_al_chart_template_generic
+582,582,Xhirime të konvertimi,account.data_account_type_current_assets,FALSE,l10n_al_chart_template_generic
+601,601,Blerje materiale të para dhe materialeve kryesore,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+602,602,Blerje materiale të tjera te stokueshme,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+603,603,Ndryshim i gjendjes se materialeve dhe mallrave,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+604,604,"Blerje,energji,avull,uje",account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+605,605,Blerje/Shpenzime mallrash,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+606,606,Blerje Amballazhi,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+607,607,Blerje Aktive biologjike afatshkurtra,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+608,608,Blerje /Shpenzime të tjera,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+609,609,Zbritje per Blerjet,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+611,611,Trajtime te pergjithshme,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+613,613,Qira,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+614,614,Shpenzime Bashkepronesie,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+615,615,Mirëmbajtje dhe riparime,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+616,616,"Sigurime prone, jete dhe pergjegjsi",account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+617,617,Shenzime Kerkime dhe Studime,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+618,618,Të tjera,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+621,621,Personel jashtë njesisë,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+622,622,"Paga, shpreblime dhe honorare per ndermjetesime",account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+623,623,"Shpenzime per koncesione, patenta, licensa, marka te ngjashme",account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+624,624,"Publicitet, reklama",account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+625,625,"Transferime, udhëtime, dieta",account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+626,626,Shpenzime postare dhe telekomunikimi,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+627,627,Shpenzime transpoti,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+6271,6271,Për blerjet,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+6272,6272,Për shitjet,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+6276,6276,Për personelin,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+628,628,Shpenzime për shërbimet bankare,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+631,631,Shpenzime per pagesa doganore,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+632,632,"Tatime, taksa dhe pagesa te ngashme lidhur me personelin",account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+633,633,Akciza,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+634,634,Taksa dhe tarifa vendore,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+635,635,Taksa e regjistrimit,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+638,638,Tatime të tjera,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+641,641,Pagat dhe shpërblimet e personelit      ,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+644,644,Sigurimet shoqërore dhe shëndetsore,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+645,645,Kontribute dhe kuota te tjera per personelin,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+646,646,Kuotizacione sociale per personelin,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+648,648,Shpenzime të tjera për personelin,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+654,654,Shpenzime për pritje dhe përfaqësime,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+657,657,Gjoba dhe dëmshpërblime,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+658,658,Shpenzime të tjera rrjedhese,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+661,661,Shpenzime financiare nga shoqerite e kontrolluara,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+662,662,Shpenzime financiare nga shoqerite e lidhura,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+664,664,Humbje nga rivlersimi i letrave me vlere,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+665,665,Humbje nga shitja e letrave me vlere,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+666,666,Zbritje akorduar klienteve,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+667,667,Shpenzime për interesa,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+668,668,Shpenzime financiare te tjera,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+669,669,Humbje nga këmbimet  valutore,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+67205,67205,"Vlera kontabel e koncensioneve dhe të drejtave të ngjashme, licensave",account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+67208,67208,Vlera kontabel e të tjera AA jomateriale,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+6721,6721,Vlera kontabel per AA jomateriale,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+6722,6722,Vlera kontabel per AA material,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+6723,6723,Vlera kontabel per AA financiar,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+6728,6728,Vlera kontabel per elemente te tjere te aktivit,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+681,681,Amortizimet e aktiveve afatgjatë,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+6811,6811,Amortizim per AA jomateriale,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+6812,6812,Amortizim per AA materiale,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+6813,6813,Provizione per zhvleresimin e aktiveve afatshkurtra,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+6815,6815,Provizione per rreziqe dhe shpenzime,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+6816,6816,Kuota e ushtrimit nga shpenzimet e perjudhave te ardhme,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+695,695,Tatimi mbi fitimin,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+696,696,Shtese tatimi mbi shoqerine,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+697,697,Shpenzime tatimi mbi pasurite e paluajtshme,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+698,698,Te tjera,account.data_account_type_expenses,FALSE,l10n_al_chart_template_generic
+701,701,Shitje e produkteve të gatshëm,account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+702,702,Shitje e produkteve te ndermjetme,account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+703,703,Shitje e nenprodukteve,account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+704,704,Shitje e punimeve dhe e sherbimeve,account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+705,705,Shitje mallrash,account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+707,707,Shitje materialeshe e furniturash,account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+708,708,Të ardhura nga shitje te tjera,account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+7081,7081,Të ardhura nga qiraja,account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+7082,7082,Të ardhura nga komisionet,account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+7083,7083,Të ardhura nga transporti per te tretet,account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+7088,7088,Të ardhura nga transporti per te tretet,account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+714,714,Ndryshim gjendje (produkt gatshem),account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+767,767,Të ardhura nga interesat,account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+768,768,Te ardhura te tjera financiare,account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+769,769,Fitim nga kembimet valutore,account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+7751,7751,Te ardhura nga shitja e AA jomateriale,account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+7752,7752,Te ardhura nga shitja e AA materiale,account.data_account_type_revenue,FALSE,l10n_al_chart_template_generic
+890,890,Bilanci i Çeljes,account.data_account_off_sheet,FALSE,l10n_al_chart_template_generic
+891,891,Bilanci i Mbylljes,account.data_account_off_sheet,FALSE,l10n_al_chart_template_generic
