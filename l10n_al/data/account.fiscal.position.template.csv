@@ -1,0 +1,2 @@
+name,chart_template_id:id,id,sequence,auto_apply,vat_required,country_id:id,country_group_id:id
+Import / Eksport,l10n_al_chart_template_generic,impex,1,1,1,base.al,

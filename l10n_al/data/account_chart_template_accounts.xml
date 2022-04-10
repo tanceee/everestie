@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="l10n_al_chart_template_generic" model="account.chart.template">
+	<field name="property_account_receivable_id" ref="411" />
+	<field name="property_account_payable_id" ref="401" />
+	<field name="property_account_expense_categ_id" ref="605" />
+	<field name="property_account_income_categ_id" ref="705" />
+	<field name="income_currency_exchange_account_id" ref="769" />
+	<field name="expense_currency_exchange_account_id" ref="669" />
+	<field name="default_pos_receivable_account_id" ref="411" />
+	<field name="property_tax_payable_account_id" ref="4457" />
+	<field name="property_tax_receivable_account_id" ref="4456" />
+    </record>
+</odoo>

@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <!-- VAT 20 -->
+    <record id="20s" model="account.tax.template">
+        <field name="description">20%</field>
+        <field name="chart_template_id" ref="l10n_al_chart_template_generic"/>
+        <field name="name">TVSH 20%</field>
+        <field name="sequence">1</field>
+        <field name="amount">20</field>
+        <field name="amount_type">percent</field>
+        <field name="type_tax_use">sale</field>
+        <field name="price_include">False</field>
+        <field name="tax_group_id" ref="tax_group_tvsh"/>
+        <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'base',
+            }),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'tax',
+                'account_id': ref('4457'),
+            }),
+        ]"/>
+        <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'base',
+            }),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'tax',
+                'account_id': ref('4457'),
+            }),
+        ]"/>
+    </record>
+
+    <record id="20b" model="account.tax.template">
+        <field name="description">20%</field>
+        <field name="chart_template_id" ref="l10n_al_chart_template_generic"/>
+        <field name="name">TVSH 20%</field>
+        <field name="sequence">2</field>
+        <field name="amount">20</field>
+        <field name="amount_type">percent</field>
+        <field name="type_tax_use">purchase</field>
+        <field name="price_include">False</field>
+        <field name="tax_group_id" ref="tax_group_tvsh"/>
+        <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'base',
+            }),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'tax',
+                'account_id': ref('4456'),
+            }),
+        ]"/>
+        <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'base',
+            }),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'tax',
+                'account_id': ref('4456'),
+            }),
+        ]"/>
+    </record>
+</odoo>
