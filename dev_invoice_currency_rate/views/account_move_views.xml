@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle 
+ -->
+<odoo>
+    
+    <record id="dev_account_move_rate_inherit_form" model="ir.ui.view">
+        <field name="name">dev.account.move.rate.inherit.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='journal_div']" position="after">
+            	<field name="is_same_currency" invisible="1"/>
+                <label for="currency_rate" groups="base.group_multi_currency" attrs="{'invisible':[('is_same_currency','=',True)]}"/>
+                <div groups="base.group_multi_currency" attrs="{'invisible':[('is_same_currency','=',True)]}">
+                    <field name="currency_rate" attrs="{'invisible':[('is_same_currency','=',True)]}"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

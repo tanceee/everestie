@@ -1,0 +1,125 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* print_voucher_half_page
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-02 21:35+0000\n"
+"PO-Revision-Date: 2022-08-03 01:57+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: sq_AL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 3.1.1\n"
+
+#. module: print_voucher_half_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_full_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_half_page
+msgid "<b>PAYMENT VOUCHER</b>"
+msgstr "<b>MANDAT PAGESË</b>"
+
+#. module: print_voucher_half_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_full_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_half_page
+msgid "<b>RECEIPT VOUCHER</b>"
+msgstr "<b>MANDAT ARKËTIM</b>"
+
+#. module: print_voucher_half_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_full_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_half_page
+msgid "Account"
+msgstr "Arkëtari"
+
+#. module: print_voucher_half_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_full_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_half_page
+msgid "Amount :"
+msgstr "Shuma:"
+
+#. module: print_voucher_half_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_full_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_half_page
+msgid "Being"
+msgstr "Përshkrim"
+
+#. module: print_voucher_half_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_full_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_half_page
+msgid "Date :"
+msgstr "Datë:"
+
+#. module: print_voucher_half_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_footer_custom
+msgid "Email:"
+msgstr "Email:"
+
+#. module: print_voucher_half_page
+#: model:ir.model.fields,field_description:print_voucher_half_page.field_account_payment__words_amount
+msgid "In Words"
+msgstr "Në Fjalë"
+
+#. module: print_voucher_half_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_full_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_half_page
+msgid "Manager"
+msgstr "Menaxher"
+
+#. module: print_voucher_half_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_full_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_half_page
+msgid "No :"
+msgstr "Nr:"
+
+#. module: print_voucher_half_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_full_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_half_page
+msgid "Paid to"
+msgstr "Pagesë për"
+
+#. module: print_voucher_half_page
+#: model:ir.model,name:print_voucher_half_page.model_account_payment
+msgid "Payments"
+msgstr "Pagesa"
+
+#. module: print_voucher_half_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_footer_custom
+msgid "Phone:"
+msgstr "Telefon:"
+
+#. module: print_voucher_half_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_full_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_half_page
+msgid "Received from  Mr. / M /s."
+msgstr "Arketuar nga"
+
+#. module: print_voucher_half_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_full_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_half_page
+msgid "Receiver's Signature"
+msgstr "Marrësi"
+
+#. module: print_voucher_half_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_full_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_voucher_half_page
+msgid "Sum of"
+msgstr "Shuma"
+
+#. module: print_voucher_half_page
+#: model:ir.actions.report,name:print_voucher_half_page.account_voucher_a4_full
+msgid "Voucher A4 Full"
+msgstr "Mandat A4"
+
+#. module: print_voucher_half_page
+#: model:ir.actions.report,name:print_voucher_half_page.account_voucher_half_page
+msgid "Voucher A4 Half"
+msgstr "Mandat 1/2 A4"
+
+#. module: print_voucher_half_page
+#: model_terms:ir.ui.view,arch_db:print_voucher_half_page.report_footer_custom
+msgid "Web:"
+msgstr "Web:"

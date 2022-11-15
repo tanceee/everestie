@@ -1,0 +1,63 @@
+.pos .sh_discount_popup .sh_discount_main_table .sh_discount_radio #discount_fixed_radio,
+.pos .sh_discount_popup .sh_discount_main_table .sh_discount_radio #discount_percentage_radio {
+    width: auto !important;
+    box-shadow: none !important;
+    min-height: unset !important;
+}
+.pos .sh_discount_popup .title {
+    font-size: 18px;
+    padding: 15px 20px !important;
+    margin-bottom: 18px;
+}
+.pos .sh_discount_popup .sh_discount_main_table .sh_discount_radio {
+    margin-bottom: 18px;
+}
+.pos .sh_discount_popup .sh_discount_main_table .sh_discount_value {
+    width: 25% !important;
+}
+.pos .sh_discount_popup .sh_discount_main_table .discount_amount_div .sh_discount_label {
+    margin-right: 8px;
+    font-size: 16px;
+}
+.pos .sh_discount_popup .sh_discount_main_table .discount_amount_div {
+    margin-bottom: 22px;
+}
+.pos .sh_discount_popup .sh_discount_footer .button.confirm {
+    background: #6ec89b !important;
+    color: #fff !important;
+}
+.pos .sh_discount_popup {
+    height: 240px !important;
+    width: 425px !important;
+}
+.sh_discount_value.invalid_number {
+    border: 1px solid red !important;
+    box-shadow: none !important;
+}
+.pos .sh_discount_popup .sh_discount_main_table label {
+    font-size: 16px;
+}
+.pos .order-container .order .summary.sh_summary .line.global_discount_line{float: left !important;}
+/* @media only screen and (max-width: 991px) {
+    .pos .modal-dialog.sh_discount_modal_dialog .sh_discount_popup {
+        width: 320px !important;
+    }
+} */
+@media only screen and (max-width: 767.98px) {
+    .pos .modal-dialog.sh_discount_modal_dialog .sh_discount_popup {
+        width: 320px !important;
+    }
+    .pos .sh_discount_modal_dialog {
+        padding: 0px;
+    }
+    .pos .sh_discount_popup .sh_discount_main_table .sh_discount_value {
+        width: 50% !important;
+    }
+    .pos .order-container .order .summary.sh_summary .line.global_discount_line .total,
+    .pos .order-container .order .summary.sh_summary .line .total{font-size: 18px;}
+    .pos .order-container .order .summary.sh_summary .line,
+    .pos .order-container .order .summary.sh_summary .line.global_discount_line{float: unset !important;}
+    .pos .order-container .order .summary.sh_summary .line .entry.total .subentry{text-align: right;}
+    .pos .order-container .order .summary.sh_summary .line.global_discount_line{border-top: 0px;}
+}
+

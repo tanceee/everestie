@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <template id="pricelist_price_info">
+            <div>
+                <table class="table table-borderless">
+                    <t t-foreach="pricelist_with_price" t-as="price_row">
+                        <tr>
+                            <th><t t-esc="price_row[0]"/></th>
+                            <td><t t-out="price_row[1]"/></td>
+                        </tr>
+                    </t>
+                </table>
+            </div>
+        </template>
+    </data>
+</odoo>
