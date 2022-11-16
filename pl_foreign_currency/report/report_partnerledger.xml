@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<template id="partnerledger">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="web.external_layout">
+						<div class="page" style="font-size:12px;">
+
+							<h2>Partner Ledger</h2>
+
+							<div class="row">
+								<div class="col-3">
+									<strong>Company:</strong>
+									<p t-esc="company_name" />
+								</div>
+								<div class="col-3">
+									<strong>Partner:</strong>
+									<p t-esc="o.name" />
+								</div>
+								<div class="col-3">
+									<strong>Target Moves:</strong>
+									<p t-if="data['form']['target_move'] == 'all'">All Entries</p>
+									<p t-if="data['form']['target_move'] == 'posted'">All Posted Entries</p>
+								</div>
+								<div class="col-3"
+									t-if="data['form']['date_from'] or data['form']['date_to']">
+									<t t-if="data['form']['date_from']">
+										<strong>Date from :</strong>
+										<span t-esc="data['form']['date_from']" />
+										<br />
+									</t>
+									<t t-if="data['form']['date_to']">
+										<strong>Date to :</strong>
+										<span t-esc="data['form']['date_to']" />
+									</t>
+								</div>
+							</div>
+							<br/>
+							<br/>
+							<t t-foreach="get_lines(data,o)" t-as="cu">
+
+								<h3 t-esc="cu['cu'].name" />
+
+								<table
+									class="table table-sm o_main_table">
+									<thead>
+										<tr>
+											<th>Date</th>
+											<th>JRNL</th>
+											<th>Ref</th>
+											<th class="text-right">Debit</th>
+											<th class="text-right">Credit</th>
+											<th class="text-right">Balance</th>
+											<th class="text-right">Balance in BC</th>
+										</tr>
+									</thead>
+									<tbody>
+										<t t-set="total" t-value="{'d':0.0,'c':0.0}" />
+										<t t-set="total_bc" t-value="{'d':0.0,'c':0.0}" />
+										<t>
+											<tr
+												t-if="data['form']['with_initial']">
+												<td />
+												<td />
+												<td>Initial Balance</td>
+												<td style="text-align:right !important"
+													t-esc="cu['bal']['debit']"
+													t-options="{'widget': 'monetary', 'display_currency': cu['cu']}" />
+												<td style="text-align:right !important"
+
+													t-esc="cu['bal']['credit']"
+													t-options="{'widget': 'monetary', 'display_currency': cu['cu']}" />
+												<td style="text-align:right !important"
+
+													t-esc="cu['bal']['debit'] - cu['bal']['credit']"
+													t-options="{'widget': 'monetary', 'display_currency': cu['cu']}" />
+												<td style="text-align:right !important"
+
+													t-esc="cu['bal']['debit_bc'] - cu['bal']['credit_bc']"
+													t-options="{'widget': 'monetary', 'display_currency': company_currency}" />
+												<t t-set="total"
+													t-value="{'d':total['d']+cu['bal']['debit'],'c':total['c']+cu['bal']['credit']}" />
+												<t t-set="total_bc"
+													t-value="{'d':total_bc['d']+cu['bal']['debit_bc'],'c':total_bc['c']+cu['bal']['credit_bc']}" />
+											</tr>
+
+											<t t-if="data['form']['with_initial']" t-set="bal"
+												t-value="cu['bal']['debit'] - cu['bal']['credit']" />
+											<t t-else="" t-set="bal" t-value="0.0" />
+
+											<tr 
+												t-foreach="cu['lines']" t-as="line" t-if="line['date']">
+												<td>
+													<span t-esc="line['date']" t-options='{"widget": "date"}' />
+												</td>
+												<td>
+													<span t-esc="line['code']" />
+												</td>
+												<td>
+													<span t-esc="line['jname']" />
+													<t t-if="line['ref']">
+														-
+														<span t-esc="line['ref']" />
+													</t>
+													<t t-if="line['name']">
+														-
+														<span t-esc="line['name']" />
+													</t>
+												</td>
+
+												<td style="text-align:right !important">
+													<span t-esc="line['debit']"
+														t-options="{'widget': 'monetary', 'display_currency': line['currency_id']}" />
+												</td>
+												<td style="text-align:right !important">
+													<span t-esc="line['credit']"
+														t-options="{'widget': 'monetary', 'display_currency': line['currency_id']}" />
+												</td>
+												<td style="text-align:right !important">
+													<t t-set="bal"
+														t-value="line['debit'] - line['credit'] +  bal" />
+													<span t-esc="bal"
+														t-options="{'widget': 'monetary', 'display_currency': line['currency_id']}" />
+												</td>
+												<td style="text-align:right !important">
+													<t t-set="converted_line" t-value="get_converted(bal, line['currency_id'], line['date'])"/>
+													<span t-esc="converted_line[0]"
+														t-options="{'widget': 'monetary', 'display_currency': converted_line[1]}" />
+												</td>
+												<t t-set="total"
+													t-value="{'d':total['d']+line['debit'],'c':total['c']+line['credit']}" />
+												<t t-set="total_bc"
+													t-value="{'d':total_bc['d']+line['debit_bc'],'c':total_bc['c']+line['credit_bc']}" />
+											</tr>
+
+
+											<tr >
+												<td />
+												<td />
+												<td><strong>Total</strong></td>
+												<td style="text-align:right !important;">
+													<strong t-esc="total['d']"
+														t-options="{'widget': 'monetary', 'display_currency': cu['cu']}" />
+												</td>
+												<td style="text-align:right !important;">
+
+													<strong t-esc="total['c']"
+														t-options="{'widget': 'monetary', 'display_currency': cu['cu']}" />
+
+												</td>
+												<td style="text-align:right !important;">
+													<strong t-esc="total['d'] - total['c']"
+														t-options="{'widget': 'monetary', 'display_currency': cu['cu']}" />
+												</td>
+												<td />
+											</tr>
+											<tr >
+												<td />
+												<td />
+												<td><strong>Total in BC</strong></td>
+												<td style="text-align:right !important;">
+													<strong t-esc="total_bc['d']"
+														t-options="{'widget': 'monetary', 'display_currency': company_currency}" />
+												</td>
+												<td style="text-align:right !important;">
+
+													<strong t-esc="total_bc['c']"
+														t-options="{'widget': 'monetary', 'display_currency': company_currency}" />
+
+												</td>
+												<td style="text-align:right !important;">
+													<strong t-esc="total_bc['d'] - total_bc['c']"
+														t-options="{'widget': 'monetary', 'display_currency': company_currency}" />
+												</td>
+												<td />
+											</tr>
+										</t>
+									</tbody>
+								</table>
+							</t>
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+		<report id="action_report_partnerledger"
+			model="account.report.partner.ledger" string="Partner Ledger"
+			report_type="qweb-pdf" name="pl_foreign_currency.partnerledger"
+			file="pl_foreign_currency.partnerledger" />
+	</data>
+</odoo>

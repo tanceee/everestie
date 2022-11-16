@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_subscription_document">
+        <t t-call="web.basic_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+            <style>
+                .new-page {
+                page-break-before: always;
+                }
+            </style>
+            <div class="page">
+                <div class="oe_structure"/>
+                <div>
+                    <img src="/sale_subscription_report/static/report_main.png" class="img img-fluid"/>
+                </div>
+                <h3 class="text-center mt-3">Shtojca: Abonim 12 Mujor</h3>
+
+                <div class="">
+                    <div>
+                        <span>Datë:
+                            <span t-field="doc.create_date"/>
+                        </span>
+                    </div>
+                    <div>
+                        <span>Nr. Abonimit :
+                            <span t-field="doc.code"/>
+                        </span>
+                    </div>
+
+                    <div class="mt-5">
+                        <h6>
+                            <strong>TË DHËNAT E SISTEMIT TË MARRË NË PËRDORIM</strong>
+                        </h6>
+                    </div>
+                    <t t-foreach="doc.recurring_invoice_line_ids" t-as="line_id">
+                        <div class="row">
+                            <div class="col-6">
+                                <span>Modeli:
+                                    <span style="text-decoration:underline dotted ! important;text-underline-position:under ! important" t-field="line_id.product_id.name"/>
+                                </span>
+                            </div>
+                            <div class="col-6">
+                                <span>Kodi:
+                                    <span t-field="line_id.product_id.default_code"/>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <span>Data e instalimit:
+                                    <span t-field="doc.date_start"/>
+                                </span>
+                            </div>
+
+                            <div class="col-6">
+                                <span>Tarifa Vjetore:
+                                    <span t-field="line_id.price_subtotal" t-options="{'widget': 'monetary', 'display_currency': line_id.currency_id}"/>
+                                     (Me TVSH)
+                                </span>
+                            </div>
+                        </div>
+
+                        <div>
+                            Çfarë përmban sistemi i marrë në përdorim :
+                        </div>
+                        <div>
+                            Sistemi funksional me të gjithë filtrat e montuar (6 filtra);
+                        </div>
+                        <div>
+                            Dy sete parafiltrash (paketim 3-sh) për zëvendësimin e tyre çdo katër muaj.
+                        </div>
+
+                        <div class="mt-2">Kalendari i mirëmbajtjes së sistemit:</div>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <span>Ndërrimi i Parë: 3 Parafiltra</span>
+                            </div>
+                            <div class="col-4">
+                                <span>Data:
+                                    <t t-esc="doc.add_months(doc.date_start, 4)"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>Filtrat e Ndërrimit: 3 Filtra</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <span>Ndërrimi i Dytë: 3 Parafiltra</span>
+                            </div>
+                            <div class="col-4">
+                                <span>Data:
+                                    <t t-esc="doc.add_months(doc.date_start, 8)"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>Filtrat e Ndërrimit: 3 Filtra</span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-4">
+                                <span>Ndërrimi i Tretë: Total 6 Filtra</span>
+                            </div>
+                            <div class="col-4">
+                                <span>Data:
+                                    <t t-esc="doc.add_months(doc.date_start, 12)"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>RIABONIM:
+                                    <i class="fa fa-check-square-o text-success"/>
+                                </span>
+                            </div>
+                        </div>
+                    </t>
+                    <div class="mt-3">
+                        <h6>
+                            <strong>TË DHËNAT E PËRDORUESIT</strong>
+                        </h6>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <span>Emër / Mbiemër:
+                                <span t-field="doc.partner_id"/>
+                            </span>
+                        </div>
+                        <div class="col-4">
+                            <span>ID:
+                                <span t-field="doc.partner_id.vat"/>
+                            </span>
+                        </div>
+                        <div class="col-4">
+                            <span></span>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <span>Tel. 1:
+                                <span t-field="doc.partner_id.phone"/>
+                            </span>
+                        </div>
+                        <div class="col-4">
+                            <span>Tel. 2:
+                                <span t-field="doc.partner_id.mobile"/>
+                            </span>
+                        </div>
+                        <div class="col-4">
+                            <span>Email:
+                                <span t-field="doc.partner_id.email"/>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <span>Qyteti:
+                                <span t-field="doc.partner_id.city"/>
+                            </span>
+                        </div>
+                        <div class="col-4">
+                            <span>Adresa:
+                                <span t-field="doc.partner_id.street"/>
+                            </span>
+                        </div>
+                        <div class="col-4">
+                            <span>Kodi Postar :
+                                <span t-field="doc.partner_id.zip"/>
+                            </span>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div class="row">
+                        <div class="col-6" style="text-align:center;">
+                            <div>TEOREN sh.p.k</div>
+                            <br/>
+                            <br/>
+                            <div>_______________________</div>
+                        </div>
+                        <div class="col-6" style="text-align:center;">
+                            <div>Përdoruesi</div>
+                            <br/>
+                            <br/>
+                            <div>_______________________</div>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div>
+                        <div><strong>Kontaktet:</strong></div>
+                        <div>Suporti Teknik: Cel:+355 (0) 67 50 13 048, Email: service.ecosoft@teoren.al</div>
+                        <div>Kujdesi ndaj Klientit: Cel:+355 (0) 67 40 40 503, Email: ecosoft@teoren.al</div>
+                    </div>
+
+                    <div class="new-page">
+                        <t t-call="sale_subscription_report.page_two"/>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </t>
+    </template>
+
+    <template id="page_two">
+        <div>
+            <img src="/sale_subscription_report/static/report_head.png" class="img img-fluid"/>
+        </div>
+        <h3 class="text-center">
+            <b>KONTRATË SHËRBIMI</b>
+        </h3>
+        <div style="font-size: 11.4px;">
+            <div>
+                <b>TEOREN SH.P.K.</b>, kompani shqiptare, me NUIS K51407506E, me seli: Autostrada Durrës -Tiranë, km.15,
+                Borakë/Durrës, përfaqësues ekskluziv i markës
+                Ecosoft për Shqipërinë dhe Kosovën, në vijim referuar si <b>“Teoren”</b>.
+            </div>
+            <div>
+                <b>NENI 1</b>
+            </div>
+            <div>
+                <b>Objekti i marrëveshjes</b>
+            </div>
+            <div>
+                <b>1.1</b>
+                Objekti i kësaj marrëveshjeje është ofrimi i shërbimeve të Sistemeve të trajtimit të ujit Ecosoft.
+            </div>
+            <div>
+                <b>1.2</b>
+                Me anë të kësaj marrëveshjeje “Përdoruesi” merr në përdorim nga “TEOREN” <b>sistemin e trajtimit</b> të
+                ujit
+                Ecosoft për një afat <b>1 VJEÇAR</b> në të cilën
+                përfshihen edhe 2 sete (6 filtra) të nevojshëm për mbylljen e ciklit 12 mujor të përdorimit, të
+                detyrueshëm
+                për t’u zëvendësuar, çdo 4 muaj.
+            </div>
+
+            <div>
+                <b>NENI 2</b>
+            </div>
+            <div>
+                <b>Afatet e marrëveshjes</b>
+            </div>
+            <div>
+                <!--            TODO add date here  -->
+                <b>2.1</b>
+                Kjo marrëveshje hyn në fuqi në momentin e nënshkrimit të saj nga Palët.                
+            </div>
+            <div>
+            Përdorimi i sistemit do të fillojë nga data
+                <b t-field="doc.date_start"/>
+                deri më datën
+                <b t-field="doc.date"/>
+                .
+            </div>
+            <div>
+                <b>2.2</b>
+                Pas përfundimit të këtij afati, “Përdoruesi” në dakordësi me “Teoren”, detyrohet të parapaguajë
+                shërbimin
+                për vitin pasardhës. Gjithashtu, kryhet edhe
+                ndërrimi i filtrave sipas protokollit të ndërrimeve.
+            </div>
+            <div>
+                <b>2.3</b>
+                Në rast se <b>“Përdoruesi”</b> nuk është dakord të rinovojë kontratën, “Teoren”, në cilësinë e pronarit
+                të
+                vetëm të
+                sistemit të trajtimit të ujit Ecosoft, ka të
+                drejtë të tërheq sistemin, në gjendje pune dhe të padëmtuar. Në rast të kundërt duhet t’i paguajë
+                kompanisë
+                “Teoren” vlerën e plotë të sistemit.
+            </div>
+
+            <div>
+                <b>NENI 3</b>
+            </div>
+            <div>
+                <b>Mënyra e pagesës së shërbimit</b>
+            </div>
+            <div>
+                <b>3.1</b>
+                Sistemi i filtrimit të ujit “Ecosoft” nuk mund të kthehet pas instalimit të tij. Në rast të kundërt
+                “Përdoruesi”nuk mund të kërkojë kthimin e pagesës së
+                bërë për abonimin.
+            </div>
+            <div>
+                <b>3.2</b>
+                Tarifa vjetore ështe e detyrueshme të bëhet parapagim në momentin e firmosjes së kësaj
+                marrëveshje. Kjo tarifë vlen vetëm për 1 vit abonim dhe nuk
+                kthehet ose transferohet në asnjë lloj forme, pavarësisht përdorimit ose jo të sistemit.
+            </div>
+            <div>
+                <b>3.3</b>
+                Në momentin e montimit të sistemit, përdoruesit do t’i lihen gjëndje filtrat për zëvendësim, çdo 4 muaj
+                ose
+                2 herë në vit. “Përdoruesi” mund ta kryejë
+                vetë zëvendësimin e filtrave ose mund të kërkojë asistencë teknike nga “Teoren”. Në rastet kur
+                “Përdoruesi”
+                kërkon suportin e Shërbimit Teknik, shërbimi
+                do të ketë një kosto prej <b>1.500 lekë</b> për ndërrimin e filtrave.
+            </div>
+
+            <div>
+                <b>NENI 4</b>
+            </div>
+            <div>
+                <b>Të drejtat dhe detyrimet e Përdoruesit</b>
+            </div>
+            <div>
+                <b>4.1</b>
+                ”Përdoruesi” nga momenti i nënshkrimit të kësaj marrëveshje gëzon të drejta të plota në përdorimin e
+                sistemit Ecosoft sipas kushteve të dakordësuara.
+            </div>
+            <div>
+                <b>4.2</b>
+                ”Përdoruesi” me anë të kësaj marrëveshje i lind e drejta të kërkojë nga “Teoren” përmbushjen e të
+                gjitha detyrimeve që dalin nga kjo marrëveshje.
+            </div>
+            <div>
+                <b>4.3</b>
+                "Përdoruesi" në asnjë moment nuk ka të drejtë të kalojë të drejtën e përdorimit të sistemit palëve të
+                treta,
+                vetëm në rast se njoftohet kompania
+                "Teoren" dhe pala e tretë është dakordësuar për vijimësinë e kontratës.
+            </div>
+            <div>
+                <b>4.4</b>
+                ”Përdoruesi” ka detyrimin të bëjë të gjitha shërbimet periodike sipas marrëveshjes. Në rast se
+                ”Përdoruesi” vonon ndërrimin e parafiltrave, kjo do të
+                sjellë pasoja dhe bllokim të membranës RO, e cila do të krijonte një kosto shtesë për ”Përdoruesin”. I
+                gjithë obligimi si më sipër është në kuadër të
+                ruajtjes së standardit dhe cilësisë së ujit dhe përmbushjes së detyrimeve të kësaj kontrate.
+            </div>
+            <div>
+                <b>4.5</b>
+                ”Përdoruesi” nuk lejohet të ndërhyjë në sistem pa miratimin e “Teoren”.
+            </div>
+            <div>
+                <b>4.6</b>
+                ”Përdoruesi” ështe i detyruar të zbatojë me përpikmëri kushtet e përdorimit të sistemit sipas
+                udhëzimeve verbale dhe me shkrim nga përfaqësuesi i
+                “Teoren”. ”Përdoruesi” duhet të tregojë kujdesin e nevojshëm në momentin e ndërrimit të parafiltrave
+                sipas
+                manualit të përdorimit që “Teoren” garanton.
+                Çdo thyerje ose dëmtim i mundshëm, në momentin e ndërrimit do të merret përsipër nga ”Përdoruesi”.
+            </div>
+            <div>
+                <b>4.7</b>
+                ”Përdoruesi” është i detyruar të plotësojë dy numra kontakti dhe adresën e emailit të tij, si dhe të
+                dhënat
+                sipas marrëveshje s për komunikim me
+                “Teoren”.
+            </div>
+            <div>
+                <b>4.8</b>
+                Përdoruesi duhet të njoftojë kompaninë “Teoren” në rast të ndryshimit të nr. të telefonit,
+                adresës së emailit dhe ndërrimit të banesës, së shënuara në
+                “Shtojcën” bashkangjitur kësaj kontrate.
+            </div>
+            <div>
+                <b>4.9</b>
+                Në rast se <b>“Përdoruesi”</b> kërkon të bëj ndryshimin e vendit fillestar të montimit, kostoja e
+                ç’montim/montimit
+                të sistemit do të jetë <b>3000 lekë</b>.
+            </div>
+            <div>
+                <b>NENI 5</b>
+            </div>
+            <div>
+                <b>Të drejtat dhe detyrimet e “Teoren”</b>
+            </div>
+            <div>
+                <b>5.1</b>
+                “Teoren” detyrohet të plotësojë të gjitha pikat e kësaj marrëveshjeje sipas kushteve të
+                dakordësuara ndërmjet palëve.
+            </div>
+            <div>
+                <b>5.2</b>
+                “Teoren” detyrohet të njoftojë përdoruesin për kohën kur duhet bërë ndërrimi i parafiltrave.
+            </div>
+            <div>
+                <b>NENI 6</b>
+            </div>
+            <div>
+                <b>Garancia dhe pronësia e produktit</b>
+            </div>
+            <div>
+                <b>6.1</b>
+                Çdo sistem Ecosoft, objekt i kësaj marrëveshje është dhe mbetet pronë e kompanisë “Teoren”,
+                specifikisht,
+                para, gjatë dhe në përfundim të saj.
+            </div>
+            <div>
+                <b>6.2</b>
+                Në asnjë kohë sistemet të cilat lëshohen nga “Teoren” për përdorim, nuk kalojnë në pronësi të
+                “Përdoruesit”
+                pa një marrëveshje të shkruar.
+            </div>
+            <div>
+                <b>6.3</b>
+                Garancia mbulon vetëm defektet dhe parregullsitë e sistemit, që janë si pasojë e fabrikimit. Të gjitha
+                defektet dhe dëmtimet që vijnë si pasojë e
+                keqpërdorimit mbulohen nga “Përdoruesi”.
+            </div>
+            <div>
+                <b>6.4</b>
+                Në rastet kur “Përdoruesi” dëmton sistemin në mënyrë të paripariueshme, “Përdoruesi” detyrohet të
+                paguajë vlerën e plotë të sistemit.
+            </div>
+
+             <div>
+                <b>NENI 7</b>
+            </div>
+            <div>
+                <b>7.1</b>
+                1 Sistemi në përdorim për 1 vit (Abonimi) që keni marrë në dorëzim, mund ta riktheni brenda 30 ditëve në gjendje të padëmtuar fizikisht, se bashku me paketimin
+                (kutine e vendosjes se produktit). Stafi teknik Ecosoft do te procedoje me ç’montimin. Pagesa do të kthehet e plotë nga kompania sipas faturës paraprake të pagesës.
+            </div>
+            <div>
+                <b>7.2</b>
+                Në përfundim të periudhës 30 ditore të provës klienti në mënyre automatike konfirmon vijimin e marrëveshjes të dakortësuar për periudhën e përdorimit bazuar në 
+                nenin <b>2.1</b>
+            </div>
+
+            <div>
+                <b>NENI 8</b>
+            </div>
+            <div>
+                <b>Zgjidhja e kontratës</b>
+            </div>
+            <div>
+                <b>8.1</b>
+                Palët zotohen se do të zbatojnë me përpikmëri këtë kontratë deri në përfundim të afatit të saj 1 vjeçar.
+            </div>
+            <div>
+                <b>8.2</b>
+                Kjo marrëveshje ndërpritet në rastin që konstatohet që përdoruesi, me veprimet apo mosveprimet e
+                tij është në shkelje të
+                neneve të kësaj marrëveshjeje, ndër të cilat raste përfshijnë, por nuk kufizohen në të mëposhtmet:
+            </div>
+            <div>a.
+                Në rast se përdoruesi nuk i përgjigjet telefonatave dhe emaileve të "Teoren" për 1 muaj pa ndonjë arsye
+                bindëse, do të ketë penalitet;
+            </div>
+            <div>b.
+                Ndërron banesë pa e njoftuar kompaninë "Teoren", duke e lënë sistemin në banesën e mëparshme, pa
+                pëlqimin e
+                palës së tretë;
+            </div>
+            <div>c.
+                Nuk i ndërron filtrat sipas pikës 3.3 të nenit 3 të kësaj kontrate dhe kërkon shtyrjen e afatit për
+                riabonimin e vitit pasardhës;
+            </div>
+            <div>
+                <b>8.3</b>
+                Në rast moszbatimi të kontratës palët do t’i zgjidhin mosmarrëveshjet me mirëkuptim midis tyre,
+                në rast të kundërt do t’i drejtohen Gjykatës
+                kompetente për zgjidhjen e tyre.
+            </div>
+
+
+            <div>
+                <b>Shënim:</b>
+            </div>
+            <div>Kostoja e blerjes së sistemit Pure me mineralizim është 31'600 lekë.</div>
+            <div>Kostoja e blerjes së sistemit Pure me kalcium është 49'500 lekë.</div>
+            <div>Kostoja e blerjes së sistemit Standard me mineralizim me pompë është 49'500 lekë.</div>
+        </div>
+
+    </template>
+
+
+    <template id="report_sale_subscription">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="sale_subscription_report.report_subscription_document" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>

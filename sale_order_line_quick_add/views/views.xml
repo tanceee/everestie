@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="sale_order_form_view_inherit">
+            <field name="name">sale_order_form_quick_add</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='order_line']" position="before">
+                   <button class="btn btn-primary" name="action_quick_add" type="object" icon="fa-plus-circle">Quick Add Order Lines</button>
+               </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

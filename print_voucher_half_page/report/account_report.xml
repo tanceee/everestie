@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	
+		<record id="paperformat_half_page" model="report.paperformat">
+            <field name="name">A4 Half Page</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">158</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+	
+		<report
+			id="account_voucher_half_page"
+			model="account.payment"
+			string="Voucher A4 Half"
+			report_type="qweb-pdf"
+			file="print_voucher_half_page.report_voucher_half_page"
+			name="print_voucher_half_page.report_voucher_half_page"
+			paperformat="paperformat_half_page"
+		/>
+		
+		<report
+			id="account_voucher_a4_full"
+			model="account.payment"
+			string="Voucher A4 Full"
+			report_type="qweb-pdf"
+			file="print_voucher_half_page.report_voucher_full_page"
+			name="print_voucher_half_page.report_voucher_full_page"
+		/>
+		
+	</data>
+</odoo>

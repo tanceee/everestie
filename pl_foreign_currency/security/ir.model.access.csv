@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+partner_ledger_download,partner.ledger.download,pl_foreign_currency.model_partner_ledger_download,,1,1,1,1
+account_common_report_wiz,Access account.common.report.wiz,pl_foreign_currency.model_account_common_report_wiz,,1,1,1,1

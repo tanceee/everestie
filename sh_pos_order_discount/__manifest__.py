@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+# Part of Softhealer Technologies.
+{
+    "name": "Point Of Sale Order Discount",
+    "author": "Softhealer Technologies",
+    "website": "https://www.softhealer.com",
+    "support": "support@softhealer.com",
+    "category": "Point Of Sale",
+    "license": "OPL-1",
+    "summary": "POS Product Discount Point Of Sale Discount Point Of Sale Order Line Discount POS Custom Discount Point Of Sale Global Discount Point Of Sale Line Discount POS Line Discount POS Global Discount POS Order Discount POS Order Line Discount Odoo",
+    "description": """Currently, in odoo point of sale, you can apply discount individually on every order line only. The "Point Of Sale Order Discount" module allows you to give discounts globally. This module applies the discounts on the point of sale order line as well as on the whole order. You can apply multiple discounts per order & order line. The discount can be applied in a fixed amount or percentage amount. Applied discount print on the receipt.""",
+    "version": "15.0.1",
+    "depends": ["point_of_sale"],
+    "application": True,
+    "data": ['views/pos_config_setting.xml', ],
+    'assets': {'point_of_sale.assets': ['sh_pos_order_discount/static/src/js/action_button.js',
+                                        'sh_pos_order_discount/static/src/js/popup.js',
+                                        'sh_pos_order_discount/static/src/js/pos.js',
+                                        'sh_pos_order_discount/static/src/js/screen.js',
+                                        'sh_pos_order_discount/static/src/css/custom_view_css.css',
+                                        ],
+               'web.assets_qweb': ['sh_pos_order_discount/static/src/xml/action_button.xml',
+                                   'sh_pos_order_discount/static/src/xml/popup.xml',
+                                   'sh_pos_order_discount/static/src/xml/order.xml',
+                                   'sh_pos_order_discount/static/src/xml/pos_custom_view.xml', ]
+               },
+    "auto_install": False,
+    "installable": True,
+    'images': ['static/description/background.png', ],
+    "price": 20,
+    "currency": "EUR",
+}

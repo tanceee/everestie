@@ -1,0 +1,7 @@
+<templates>
+    <div t-name="pricelist_in_orderline.pricelist_info">
+        <div>
+            <a tabindex="0" class="fa fa-money text-primary"/>
+        </div>
+    </div>
+</templates>

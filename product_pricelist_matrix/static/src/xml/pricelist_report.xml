@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="product_pricelist_matrix.report_pricelist_search">
+        <div class="form-group">
+            <label class="font-weight-bold">Pricelist:</label>
+            <div class="row">
+                <div class="col mr-4">
+                    <span class="o_pricelist"/>
+                    <button class="btn btn-primary o_update_options">Update</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="show_cost" name="show_cost"/>
+                        <label class="form-check-label" for="show_cost">Show Cost Price</label>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="show_qty_on_hand" name="show_qty_on_hand"/>
+                        <label class="form-check-label" for="show_qty_on_hand">Show On-hand Qty.</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

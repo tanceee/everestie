@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template_purchase_order" xml:space="preserve">
+    <t t-name="ShDiscountPopup">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput sh_popup_text_input sh_discount_popup" style="font-size: 16px;">
+                <p class="title">Discount</p>
+                <div class="main-body touch-scrollable scrollable-y sh_discount_main_table">
+                    <div class="sh_discount_radio">
+                        <input type="radio" id="discount_fixed_radio" name="fixed_percen_discount_radio" checked="true" />
+                        <label for="discount_fixed_radio"> Fixed</label>
+                        <input type="radio" id="discount_percentage_radio" name="fixed_percen_discount_radio" />
+                        <label for="discount_percentage_radio"> Percentage</label>
+                    </div>
+                    <div class="discount_amount_div"><span class="sh_discount_label">Value : </span><input type="text" class="sh_discount_value" /></div>
+                </div>
+                <div class="footer sh_discount_footer">
+                    <div class="button confirm">Confirm</div>
+                    <div class="button cancel">Cancel</div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

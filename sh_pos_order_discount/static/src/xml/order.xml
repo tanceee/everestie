@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="OrderSummary" t-inherit="point_of_sale.OrderSummary" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('line')]" position="after">
+            <div class="line global_discount_line">
+                <t t-if="env.pos.config.sh_allow_order_line_discount or env.pos.config.sh_allow_global_discount">
+                    <span class="total badge">Global Discount</span>
+                    <div class="entry total global_fixed_discount"><span class="subentry"> Amount: 0.00</span> <span class="value discount_fixed_value"></span></div>
+                </t>
+            </div>
+        </xpath>
+    </t>
+</templates>

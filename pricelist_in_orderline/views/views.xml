@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <record id="view_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page/field[@name='order_line']/tree//field[@name='product_id']" position="after">
+                    <field name="line_pricelist_id" optional="hide" force_save="1"
+                           domain="[('currency_id', '=', currency_id)]" groups="product.group_product_pricelist"
+                           options="{'no_create': True, 'no_open': True}"/>
+                    <field name="price_details_html" invisible="1"/>
+                    <widget name="line_pricelist_widget" width="20px"/>
+                </xpath>
+
+                <xpath expr="//page/field[@name='order_line']/form//field[@name='product_id']" position="after">
+                    <field name="currency_id" invisible="1"/>
+                    <label for="line_pricelist_id"/>
+                    <div class="o_row">
+                        <field name="line_pricelist_id" force_save="1"
+                               domain="[('currency_id', '=', currency_id)]" groups="product.group_product_pricelist"
+                               options="{'no_create': True, 'no_open': True}"/>
+                        <widget name="line_pricelist_widget" width="20px"/>
+                    </div>
+                    <field name="price_details_html" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

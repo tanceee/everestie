@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_quick_order_wizard,quick_order_wizard,model_quick_order_wizard,base.group_user,1,1,1,1
+access_quick_order_line_wizard,quick_order_line_wizard,model_quick_order_line_wizard,base.group_user,1,1,1,1
+access_line_to_add,line_to_add,model_line_to_add,base.group_user,1,1,1,1
