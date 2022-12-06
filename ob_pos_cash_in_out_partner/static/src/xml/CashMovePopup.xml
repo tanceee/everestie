@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="CashMovePopup.Partners" t-inherit="point_of_sale.CashMovePopup" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('input-amount')]" position="after">
+            <br/>
+            <div class="partner_ids">
+                <br/>
+                <span>Partner</span>
+                <select id="cash_move_partners" name="partner_id" t-ref="partner-ref" class="popup-input">
+                    <option value="">Select Contact.....</option>
+                        <t t-foreach="env.pos.partners" t-as="d" t-key="d.id">
+                            <option t-att-value="d.id"><t t-esc='d.name'/>
+                            </option>
+                        </t>
+                    </select>
+                </div>
+        </xpath>
+    </t>
+</templates>
