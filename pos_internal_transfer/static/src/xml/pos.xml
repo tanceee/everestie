@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="InternalTransferButton" owl="1">
+        <div class="control-button">
+            Internal Transfer  
+        </div>
+    </t>
+
+    <t t-name="InternalTransferPopupWidget" owl="1">
+        <div class="modal-dialog">
+            <div class="popup" style="width: 800px;">
+                <p class="title">Stock Internal Transfer</p>
+                <div class="body" style="text-align: left;">
+                    <table width="100%" class="location_table">
+                        <tr style="border: 10px solid #F0EEEE">
+                            <td>Source Location</td>
+                            <td>
+                                <select class='pick-src' style="float: right; width: 100%;font-size: 18px;">
+                                    <t t-if="env.pos.stocklocations">
+                                        <t t-foreach='env.pos.stocklocations' t-as='src'>
+                                          <option t-att-value='src.id'>
+                                            <t t-esc='src.display_name'/>
+                                          </option>
+                                        </t>
+                                    </t>
+                                </select>
+                                <br/>
+                            </td>
+                        </tr>
+                        <tr style="border: 10px solid #F0EEEE">
+                            <td>Destination Location</td>
+                            <td>
+                                <select class='pick-dest' style="float:right;width:100%;font-size: 18px;">
+                                    <t t-if="env.pos.stocklocations">
+                                        <t t-foreach='env.pos.stocklocations' t-as='dest'>
+                                          <option t-att-value='dest.id'>
+                                            <t t-esc='dest.display_name'/>
+                                          </option>
+                                        </t>
+                                    </t>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr style="border: 10px solid #F0EEEE">
+                            <td width="30%">Picking Type</td>
+                            <td width="70%">
+                                <select class='pick-type' style="float: right; width: 100%;font-size: 18px;">
+                                    <t t-if="env.pos.stockpickingtype">
+                                        <t t-foreach='env.pos.stockpickingtype' t-as='type'>
+                                          <option t-att-value='type.id'>
+                                            <t t-esc='type.display_name'/>
+                                          </option>
+                                        </t>
+                                    </t>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr style="border: 10px solid #F0EEEE">
+                            <td>State</td>
+                            <td>
+                                <select class='pick-state' style="float: right;width: 100%;font-size: 18px;">
+                                    <option value="draft">Draft</option>
+                                    <option value="waiting">Waiting</option>
+                                    <option value="done">Done</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer">
+                    <div class="button" t-on-mousedown.prevent="cancel">
+                        Cancel 
+                    </div>
+                    <div class="button" t-on-click="confirm_transfer">
+                        Apply 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
