@@ -13,9 +13,14 @@
         # 'security/ir.model.access.csv',
         'views/views.xml',
     ],
-    'qweb': [
-        'static/src/xml/pos.xml',
-    ],
+    'assets': {
+        'point_of_sale.assets': [
+            'pos_internal_transfer/static/src/js/pos.js',
+        ],
+        'web.assets_qweb': [
+            'pos_internal_transfer/static/src/xml/**/*',
+        ],
+    },
     'images': [
         'static/description/popup.jpg',
     ],
