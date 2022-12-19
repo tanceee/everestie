@@ -26,8 +26,7 @@
 					<option> Select a Serial/Lot Number </option>
 					<t t-foreach="barcodes" t-as="brcd" t-key="brcd.id">
 						<option t-att-value="brcd.name">
-							<t t-esc='brcd.name'/>
-							(Qty :<t t-esc="brcd.loc_qty"/>)
+							(<t t-esc='brcd.name'/> - <t t-esc="brcd.loc_qty"/> - <t t-esc="brcd.expiration_date"/>)
 						</option>
 					</t>
 				</select>

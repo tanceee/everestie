@@ -28,6 +28,15 @@ odoo.define('pways_pos_lot_selection.models', function(require) {
 
 			result.forEach(function(quant) {
 				var all_qty = {}
+				var fullDate = new Date(Date.parse(quant.expiration_date));
+				var twoDigitMonth = fullDate.getMonth() + 1 + "";
+				if (twoDigitMonth.length == 1)
+				    twoDigitMonth = "0" + twoDigitMonth;
+				var twoDigitDate = fullDate.getDate() + "";
+				if (twoDigitDate.length == 1)
+				    twoDigitDate = "0" + twoDigitDate;
+				var ExpDate = twoDigitDate + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
+
 				if(quant.reserve_quant <= quant.quantity){
 					if(quant.is_expired == false){
 						all_qty[location] = quant.quantity
@@ -36,6 +45,7 @@ odoo.define('pways_pos_lot_selection.models', function(require) {
 						quant.name = quant.lot_id[1];
 						quant.lot_name = quant.lot_id[1];
 						quant.product_qty = quant.quantity;
+						quant.expiration_date = ExpDate;
 						quants.push(quant);
 					}
 				}
