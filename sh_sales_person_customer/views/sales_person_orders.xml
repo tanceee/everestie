@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="sh_res_partner_sales_person_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.sales.person.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field name="sales_persons_ids" domain="[('active','=',True)]" widget="many2many_tags" groups="sales_team.group_sale_manager" />
+            </field>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<odoo>
+    <record id="sh_res_partner_update_wizard_form_view" model="ir.ui.view">
+        <field name="name">sh.res.partner.mass.update.wizard.form</field>
+        <field name="model">sh.res.partner.mass.update.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Update Mass Wizard">
+                <group>
+                    <group string="Update SalesPerson">
+                        <field name="update_salesperson_bool" />
+                        <field name="sales_person" attrs="{'invisible': [('update_salesperson_bool', '=', False)]}" />
+                    </group>
+                    <group string="Update Allocate Salesperson">
+                        <field name="update_allocate_sales_person_bool" />
+                        <field name="update_method_allocate_sales_person" attrs="{'invisible': [('update_allocate_sales_person_bool', '=', False)]}" widget="radio" />
+                        <field name="update_allocate_salesperson_ids" attrs="{'invisible': [('update_allocate_sales_person_bool', '=', False)]}" widget="many2many_tags" />
+                    </group>
+                </group>
+                <footer>
+                    <button name="update_record" class="btn btn-primary" type="object" string="Update" />
+                    <button string="Cancel" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="sh_res_partner_mass_salesperson_wizard_action" model="ir.actions.act_window">
+        <field name="name">Update Mass Sales Person</field>
+        <field name="res_model">sh.res.partner.mass.update.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
