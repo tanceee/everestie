@@ -12,7 +12,7 @@ odoo.define('pos_internal_transfer', function (require) {
     models.load_models([{
         model: 'stock.picking.type',
         fields: ['id','name','display_name'],
-        domain: function(self){ return [['code', '=', 'internal'],['warehouse_id.company_id', '=', self.company && self.company.id]]; }, 
+        domain: function(self){ return [['id','in',self.config.allow_picking_type_ids]]; }, 
         loaded: function(self, result){
             self.stockpickingtype = result;
         },

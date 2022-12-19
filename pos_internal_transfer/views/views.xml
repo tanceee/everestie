@@ -14,7 +14,8 @@
                         <div class="o_setting_right_pane">
                             <label for="allow_internal_transfer"/>
                             <div>
-                                <field name="allow_internal_locations" widget="many2many_tags"/>
+                                <field name="allow_internal_locations" widget="many2many_tags"/><br/>
+                                <field name="allow_picking_type_ids" widget="many2many_tags"/><br/>
                             </div>
                         </div>
                     </div>

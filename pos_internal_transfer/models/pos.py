@@ -9,6 +9,7 @@ class pos_config(models.Model):
 
 	allow_internal_transfer = fields.Boolean('Allow Internal Transfer')
 	allow_internal_locations = fields.Many2many("stock.location","stock_config_loaction","stock_location","config_location","Internal Locations",domain="[('usage', '=', 'internal'),('company_id','=',company_id)]")
+	allow_picking_type_ids = fields.Many2many("stock.picking.type","stock_picking_type_config_id","config_id","stock_type_id","Picking Type",domain="[('code', '=', 'internal'),('warehouse_id.company_id','=',company_id)]")
 
 
 class PosOrderInherit(models.Model):
