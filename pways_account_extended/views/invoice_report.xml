@@ -6,7 +6,7 @@
         </xpath>
 
         <xpath expr="//table[@class='table table-sm']//tbody//t//tr" position="inside">
-            <td class="text-right"><t t-esc="snln_line['expiry_date']"/></td>
+            <td class="text-right"><t t-esc="snln_line.get('expiry_date')"/></td>
         </xpath>
 	</template>	
 </odoo>
