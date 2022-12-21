@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="pways_stock_account_report_invoice_inherit" inherit_id="stock_account.stock_account_report_invoice_document">
+        <xpath expr="//table[@name='invoice_snln_table']//thead//tr" position="inside" >
+        	<th class="text-right"><span>Expiry Date</span></th>
+        </xpath>
+
+        <xpath expr="//table[@class='table table-sm']//tbody//t//tr" position="inside">
+            <td class="text-right"><t t-esc="snln_line['expiry_date']"/></td>
+        </xpath>
+	</template>	
+</odoo>
