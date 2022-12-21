@@ -13,6 +13,8 @@ class AccountMove(models.Model):
         self.ensure_one()
 
         res = super(AccountMove, self)._get_invoiced_lot_values()
+        print('::::::::::::::::::', res)
+        res =[]
         if self.state == 'draft' or not self.invoice_date or self.move_type not in ('out_invoice', 'out_refund'):
             return res
 
@@ -53,23 +55,37 @@ class AccountMove(models.Model):
 
             qties_per_lot[sml.lot_id] += qty_done
 
-        for lot, qty in qties_per_lot.items():
-            # access the lot as a superuser in order to avoid an error
-            # when a user prints an invoice without having the stock access
-            lot = lot.sudo()
-            if float_is_zero(invoiced_qties[lot.product_id], precision_rounding=lot.product_uom_id.rounding) \
-                    or float_compare(qty, 0, precision_rounding=lot.product_uom_id.rounding) <= 0:
-                continue
-            invoiced_lot_qty = min(qty, invoiced_qties[lot.product_id])
-            invoiced_qties[lot.product_id] -= invoiced_lot_qty
-            res.append({
-                'product_name': lot.product_id.display_name,
-                'quantity': formatLang(self.env, invoiced_lot_qty, dp='Product Unit of Measure'),
-                'uom_name': lot.product_uom_id.name,
-                'lot_name': lot.name,
-                # The lot id is needed by localizations to inherit the method and add custom fields on the invoice's report.
-                'lot_id': lot.id,
-                'expiry_date': lot.expiration_date.strftime('%d/%m/%Y'),
-            })
-
+        if self.sudo().pos_order_ids:
+            for order in self.sudo().pos_order_ids:
+                for line in order.lines:
+                    lots = line.pack_lot_ids or False
+                    if lots:
+                        for lot in lots:
+                            lot_id = self.env['stock.production.lot'].search([('name', '=', lot.lot_name)], limit=1)
+                            res.append({
+                                'product_name': lot.product_id.name,
+                                'quantity': line.qty if lot.product_id.tracking == 'lot' else 1.0,
+                                'uom_name': line.product_uom_id.name,
+                                'lot_name': lot.lot_name,
+                                'expiry_date': lot_id.expiration_date.strftime('%d/%m/%Y') if lot_id else False, 
+                            })
+        else:
+            for lot, qty in qties_per_lot.items():
+                # access the lot as a superuser in order to avoid an error
+                # when a user prints an invoice without having the stock access
+                lot = lot.sudo()
+                if float_is_zero(invoiced_qties[lot.product_id], precision_rounding=lot.product_uom_id.rounding) \
+                        or float_compare(qty, 0, precision_rounding=lot.product_uom_id.rounding) <= 0:
+                    continue
+                invoiced_lot_qty = min(qty, invoiced_qties[lot.product_id])
+                invoiced_qties[lot.product_id] -= invoiced_lot_qty
+                res.append({
+                    'product_name': lot.product_id.display_name,
+                    'quantity': formatLang(self.env, invoiced_lot_qty, dp='Product Unit of Measure'),
+                    'uom_name': lot.product_uom_id.name,
+                    'lot_name': lot.name,
+                    # The lot id is needed by localizations to inherit the method and add custom fields on the invoice's report.
+                    'lot_id': lot.id,
+                    'expiry_date': lot.expiration_date.strftime('%d/%m/%Y'),
+                })
         return res
