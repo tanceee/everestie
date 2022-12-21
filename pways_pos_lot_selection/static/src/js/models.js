@@ -97,7 +97,7 @@ odoo.define('pways_pos_lot_selection.models', function(require) {
 		},
 
 		get_lot_barcode_by_prod_id(id){
-			let barcodes = this.lot_barcode_by_name;
+			let barcodes = this.lot_barcode_by_id;
 			let brcd_lst = [];
 			$.each(barcodes, function( i, line ){
 				if (line.product_id[0] == id && line.loc_qty > 0){

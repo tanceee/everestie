@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <templates id="pos_wallet_odoo_template" inherit_id="point_of_sale.template" xml:space="preserve">
 	<t t-name="PwaysAlertPopUp" owl="1">
         <div class="modal-dialog">

@@ -15,7 +15,6 @@ class StockQuant(models.Model):
 	expiration_date = fields.Datetime(related="lot_id.expiration_date", store=True)
 	is_expired = fields.Boolean(compute='_compute_is_expired')
 
-
 	def _compute_is_expired(self):
 		for rec in self:
 			if rec.expiration_date and rec.expiration_date > datetime.datetime.now():
