@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': "LOT In Invoice Report",
-    'summary': "LOT In Invoice Report-21-12-6-30",
+    'summary': "LOT In Invoice Report-22-12-9",
     'description': "LOT In Invoice Report",
     'author' : 'Preciseways',
     'website': "http://www.preciseways.com",
