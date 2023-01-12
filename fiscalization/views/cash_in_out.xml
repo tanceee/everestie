@@ -1,0 +1,42 @@
+<odoo>
+    <record id="fiscalization_account_bank_statement_cashbox_inherit" model="ir.ui.view">
+        <field name="name">account.bank.statement.cashbox.inherit</field>
+        <field name="model">account.bank.statement.cashbox</field>
+        <field name="inherit_id" ref="account.view_account_bnk_stmt_cashbox"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="before">
+                <field name="pos_config_id" nolabel="1" class="oe_inline" readonly="1"/>
+
+                <group>
+                    <field name="direct_amount_input"/>
+                    <field name="is_initial_cash"/>
+                    <field name="direct_amount" attrs="{'invisible': [('direct_amount_input','=',False)]}"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='cashbox_lines_ids']" position="attributes">
+                <attribute name="attrs">{'invisible': [('direct_amount_input','=',True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+<!--    <record id="fiscalization_cash_box_in_inherit" model="ir.ui.view">-->
+<!--        <field name="name">cash.box.in.inherit</field>-->
+<!--        <field name="model">cash.box.in</field>-->
+<!--        <field name="inherit_id" ref="account.cash_box_in_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <field name="name" position="before">-->
+<!--                <field name="pos_config_id" class="oe_inline" readonly="1"/>-->
+<!--            </field>-->
+<!--        </field>-->
+<!--    </record>-->
+    <record id="fiscalization_cash_box_out_inherit" model="ir.ui.view">
+        <field name="name">cash.box.out.inherit</field>
+        <field name="model">cash.box.out</field>
+        <field name="inherit_id" ref="account.cash_box_out_form"/>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="pos_config_id" class="oe_inline" readonly="1"/>
+            </field>
+        </field>
+    </record>
+</odoo>

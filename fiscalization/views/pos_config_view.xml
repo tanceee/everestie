@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="sequence_number" model="ir.sequence">
+        <field name="name">Order Number Sequence Number</field>
+        <field name="code">pos.order.sequence.number</field>
+        <!--        <field name="prefix">DDT/</field>-->
+        <field name="padding">1</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="fiscalization_pos_config_form" model="ir.ui.view">
+        <field name="name">fiscalization.pos.config.form</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet[1]" position="before">
+                <sheet name="fiscalization" string="Fiscalization Information">
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <br/>
+                        <h1>Fiscalization Information</h1>
+                    </div>
+                    <group>
+                        <field name="tcr_code" ref="pos_order.tcr_code"/>
+                        <field name="disable_fiscalization"/>
+                        <field name="enable_transporter"/>
+                        <field name="is_simplify_inv"/>
+                        <field name="business_unit_code" invisible="1"/>
+                        <button name="generate_tcr_code" type="object" string="Generate TCR"
+                                action="generate_tcr_code"/>
+<!--                        <field name="image_check" widget="image"/>-->
+<!--                        <field name="image_size"/>-->
+                    </group>
+                </sheet>
+            </xpath>
+
+            <xpath expr="//div[@id='title']" position="replace">
+                <div class="oe_title" id="title">
+                    <br/>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[@id='auto_printing']" position="after">
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name='show_company_logo'/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="show_company_logo"/>
+                        <div class="text-muted">
+                            Show Company Logo on the receipt
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+<!--    -->
+<!--    <template id="pos_receipt_fiscalization" name="pos_receipt_fiscalization assets" inherit_id="point_of_sale.assets">-->
+<!--        <xpath expr="." position="inside">-->
+<!--            <script type="text/javascript" src="/fiscalization/static/src/lib/notify.min.js"/>-->
+<!--            <script type="text/javascript" src="/fiscalization/static/src/js/qrious.min.js"/>-->
+<!--            <script type="text/javascript" src="/fiscalization/static/src/js/forge.min.js"/>-->
+<!--            <script type="text/javascript" src="/fiscalization/static/src/js/pos_receipt.js"/>-->
+<!--        </xpath>-->
+<!--    </template>-->
+</odoo>

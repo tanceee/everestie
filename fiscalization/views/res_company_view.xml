@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+<!--        <record model="ir.ui.view" id="company_fiscalization_detail_inherit">-->
+<!--            <field name="name">company_fiscalization_inherit form</field>-->
+<!--            <field name="model">res.company</field>-->
+<!--            <field name="inherit_id" ref="base.view_company_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='partner_id']" position="after">-->
+<!--                    <field name="p12_file" invisible="1"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

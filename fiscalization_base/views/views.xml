@@ -1,0 +1,84 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="company_fiscalization_detail">
+            <field name="name">company_fiscalization_detail form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Fiscalization Detail">
+                        <group string="General" col="4">
+                            <field name="software_code" password="True"/>
+                            <field name="maintainer_code"/>
+                            <field name="company_id_is_in_vat"/>
+                        </group>
+                        <group string="API Endpoints" col="2">
+                            <field name="fiscalization_endpoint"/>
+                            <field name="einvoice_endpoint"/>
+                            <field name="invoice_check_endpoint"/>
+                        </group>
+                        <group string="Security Certificate" col="4">
+                            <field name="p12_certificate" filename="certificate_file_name" class="font-weight-bold"
+                                   display="full"/>
+                            <field name="certificate_file_name" readonly="1" invisible="1" force_save="1"/>
+                            <field name="certificate_password" password="True"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="user_operator_code">
+            <field name="name">user_operator_code form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lang']/../.." position="before">
+                    <group>
+                        <field name="operator_code"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_operating_unit_inherited_form" model="ir.ui.view">
+            <field name="name">operating.unit.form.inherited</field>
+            <field name="model">operating.unit</field>
+            <field name="inherit_id" ref="operating_unit.view_operating_unit_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="business_unit_code"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="inherit_res_partner_form">
+            <field name="name">inherit.res.partner.form.view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="before">
+                     <field name="is_transporter"/>
+                    <field name="license_plate_no" attrs="{'invisible': [('is_transporter', '=', False)]}"/>
+                    <field name="vat_type"/>
+                </xpath>
+                <xpath expr="//field[@name='vat']/../.." position="after">
+                    <button type="object" name="get_tax_payer" string="Load taxpayer's details"
+                            icon="fa-cogs" class="oe_inline btn-secondary"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_tax_form_inherit" model="ir.ui.view">
+            <field name="name">account.tax.form.inherit</field>
+            <field name="model">account.tax</field>
+            <field name="inherit_id" ref="account.view_tax_form"/>
+            <field name="arch" type="xml">
+                <field name="tax_group_id" position="after">
+                    <field name="exempt_code"/>
+                    <field name="description_exempt"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

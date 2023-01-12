@@ -1,0 +1,65 @@
+<odoo>
+    <data>
+        <record id="view_seller_inv_wizard_form" model="ir.ui.view">
+            <field name="name">seller.inv.wizard.form</field>
+            <field name="model">seller.einvoice.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group col="4">
+                        <field name="inv_to_fetch"/>
+                        <field name="testing" invisible="1"/>
+                        <field name="start_datetime"/>
+                        <field name="end_datetime"/>
+                    </group>
+                    <button name="fetch_seller_einvoice" type="object" string="Fetch Seller E-Invoices"
+                            class="oe_highlight"/>
+                    <group>
+                    </group>
+                    <group col="4">
+                        <field name="change_status_to" widget="radio" options="{'horizontal': false}"/>
+                        <field name="response"/>
+                    </group>
+                    <button name="multiple_einvoice_change_status" type="object"
+                            string="Multiple E-Invoices Change Status" class="btn btn-primary"/>
+
+                    <group string="Seller E-Invoices">
+                        <field name="seller_einv_line_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="select" nolabel="1" widget="boolean_toggle"/>
+                                <field name="seller_tin" readonly="1"/>
+                                <field name="inv_number" readonly="1"/>
+                                <field name="due_datetime" readonly="1"/>
+                                <field name="rec_datetime" readonly="1"/>
+                                <field name="eic" readonly="1"/>
+                                <field name="invoice_amount" readonly="1"/>
+                                <field name="buyer_tin" readonly="1"/>
+                                <field name="party_type" readonly="1"/>
+                                <field name="status" string="Current Status" readonly="1"/>
+                                <field name="einv_wizard_id" invisible="1"/>
+                                <button name="get_e_invoice_pdf" type="object"
+                                        string="Print E-Invoice PDF" class="btn btn-info"/>
+                                <button name="accept_einvoice" type="object"
+                                        string="Accept E-Invoice" class="btn btn-success"/>
+                                <button name="refuse_einvoice" type="object"
+                                        string="Refuse E-Invoice" class="btn btn-danger"/>
+                            </tree>
+                        </field>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_seller_einv_wizard" model="ir.actions.act_window">
+            <field name="name">Seller E-Invoice Update Status</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">seller.einvoice.wizard</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">form</field>
+            <field name="target">current</field>
+        </record>
+
+        <menuitem name="Seller E-Invoice Status" id="menu_seller_einv_status_update"
+                  parent="account.menu_finance_payables"
+                  action="action_seller_einv_wizard"/>
+    </data>
+</odoo>

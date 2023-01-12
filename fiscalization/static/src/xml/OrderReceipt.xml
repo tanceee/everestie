@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('pos-receipt-contact')]" position="inside">
+            <t t-if="env.pos.config.disable_fiscalization == false">
+                -----------------------------
+                <div t-if="receipt.tcr_code">
+                     TCR Code: <t t-esc="receipt.tcr_code"/>
+                </div>
+
+                <div t-if="receipt.operator_code">
+                    Operator Code: <t t-esc="receipt.operator_code"/>
+                </div>
+                <div t-if="receipt.business_unit_code">
+                    Business Unit Code: <t t-esc="receipt.business_unit_code"/>
+                </div>
+            </t>
+
+        </xpath>
+        <xpath expr="//div[hasclass('before-footer')]" position="before">
+            <t t-if="env.pos.config.disable_fiscalization == false">
+                <center t-if="receipt.qrcode"><img t-att-src="receipt.qrcode" alt="QR Code"/></center>
+                <div>
+                    <div style="font-weight:bold;font-size:12px;">NSLF: <t t-esc="receipt.nslf"/></div>
+                </div>
+                <div>
+                   <div t-if="receipt.nivf" style="font-weight:bold;font-size:12px;">NIVF: <t t-esc="receipt.nivf"/></div>
+                    <div t-else="" style="font-weight:bold;font-size:12px;">NIVF: Per momentin kjo fature nuk eshte fiksalizuar</div>
+                </div>
+                <div t-if="receipt.transporter">
+                    <div style="font-weight:bold;font-size:12px;">
+                        Transporter: <t t-esc="receipt.transporter"/>
+                    </div>
+                    <div style="font-weight:bold;font-size:12px;">
+                        License Plate No.: <t t-esc="receipt.license"/>
+                    </div>
+                      <div style="font-weight:bold;font-size:12px;">
+                        Delivery Datetime: <t t-esc="receipt.delivery_datetime"/>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+</templates>

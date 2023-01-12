@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_invoice_document" inherit_id="account.report_invoice_document">
+            <xpath expr="//div[@id='qrcode']" position="after">
+                <div t-if="o.from_pos">
+                    <p><strong>NIVF</strong>(FIC):
+                        <t t-esc="o.fic_from_pos"/>
+                    </p>
+                    <p><strong>NSLF</strong>(IIC):
+                        <t t-esc="o.iic_from_pos"/>
+                    </p>
+                    <p><strong>Business Unit</strong>: <t t-esc="o.operating_unit_id.business_unit_code"/>
+                    </p>
+                    <p><strong>Operator</strong>: <t t-esc="o.user_id.operator_code"/>
+                    </p>
+                </div>
+
+                <div t-if="o.qrcode_from_pos">
+                    <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode_from_pos)"
+                         width="140px" height="140px"/>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

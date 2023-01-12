@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="CashOpeningPopup" t-inherit="point_of_sale.CashOpeningPopup" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('opening-cash-section')]" position="after">
+            <div>
+                <strong class="info-title">Is Initial Cash</strong>
+                <div>
+                   <input type="checkbox" id="is_initial_cash" name="is_initial_cash" t-model="state.is_initial_cash"/>
+                </div>
+                <div id="cash_reg_res"/>
+            </div>
+        </xpath>
+    </t>
+</templates>
