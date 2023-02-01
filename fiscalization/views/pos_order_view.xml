@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="fiscalization_view_pos_form" model="ir.ui.view">
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <header>
+                <button name="fiscalize" string="Fiscalize" type="object"
+                        attrs="{'invisible':[('is_fiscalized','=',True)]}"/>
+            </header>
+            <group col="4" colspan="4" name="order_fields">
+                <field name="is_fiscalized"/>
+            </group>
+        </field>
+    </record>
+    <record id="fiscalization_pos_order_tree_view" model="ir.ui.view">
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="session_id" position="after">
+                <field name="is_fiscalized"/>
+
+            </field>
+        </field>
+    </record>
+
+    <record id="view_pos_pos_form" model="ir.ui.view">
+        <field name="name">pos.order.form</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Fiscalization Info">
+                    <group>
+                        <field name="fiscalization_tries"/>
+                        <field name="fiscalization_time"/>
+                        <field name="iic_code"/>
+                        <field name="fic"/>
+                        <field name="fiscalization_error"/>
+                    </group>
+                </page>
+                <page string="Transport Info">
+                    <group>
+                        <group>
+                            <field name="transporter_id"/>
+                            <field name="license_plate_no"/>
+                            <field name="delivery_datetime"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_order_filter_inherit" model="ir.ui.view">
+        <field name="name">pos.order.list.select.inherit</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='posted']" position="after">
+                <filter string="Fiscalized" name="fiscalized" domain="[('is_fiscalized','=',True)]"/>
+                <filter string="Not Fiscalized" name="not_fiscalized" domain="[('is_fiscalized','!=',True)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_server_bulk_fiscalization" model="ir.actions.server">
+        <field name="name">Bulk Fiscalization</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_pos_order"/>
+        <field name="binding_model_id" ref="model_pos_order"/>
+        <field name="state">code</field>
+        <field name="code">records.pos_order_bulk_fiscalization()</field>
+    </record>
+</odoo>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="main_sale_tax_invoice_details">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page" style="font-size:17px;">
+                        <div class="custom_header" style="font-size: 14px;">
+                            <t t-if="not o and doc">
+                                <t t-set="o" t-value="doc"/>
+                            </t>
+                            <t t-if="o and 'company_id' in o">
+                                <t t-set="company" t-value="o.company_id"/>
+                            </t>
+                            <t t-if="not o or not 'company_id' in o">
+                                <t t-set="company" t-value="res_company"/>
+                            </t>
+
+                            <div style="font-size:24px;">
+                                <b>
+                                    <center><span>DETAJE FATURE</span></center>
+                                </b>
+                            </div>
+                            <div class='row'>
+                                <div class="col-4"><b>No. Fature :<span t-field='o.name'/></b></div>
+                                <div class='col-4'/>
+                                <div class='col-4'><b>Date : <span t-esc="get_date(o)"/></b></div>
+                            </div>
+                            <div style="font-size:20px;">
+                                <t t-if="company.street">
+                                    <span t-field="company.street"/>,
+                                </t>
+                                <t t-if="company.street2">
+                                    <span t-field="company.street2"/>,
+                                </t>
+
+                                <t t-if="company.city">
+                                    <span t-field="company.city"/>
+                                </t>
+                                <t t-if="company.country_id">,
+                                    <span t-field="company.country_id.name"/>
+                                </t>
+                            </div><br/>
+                        </div>
+
+                        <hr style="border-top: 1px dashed black"/>
+                        <!--customer section-->
+                        <div style="font-size:20px;">
+                            <div>
+                                <span><b>Customer :</b></span>
+                                <span t-field="o.partner_id.name"/>
+                            </div>
+                            <div>
+                                <span><b>Address :</b></span>
+                                <span t-if="o.partner_id">
+                                    <span t-if="o.partner_id.street">
+                                        <span t-field="o.partner_id.street"/>,
+                                    </span>
+                                    <span t-if="o.partner_id.city">
+                                        <span t-field="o.partner_id.city"/>
+                                    </span>
+                                </span>
+                            </div>
+                            <div>
+                                <b><span>Vat No :</span></b>
+                                <span t-field="o.partner_id.vat"/>
+                            </div>
+                            <div>
+                                <b><span>Phone :</span></b>
+                                <span t-field="o.partner_id.phone"/>
+                            </div>
+                        </div><br/>
+                        <!--salesperson section-->
+                        <div style="font-size:20px;">
+                            <div>
+                                <span><b>Salesperson :</b></span>
+                                <span t-field="o.user_id.name"/>
+                            </div>
+                            <div>
+                                <span><b>Address :</b></span>
+                                <span t-if="o.transportuesi">
+                                    <span t-if="o.transportuesi.street">
+                                        <span t-field="o.transportuesi.street"/>,&#160;
+                                    </span>
+                                     <span t-if="o.transportuesi.zip">
+                                            <span t-field="o.transportuesi.zip"/>,&#160;
+                                        </span>
+                                    <span t-if="o.transportuesi.city">
+                                        <span t-field="o.transportuesi.city"/>
+                                    </span>
+                                    <span t-if="o.transportuesi.country_id.name">
+                                        <span t-field="o.transportuesi.country_id.name"/>
+                                    </span>
+                                </span>
+                                <span t-if="not o.transportuesi and o.user_id and o.user_id.partner_id">
+                                    <span t-if="o.user_id.partner_id.street"><span
+                                            t-field="o.user_id.partner_id.street"/>,&#160;
+                                    </span>
+                                    <span t-if="o.user_id.partner_id.zip"><span
+                                            t-field="o.user_id.partner_id.zip"/>,&#160;
+                                    </span>
+                                    <span t-if="o.user_id.partner_id.city">
+                                        <span t-field="o.user_id.partner_id.city"/>,&#160;
+                                    </span>
+                                    <span t-if="o.user_id.partner_id.country_id.name">
+                                        <span t-field="o.user_id.partner_id.country_id.name"/>
+                                    </span>
+                                </span>
+                            </div>
+                            <div>
+                                <b><span>License Plate No :</span></b>
+                                <span t-field="o.user_id.license_plate_no"/>
+                            </div>
+                            <div>
+                                <b><span>Vat No :</span></b>
+                                <span t-field="o.user_id.partner_id.vat"/>
+                            </div>
+                            <div>
+                                <b><span>Delivery Time :</span></b>
+                                <span t-if="o.delivery_time">
+                                    <span t-field="o.delivery_time"/>
+                                </span>
+                            </div>
+                        </div>
+                        <table width="100%" class="my_tab" style="margin-top: 20px;table-layout: fixed;font-size:17px;">
+                            <tr>
+                                <th style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                    <span>No.</span>
+                                </th>
+                                <th colspan="3" style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                    <span>Description</span>
+                                </th>
+                                <th style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                    <span>Unit of<br/>Measure</span>
+                                </th>
+                                <th style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                    <span>Quantity</span>
+                                </th> 
+                                <th style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                    <span>Lot</span>
+                                </th>
+                                <th colspan='2' style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                    <span>Expiry Date</span>
+                                </th>
+                            </tr>
+                            <span t-set="counter" t-value="1"/>
+                            <span t-set="total_qty" t-value="0.0"/>
+                            <span t-set="lot_vals" t-value='get_invoiced_lot_values(o)'/>
+                            <tr t-foreach="o.invoice_line_ids" t-as="line" style="word-wrap: break-word;">
+                                
+                                <span t-set="lot_value" t-value="0"/>
+                                <td style="border: dashed black 1px;border-top: 1px dashed black;text-align: center;padding:1px">
+                                    <span t-esc="counter"/>
+                                </td>
+                                <td colspan="8" style="border: dashed black 1px;border-top: 1px dashed black;padding:1px">
+                                    <span t-esc="line.product_id.barcode"/> &#160;&#160; <span t-esc="line.product_id.name"/>
+                                </td>
+                                <tr>
+                                    <td colspan='4' style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px"/>
+                                    <td style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                        <span t-esc="line.product_uom_id and line.product_uom_id.name or ''"/>
+                                    </td>
+                                    <td style="border: dashed black 1px;border-top: 1px dashed black;text-align: center;padding:1px">
+                                        <span t-esc="'%.2f'%(line.quantity)"/>
+                                    </td>
+                                    <t t-foreach='lot_vals' t-as='vals'>
+                                        <t t-if="vals['product_id'] == line.product_id.id">
+                                            <span t-set="lot_value" t-value="1"/>
+                                            <td style="border: dashed black 1px;border-top: 1px dashed black;text-align: center;padding:1px">
+                                                <span t-esc="vals['lot_name']"/>
+                                            </td>
+                                            <td colspan='2' style="border: dashed black 1px;border-top: 1px dashed black;text-align: center;padding:1px">
+                                                <span t-esc="vals['expiry_date']"/>
+                                            </td>
+                                        </t>
+                                    </t>
+                                    <t t-if='lot_value == 0'>
+                                        <td style="border: dashed black 1px;border-top: 1px dashed black;text-align: center;padding:1px">
+                                            <span/>
+                                        </td>
+                                        <td colspan='2' style="border: dashed black 1px;border-top: 1px dashed black;text-align: center;padding:1px">
+                                            <span/>
+                                        </td>
+                                    </t>
+                                </tr>
+                                <span t-set="counter" t-value="counter + 1"/>
+                                <span t-set="total_qty" t-value="total_qty + line.quantity"/>
+                            </tr>
+                            <tr>
+                                <th colspan="5" style="border: dashed black 1px;padding:1px">
+                                    <center> Total </center>
+                                </th>
+                                <th style="border: dashed black 1px;text-align: right;padding:1px">
+                                    <span/><span t-esc="'%.0f'%(total_qty)"/>
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

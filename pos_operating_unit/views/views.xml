@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <!-- <record id="view_pos_pos_form" model="ir.ui.view">
+            <field name="name">pos.order.form</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lines']/tree/field[@name='product_id']" position="after">
+                    <field name="operating_unit_id"/>
+                </xpath>
+                <field name="user_id" position="after">
+                    <field name="operating_unit_id"/>
+                </field>
+            </field>
+        </record> -->
+
+        <record id="pos_config_view_form" model="ir.ui.view">
+            <field name="name">pos.config.form.view</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"></field>
+            <field name="arch" type="xml">
+                <div id="category_reference" position="after">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="allow_operating_unit"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="allow_operating_unit"/>
+                            <label for="operating_unit_id"/>
+                            <field name="operating_unit_id"/>
+                        </div>
+                    </div>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

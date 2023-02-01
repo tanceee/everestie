@@ -1,0 +1,18 @@
+
+Version 14.0.0.1 : (29/12/20)
+		- Use stock lot instead of custom object to reduce load in pos.
+		- Display only lot with pos config's operation type's location in pos.
+
+Version 14.0.0.2 : (06/01/21)
+		- Generate warning for lot product if sum of all added quantity in lines more than avaialble quantity of lot.
+
+Version 14.0.0.3 : (27/01/21)
+		- Add new menu of "Lot/Serial numbers" under POS > Products.
+		- Add report to print lot/serial number.
+		- Add domain in products lot o2m , to display only lot which have quantity.
+
+Version 14.0.0.4 : (09/02/21)
+		- Show Lot quantity as per location of pos config's operation type.
+
+Version 14.0.0.5 : (04/03/21)
+		- Made lot barcode name storable.

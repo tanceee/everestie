@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_pricelist_page">
+        <div class="container bg-white p-4 my-4">
+            <h2>Product Pricelist</h2>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Internal Ref.</th>
+                                <th>Products</th>
+                                <th groups="uom.group_uom">UoM</th>
+                                <th class="text-right" t-if="show_cost">Cost Price</th>
+                                <th class="text-right" t-if="show_qty_on_hand">Qty. On-Hand</th>
+                                <t t-foreach="pricelist_ids" t-as="pricelist_id">
+                                    <th class="text-right">
+                                        <t t-esc="pricelist_id.name"/>
+                                    </th>
+                                </t>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="products" t-as="product">
+                                <tr>
+                                    <td >
+                                        <t t-esc="product['code']"/>
+                                    </td>
+                                    <td t-att-class="is_product_tmpl and 'font-weight-bold' or None">
+                                        <a t-if="is_html_type" href="#" class="o_action"
+                                           t-att-data-model="is_product_tmpl and 'product.template' or 'product.product'"
+                                           t-att-data-res-id="product['id']">
+                                            <t t-esc="product['name']"/>
+                                        </a>
+                                        <t t-else="">
+                                            <t t-esc="product['name']"/>
+                                        </t>
+                                    </td>
+                                    <td groups="uom.group_uom">
+                                        <t t-esc="product['uom']"/>
+                                    </td>
+                                    <td t-if="show_cost" class="text-right">
+                                        <t t-esc="product['cost_price']"
+                                           t-options='{"widget": "monetary", "display_currency": request.env.company.currency_id}'/>
+                                    </td>
+                                    <td t-if="show_qty_on_hand" class="text-right">
+                                        <t t-esc="product['qty_available']"/>
+                                    </td>
+                                    <t t-foreach="pricelist_ids" t-as="pricelist_id">
+                                        <td class="text-right">
+                                            <t t-esc="product['price'][pricelist_id]"
+                                               t-options='{"widget": "monetary", "display_currency": pricelist_id.currency_id}'/>
+                                        </td>
+                                    </t>
+                                </tr>
+                                <t t-if="is_product_tmpl and 'variants' in product">
+                                    <tr t-foreach="product['variants']" t-as="variant">
+                                        <td>
+                                            <t t-esc="variant['code']"/>
+                                        </td>
+                                        <td>
+                                            <a t-if="is_html_type" href="#" class="o_action ml-4"
+                                               data-model="product.product" t-att-data-res-id="variant['id']">
+                                                <t t-esc="variant['name']"/>
+                                            </a>
+                                            <span t-else="" class="ml-4" t-esc="variant['name']"/>
+                                        </td>
+                                        <td groups="uom.group_uom">
+                                            <t t-esc="product['uom']"/>
+                                        </td>
+                                        <td t-if="show_cost" class="text-right">
+                                            <t t-esc="variant['cost_price']"
+                                               t-options='{"widget": "monetary", "display_currency": request.env.company.currency_id}'/>
+                                        </td>
+                                         <td t-if="show_qty_on_hand" class="text-right">
+                                        <t t-esc="variant['qty_available']"/>
+                                    </td>
+                                        <t t-foreach="pricelist_ids" t-as="pricelist_id">
+                                            <td class="text-right">
+                                                <t t-esc="variant['price'][pricelist_id]"
+                                                   t-options='{"widget": "monetary", "display_currency": pricelist_id.currency_id}'/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_pricelist">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <t t-call="product_pricelist_matrix.report_pricelist_page"/>
+                </div>
+                <p style="page-break-before:always;"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_pricelist_print" model="report.paperformat">
+        <field name="name">Product Pricelist</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">22</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">10</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_pricelist" model="ir.actions.report">
+        <field name="name" eval="'Pricelist - %s' % (DateTime.today().date().strftime('%Y-%m-%d'))"/>
+        <field name="model">product.product</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">product_pricelist_matrix.report_pricelist</field>
+        <field name="report_file">product_pricelist_matrix.report_pricelist</field>
+        <field name="paperformat_id" ref="product_pricelist_matrix.paperformat_pricelist_print"/>
+    </record>
+
+</odoo>

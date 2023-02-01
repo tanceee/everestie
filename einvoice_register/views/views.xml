@@ -1,0 +1,238 @@
+<odoo>
+    <data>
+        <record id="view_account_invoice_form" model="ir.ui.view">
+            <field name="name">account.move.form.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='currency_id']/.." position="after">
+                    <field name="enable_fiscalization" invisible="1"/>
+                    <!--                    <field name="company_is_vat_register"/>-->
+                    <field name="is_reverse_charge" invisible="1"/>
+                    <field name="is_bad_debt_invoice"
+                           attrs="{'invisible':['|',('enable_fiscalization','=', False), ('move_type', '!=', 'out_refund')]}"/>
+                    <field name="start_date" attrs="{'invisible':[('enable_fiscalization','=', False)]}"/>
+                    <field name="end_date" attrs="{'invisible':[('enable_fiscalization','=', False)]}"/>
+                </xpath>
+
+                <xpath expr="//header/button[@name='action_post'][2]" position="replace">
+                    <button name="action_post" string="Confirm" class="oe_highlight"
+                            type="object" groups="account.group_account_invoice" data-hotkey="v"
+                            attrs="{'invisible': ['|', '|', '|', '|', ('enable_fiscalization','=', True), ('state', '!=', 'draft'), ('auto_post', '=', True), ('move_type', '=', 'entry'), ('display_inactive_currency_warning','=',True)]}"/>
+                    <button name="action_post" string="Confirm &amp; Fiscalize" class="oe_highlight"
+                            type="object" groups="account.group_account_invoice" data-hotkey="v"
+                            attrs="{'invisible': ['|', '|', '|', '|', ('enable_fiscalization','=', False), ('state', '!=', 'draft'), ('auto_post', '=', True), ('move_type', '=', 'entry'), ('display_inactive_currency_warning','=',True)]}"/>
+
+
+                    <!--                    <button name="action_invoice_open" type="object" string="Validate"-->
+                    <!--                            groups="account.group_account_invoice"-->
+                    <!--                            class="oe_highlight o_invoice_validate"-->
+                    <!--                            attrs="{'invisible':['|',('enable_fiscalization','=', True),('state','!=', 'draft')]}"/>-->
+                    <!--                    <button name="action_invoice_open" type="object" string="Validate &amp; Fiscalize"-->
+                    <!--                            groups="account.group_account_invoice"-->
+                    <!--                            class="oe_highlight o_invoice_validate"-->
+                    <!--                            attrs="{'invisible':['|',('enable_fiscalization','=', False), ('state','!=', 'draft')]}"/>-->
+                </xpath>
+
+                <xpath expr="//field[@name='invoice_vendor_bill_id']" position="after">
+                    <field name="business_process"
+                           attrs="{'readonly':[('state','!=','draft')], 'invisible':[('enable_fiscalization','=', False)]}"/>
+                    <field name="type_code"
+                           attrs="{'readonly':[('state','!=','draft')], 'invisible':[('enable_fiscalization','=', False)]}"/>
+                </xpath>
+                <!--                <xpath expr="//field[@name='ref']" position="after">-->
+                <!--                   -->
+                <!--                </xpath>-->
+                <xpath expr="//header/button[last()]" position="after">
+                    <field name="vat_type" invisible="1"/>
+                    <!--                    <button name="fiscalize_invoice"-->
+                    <!--                            string="Fiscalize Invoice"-->
+                    <!--                            type="object"-->
+                    <!--                            class="oe_highlight"-->
+                    <!--                            attrs="{'invisible': ['|','|', '|',('state', 'in', ['draft', 'cancel']), ('fic_number', '!=', False), ('type','!=','out_invoice'), ('is_fiscalized', '=', True)]}"/>-->
+                    <button name="e_invoice_reg"
+                            string="Register EInvoice"
+                            type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': ['|','|', '|','|','|',('state', 'in', ['draft', 'cancel']), ('eic_number', '!=', False),('is_export', '=', True), ('move_type','!=','out_invoice'), ('is_fiscalized', '=', False),  ('vat_type', 'in', ['ID', 'PASS', 'SOC'])]}"/>
+                    <button name="credit_note_reg"
+                            string="Register Credit Note"
+                            type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': ['|','|', '|','|','|',('state', 'in', ['draft', 'cancel']), ('eic_number', '!=', False),('is_export', '=', True), ('move_type','!=','out_refund'), ('is_fiscalized', '=', False),  ('vat_type', 'in', ['ID', 'PASS', 'SOC'])]}"/>
+                    <button name="get_e_invoice_pdf"
+                            string="E-Invoice PDF"
+                            type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': ['|', ('eic_number', '=', False), ('is_fiscalized', '=', False)]}"/>
+                </xpath>
+
+                <field name="fiscal_position_id" position="after">
+                    <field name="is_export" attrs="{'readonly':[('state','!=','draft')]}" invisible="1"/>
+                    <field name="is_self_inv" attrs="{'readonly':[('state','!=','draft')]}" invisible="1"/>
+                    <field name="type_of_self_iss" string="Type Of Self-Issuing"
+                           attrs="{'readonly':[('state','!=','draft')], 'invisible': [('is_self_inv','=', False)], 'required':[('is_self_inv','=', True)] }"/>
+                </field>
+
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="after">
+                    <field name="company_is_vat_register" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='tax_ids']"
+                       position="attributes">
+                    <attribute name="attrs">{'required': [('company_is_vat_register','=', True)]}</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='other_info']/group[@id='other_tab_group']" position="after">
+                    <group>
+                        <field name="is_fiscalized" readonly="1"
+                               attrs="{'invisible':[('enable_fiscalization','=', False)]}"/>
+                        <field name="fic_number" readonly="1"
+                               attrs="{'invisible':[('enable_fiscalization','=', False)]}"/>
+                        <field name="eic_number" readonly="1"
+                               attrs="{'invisible':[('enable_fiscalization','=', False)]}"/>
+                        <field name="iic_code" readonly="1"
+                               attrs="{'invisible':[('enable_fiscalization','=', False)]}"/>
+                        <field name="fiscalization_response" invisible="1"/>
+                    </group>
+                    <field name="tax_line_ids" attrs="{'invisible':[('enable_fiscalization','=', False)]}">
+                        <tree editable="bottom" string="Taxes" create="0">
+                            <field name="name"/>
+                            <!--Need invisible fields for on_change to create all necessary info -->
+                            <field name="tax_id" invisible="0"/>
+                            <field name="sequence" invisible="1"/>
+                            <field name="manual" invisible="1"/>
+                            <field name="account_id" groups="account.group_account_user"/>
+                            <field name="analytic_account_id" domain="[('company_id', '=', parent.company_id)]"
+                                   groups="analytic.group_analytic_accounting"/>
+                            <field name="analytic_tag_ids" groups="analytic.group_analytic_tags" widget="many2many_tags"
+                                   options="{'color_field': 'color'}"/>
+                            <field name="amount" invisible="1"/>
+                            <field name="amount_rounding" invisible="1"/>
+                            <field name="base" invisible="1"/>
+                            <field name="amount_total"/>
+                            <field name="currency_id" invisible="1" force_save="1"/>
+                        </tree>
+                    </field>
+
+                    <group string="Additional Documents for E-Invoice"
+                           attrs="{'invisible':[('enable_fiscalization','=', False)]}">
+                        <field name="attach_doc_ids" widget="many2many_binary" nolabel="1"/>
+                    </group>
+                    <group string="Additional Documents External links for E-Invoice"
+                           attrs="{'invisible':[('enable_fiscalization','=', False)]}">
+                        <field name="attach_doc_link_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="link"/>
+                            </tree>
+                        </field>
+                    </group>
+                </xpath>
+
+                <xpath expr="//page[@id='other_tab']//field[@name='partner_bank_id']" position="after">
+                    <field name="partner_additional_bank_ids" widget="many2many_tags"
+                           string="Additional Bank Accounts"/>
+                </xpath>
+                <xpath expr="//page[@id='other_tab']//field[@name='partner_bank_id']" position="attributes">
+                    <attribute name="string">Main Bank Account</attribute>
+                </xpath>
+
+                <xpath expr="//notebook" position="inside">
+                    <page string="Transport Info">
+                        <group>
+                            <group>
+                                <field name="transporter_id"/>
+                                <field name="license_plate_no"/>
+                                <field name="delivery_datetime"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_uom_form_view" model="ir.ui.view">
+            <field name="model">uom.uom</field>
+            <field name="inherit_id" ref="uom.product_uom_form_view"/>
+            <field name="arch" type="xml">
+                <field name="rounding" position="after">
+                    <field name="unece_code"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="product_uom_tree_view" model="ir.ui.view">
+            <field name="model">uom.uom</field>
+            <field name="inherit_id" ref="uom.product_uom_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="category_id" position="after">
+                    <field name="unece_code"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="account_fiscal_position_form_view" model="ir.ui.view">
+            <field name="model">account.fiscal.position</field>
+            <field name="inherit_id" ref="account.view_account_position_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="for_export"/>
+                    <field name="for_reverse_charge"/>
+                    <field name="for_self_inv" attrs="{'readonly': [('for_reverse_charge', '=', True)]}" force_save="1"/>
+                </field>
+            </field>
+        </record>
+
+
+        <record id="fiscalization_error_codes_tree" model="ir.ui.view">
+            <field name="name">fiscalization.error.code.tree.view</field>
+            <field name="model">fiscalization.error.code</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="error_message"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="fiscalization_error_codes_form" model="ir.ui.view">
+            <field name="name">fiscalization.error.code.form.view</field>
+            <field name="model">fiscalization.error.code</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="error_message"/>
+                        </group>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+<!--        <record id="view_partner_info_form" model="ir.ui.view">-->
+<!--            <field name="name">res.partner.form.inherit</field>-->
+<!--            <field name="model">res.partner</field>-->
+<!--            <field name="inherit_id" ref="base.view_partner_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='vat']" position="after">-->
+<!--                    <field name="license_plate_no"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="action_error_codes" model="ir.actions.act_window">
+            <field name="name">Error Codes</field>
+            <field name="res_model">fiscalization.error.code</field>
+            <!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="error_codes_menu" name="Fiscalization Error Codes" parent="account.menu_finance_configuration"
+                  action="action_error_codes"/>
+
+    </data>
+</odoo>

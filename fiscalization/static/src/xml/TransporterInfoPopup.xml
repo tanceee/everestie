@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+    <t t-name="TransporterInfoPopup" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <div class="popup product-info-popup">
+                <header class="title">
+                    Set Transporter Information
+                </header>
+                <main class="body" style="text-align: left;">
+
+                    <table border="0">
+                        <tr>
+                            <td>
+                                <strong class="label">Transporter</strong>
+                            </td>
+                            <td>
+                                <select id="transporter" name="transporter" t-on-change="getLicensePlate"
+                                        style="    margin: 18px;width: 100%;font-size: 21px;padding: 10px;">
+                                    <option value="">--SELECT--</option>
+                                    <t t-foreach="props.all_customers" t-as="customer" t-key="customer.id">
+                                        <option t-att-data-license="customer.license_plate_no"
+                                                t-att-value="customer.id">
+                                            <t t-esc="customer.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong class="label">License Plate No.</strong>
+                            </td>
+                            <td>
+                                <input type="text" style="margin: 18px;font-size: 21px;width: 100%;" id="plate_number"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong class="label">Delivery Datetime</strong>
+                            </td>
+                            <td>
+                                <input id="delivery_datetime" type="datetime-local"
+                                       style="margin: 18px;font-size: 21px;width: 100%;"/>
+                            </td>
+                        </tr>
+                    </table>
+                </main>
+                <footer class="footer">
+                    <div class="button cancel" t-on-click="cancel">
+                        Close
+                    </div>
+                    <div class="button" t-on-click="clearTransporter">
+                        Clear
+                    </div>
+                    <div class="button highlight" t-on-click="setTransporter">
+                        Set
+                    </div>
+
+                </footer>
+            </div>
+        </div>
+    </t>
+</templates>
