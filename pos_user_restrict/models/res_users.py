@@ -16,6 +16,6 @@ class ResUsers(models.Model):
         res = super(ResUsers, self).write(values)
         if self.ids and 'pos_config_ids' in values:
             self.env['ir.model.access'].call_cache_clearing_methods()
-           # self.env['ir.rule'].clear_caches()
-            self.has_group.clear_cache(self)
+            self.env['ir.rule'].clear_caches()
+          #  self.has_group.clear_cache(self)
         return res
