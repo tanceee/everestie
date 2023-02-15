@@ -47,7 +47,7 @@ odoo app will add invocie currency rate on invocie screen to adjust currency rat
 
     """,
     'summary':"""odoo app will add invocie currency rate on invocie screen to adjust currency rate, manual invoice exchange rate, invoice currency rate, invoice exchange rate, invoice exchange rate, manual exchange rate, convert exchange currency rate invoice, currency rate accouting, mass currency rate""",
-    'depends': ['account'],
+    'depends': ['sale', 'purchase', 'stock_account', 'purchase_stock'],
     'data': [
         'views/account_move_views.xml',
     ],
