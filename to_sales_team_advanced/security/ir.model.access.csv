@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_team_region,crm.team.region,model_crm_team_region,base.group_user,1,0,0,0
+access_crm_team_all_lead,crm.team.all.lead,model_crm_team_region,sales_team.group_sale_salesman_all_leads,1,1,1,0
+access_crm_team_manager,crm.team.region.manager,model_crm_team_region,sales_team.group_sale_manager,1,1,1,1
+access_crm_team_team_leader,crm.team.team.leader,model_crm_team,to_sales_team_advanced.group_sale_team_leader,1,0,0,0
+access_crm_team_regional_manager,crm.team.region.manager,model_crm_team,to_sales_team_advanced.group_sale_regional_manager,1,1,1,0
+access_crm_team_member_region_manager,access.crm.team.member.region manager,sales_team.model_crm_team_member,to_sales_team_advanced.group_sale_regional_manager,1,1,1,0
