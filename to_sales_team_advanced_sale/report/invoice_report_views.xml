@@ -1,0 +1,32 @@
+<odoo>
+	<record id="view_account_invoice_report_search"
+		model="ir.ui.view">
+		<field name="name">account.invoice.report.search</field>
+		<field name="model">account.invoice.report</field>
+		<field name="inherit_id"
+			ref="account.view_account_invoice_report_search" />
+		<field name="arch" type="xml">
+			<xpath expr="//group/filter[@name='user']" position="after">
+				<filter string="Team Leader" name="grp_team_leader"
+					context="{'group_by':'team_leader_id'}" />
+			</xpath>
+		</field>
+	</record>
+
+	<record id="view_account_invoice_report_search_inherit"
+		model="ir.ui.view">
+		<field name="name">account.invoice.report.search</field>
+		<field name="model">account.invoice.report</field>
+		<field name="inherit_id"
+			ref="sale.view_account_invoice_report_search_inherit" />
+		<field name="arch" type="xml">
+			<xpath expr="//group/filter[@name='sales_channel']" position="after">
+				<filter string="Sales Region" name="grp_sales_region"
+					context="{'group_by':'crm_team_region_id'}" />
+				<filter string="Regional Manager" name="grp_regional_manager"
+					context="{'group_by':'regional_manager_id'}" />
+			</xpath>
+		</field>
+	</record>
+
+</odoo>
