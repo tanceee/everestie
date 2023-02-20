@@ -1,0 +1,5 @@
+<odoo>
+	<record id="sale.menu_sale_config" model="ir.ui.menu">
+		<field name="groups_id" eval="[(4, ref('to_sales_team_advanced.group_sale_team_leader'))]"/>
+	</record>
+</odoo>
