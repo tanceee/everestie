@@ -683,8 +683,8 @@ class AccountInvoice(models.Model):
 
     def e_invoice_reg(self):
         xml_ubl_invoice_content = self.generate_ubl_xml_string().decode('utf-8')
-        print("Registering E-invoice", xml_ubl_invoice_content)
-        _logger.info(">>>>>>>>> XML CONTENT %s" % xml_ubl_invoice_content)
+        #print("Registering E-invoice", xml_ubl_invoice_content)
+        #_logger.info(">>>>>>>>> XML CONTENT %s" % xml_ubl_invoice_content)
         company_id = self.env.user.company_id
         company_p12_certificate = company_id.p12_certificate
         company_p12_certificate = base64.b64decode(company_p12_certificate)
