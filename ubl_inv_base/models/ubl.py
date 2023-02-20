@@ -520,7 +520,7 @@ class BaseUbl(models.AbstractModel):
 
             # print("TAXES @@@@@@@@@@@", taxes)
             if taxes:
-                for tax in taxes.filtered(lambda t: t.company_id == self.env.user.company_id):
+                for tax in taxes.filtered(lambda t: t.company_id == self.env.company):
                     self._ubl_add_tax_category(tax, item, ns, node_name='ClassifiedTaxCategory', version=version)
             else:
                 tax_category = etree.SubElement(item, ns['cac'] + 'ClassifiedTaxCategory')
