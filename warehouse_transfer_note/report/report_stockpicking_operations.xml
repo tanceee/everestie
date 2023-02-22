@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="report_picking" inherit_id="stock.report_picking">
+            <xpath expr="//div[hasclass('page')][last()]" position="inside">
+                <div t-if="o.wtnic">
+                    <p><strong>WTNIC</strong>:
+                        <t t-esc="o.wtnic"/>
+                    </p>
+                    <p><strong>FWTNIC</strong>:
+                        <t t-esc="o.fwtnic"/>
+                    </p>
+<!--                    <p><strong>Business Unit</strong>:-->
+<!--                        <t t-esc="o.operating_unit_id.business_unit_code"/>-->
+<!--                    </p>-->
+<!--                    <p><strong>Operator</strong>:-->
+<!--                        <t t-esc="o.user_id.operator_code"/>-->
+<!--                    </p>-->
+                </div>
+
+                <div t-if="o.fwtnic">
+                    <img t-att-src="'data:image/*;base64,%s' % to_text(o.make_wtn_qr_code())"
+                         width="140px" height="140px"/>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

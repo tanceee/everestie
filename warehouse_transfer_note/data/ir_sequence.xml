@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <record id="sequence_number_warehouse_transfer_note" model="ir.sequence">
+            <field name="name">Warehouse Transfer Note Sequence Number</field>
+            <field name="code">warehouse.transfer.note.sequence.number</field>
+            <field name="padding">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

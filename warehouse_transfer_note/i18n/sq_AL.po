@@ -1,0 +1,520 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* warehouse_transfer_note
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-09-27 21:26+0000\n"
+"PO-Revision-Date: 2021-09-28 15:47+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: sq_AL\n"
+"X-Generator: Poedit 3.0\n"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__des_address
+msgid "Address of destination."
+msgstr "Adresë Destinacion."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__issuer_address
+msgid "Address of the WTN issuer."
+msgstr "Adresa e leshuesit te faturës shoqëruese."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__start_address
+msgid "Address of the starting point of transportation."
+msgstr "Adresa e pikes se nisjes."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__is_goods_flammable
+msgid "Are goods flammable or not."
+msgstr "A janë mallrat të ndezshme apo jo."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__carrier_id
+msgid "Carrier"
+msgstr "Transportues"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__carrier_address
+msgid "Carrier Address"
+msgstr "Adresë Trnasportuesi"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__carrier_id_num
+msgid "Carrier Id Num"
+msgstr "Numër Id Transportuesi"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__carrier_id_type
+msgid "Carrier Id Type"
+msgstr "Lloj ID"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__carrier_name
+msgid "Carrier Name"
+msgstr "Emertim Transportuesi"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__carrier_town
+msgid "Carrier Town"
+msgstr "Qytet Transportuesi"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__carrier_address
+msgid "Carrier's address."
+msgstr "Adresë Transportuesi."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__carrier_id_type
+msgid "Carrier's identification number type."
+msgstr "Lloji i mjetit të identifikimit të transportuesit."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__carrier_id_num
+msgid "Carrier's identification number."
+msgstr "Numri identifikimit të transportuesit."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__carrier_name
+msgid "Carrier's name."
+msgstr "Emërtim Transporuesi."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__carrier_town
+msgid "Carrier's town."
+msgstr "Qyyteti Transportuesit."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__des_city
+msgid "City of destination."
+msgstr "Qyteti Destinacion."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__start_city
+msgid "City of the starting point of transportation."
+msgstr "Qyteti i fillimit të transportit."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__value_of_goods
+msgid "Cost of goods at cost price."
+msgstr "Kosto e mallrave në çmim kosto."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__issue_date_time
+msgid "Date and time of creation of the WTN."
+msgstr "Datë dhe ora e krijimit të Faturës Shoqëruese."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__start_date_time
+msgid "Date and time of the transport departure from start address."
+msgstr "Datë dhe ore e fillimit të transportit nga pika e nisjes."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__des_address
+msgid "Des Address"
+msgstr "Adresë Destinacion"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__des_city
+msgid "Des City"
+msgstr "Qytet Destinacion"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__des_date_time
+msgid "Des Date Time"
+msgstr "Date Destinacion"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__des_point
+msgid "Des Point"
+msgstr "Pikë Dest"
+
+#. module: warehouse_transfer_note
+#: model_terms:ir.ui.view,arch_db:warehouse_transfer_note.picking_form_inherit
+msgid "Destination"
+msgstr "Destinacion"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__des_date_time
+msgid "Expected date when the goods should arrive to its destination."
+msgstr "Data e pritshme kur mallrat duhet te arrijnë në destinacion."
+
+#. module: warehouse_transfer_note
+#: model_terms:ir.ui.view,arch_db:warehouse_transfer_note.picking_form_inherit
+msgid "FWTNIC"
+msgstr "NIVF"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__fwtnic
+msgid "Fwtnic"
+msgstr "Fwtnic"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__is_escort_required
+msgid "Is Escort Required"
+msgstr "Është e nevojshme shoqërimi"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__is_fiscalized
+msgid "Is Fiscalized"
+msgstr "Fiskalizuar"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__is_goods_flammable
+msgid "Is Goods Flammable"
+msgstr "Mallrat janë të ndezshme"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__is_internal_picking
+msgid "Is Internal Picking"
+msgstr "Është Transferim i Brendshëm"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__is_escort_required
+msgid "Is escort required or not."
+msgstr "Kërkohet shoqërim apo jo."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__issue_date_time
+msgid "Issue Date Time"
+msgstr "Data dhe ora e leshuar"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__issuer_address
+msgid "Issuer Address"
+msgstr "Adrese e leshuesit"
+
+#. module: warehouse_transfer_note
+#: model_terms:ir.ui.view,arch_db:warehouse_transfer_note.picking_form_inherit
+msgid "Issuer Details"
+msgstr "Detaje Leshuesi"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__issuer_name
+msgid "Issuer Name"
+msgstr "Emertim Leshuesi"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__issuer_nuis
+msgid "Issuer Nuis"
+msgstr "NIPT i leshuesit"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__issuer_town
+msgid "Issuer Town"
+msgstr "Qyetet Derguesi"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__items_num
+msgid "Items Num"
+msgstr "Numri Artikujve"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__issuer_nuis
+msgid "NUIS of the WTN issuer."
+msgstr "NIPT i derguesit."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__issuer_name
+msgid "Name of the WTN issuer."
+msgstr "Emertim i Derguesit te fatures shoqeruese."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__items_num
+msgid "Number of items of goods."
+msgstr "Numri i artikujve."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__pack_num
+msgid "Number of packs."
+msgstr "Numri pakove."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__pack_num
+msgid "Pack Num"
+msgstr "Numër Kutish"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__pack_type
+msgid "Pack Type"
+msgstr "Lloji i Paketimit"
+
+#. module: warehouse_transfer_note
+#: model_terms:ir.ui.view,arch_db:warehouse_transfer_note.picking_form_inherit
+msgid "Packaging"
+msgstr "Paketimi"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__veh_plates
+msgid "Plates of the vehicle that will transport the goods."
+msgstr "Targa e automjetit qe do te transportoj mallrat."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__wtnic_signature
+msgid "Signed warehouse transfer note identification code concatenated parameters."
+msgstr "Signed warehouse transfer note identification code concatenated parameters."
+
+#. module: warehouse_transfer_note
+#: model_terms:ir.ui.view,arch_db:warehouse_transfer_note.picking_form_inherit
+msgid "Source"
+msgstr "Burimi"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__start_address
+msgid "Start Address"
+msgstr "Adrese Fillimi"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__start_city
+msgid "Start City"
+msgstr "Qyteti Nisjes"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__start_date_time
+msgid "Start Date Time"
+msgstr "Ore dhe Date Nisje"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__start_point
+msgid "Start Point"
+msgstr "Pika e Nisjes"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__subsequent_delivery_type
+msgid "Subsequent Delivery Type"
+msgstr "Subsequent Delivery Type"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__issuer_town
+msgid "Town of the WTN issuer."
+msgstr "Qyteti i derguesit."
+
+#. module: warehouse_transfer_note
+#: model:ir.model,name:warehouse_transfer_note.model_stock_picking
+msgid "Transfer"
+msgstr "Transfero"
+
+#. module: warehouse_transfer_note
+#: model_terms:ir.ui.view,arch_db:warehouse_transfer_note.picking_form_inherit
+msgid "Transfer Representative"
+msgstr "Pergjegjes i transferimit"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__transfer_user_id
+msgid "Transfer User"
+msgstr "Perdorues i transferimit"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_warehouse__warehouse_type
+msgid "Type of Warehouse."
+msgstr "Lloj Magazine."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__des_point
+msgid "Type of destination point."
+msgstr "Lloji i pikes destinacion."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__pack_type
+msgid "Type of packaging."
+msgstr "Lloj paketimi."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__start_point
+msgid "Type of start point."
+msgstr "Lloj pike fillimi."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__value_of_goods
+msgid "Value Of Goods"
+msgstr "Vlere e mallrave"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__veh_ownership
+msgid "Veh Ownership"
+msgstr "Pronesi Mjeti"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__veh_plates
+msgid "Veh Plates"
+msgstr "Targa Mjeti"
+
+#. module: warehouse_transfer_note
+#: model_terms:ir.ui.view,arch_db:warehouse_transfer_note.picking_form_inherit
+msgid "WTN Fields"
+msgstr "Fature Shoqerimi"
+
+#. module: warehouse_transfer_note
+#: model_terms:ir.ui.view,arch_db:warehouse_transfer_note.picking_form_inherit
+msgid "WTN Register"
+msgstr "Krijo Fature Shoqeruese"
+
+#. module: warehouse_transfer_note
+#: model_terms:ir.ui.view,arch_db:warehouse_transfer_note.picking_form_inherit
+msgid "WTNIC"
+msgstr "NSLF"
+
+#. module: warehouse_transfer_note
+#: model:ir.model,name:warehouse_transfer_note.model_stock_warehouse
+msgid "Warehouse"
+msgstr "Magazine"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_warehouse__warehouse_type
+msgid "Warehouse Type"
+msgstr "Lloj Magazine"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,help:warehouse_transfer_note.field_stock_picking__wtnic
+msgid "Warehouse transfer note identification code."
+msgstr "Kod identifikimi fature shoqeruese."
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__wth_number
+msgid "Wth Number"
+msgstr "Numer WTN"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__wtn_ordinal_number
+msgid "Wtn Ordinal Number"
+msgstr "WTN numer rendor"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__wtn_transaction
+msgid "Wtn Transaction"
+msgstr "Trans"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__wtn_type
+msgid "Wtn Type"
+msgstr "Lloj Fature Shoqeruese"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__wtnic
+msgid "Wtnic"
+msgstr "Wtnic"
+
+#. module: warehouse_transfer_note
+#: model:ir.model.fields,field_description:warehouse_transfer_note.field_stock_picking__wtnic_signature
+msgid "Wtnic Signature"
+msgstr "Wtnic Signature"
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,start_point:0
+#: selection:stock.warehouse,warehouse_type:0
+msgid "[ANOTHER] Another person's warehouse"
+msgstr "Magazinë e një personi tjetër"
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,subsequent_delivery_type:0
+msgid "[BOUNDBOOK] When TCR is not working and message cannot be created with TCR."
+msgstr "[BOUNDBOOK] Kur TCR nuk punon dhe mesazhi nuk mund të krijohet me TCR."
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,start_point:0
+#: selection:stock.warehouse,warehouse_type:0
+msgid "[CUSTOMS] Customs warehouse"
+msgstr "Magazinë Doganore"
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,wtn_transaction:0
+msgid "[DOOR] The goods are transferred for door to door sales transaction type."
+msgstr "Mallrat transferohen për transaksionet e shitjeve derë më derë."
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,wtn_transaction:0
+msgid "[EXAMINATION] Examination transaction type for fuels."
+msgstr "Lloj veprimi për egzaminimin për lëndët djegëse."
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,des_point:0 selection:stock.picking,start_point:0
+#: selection:stock.warehouse,warehouse_type:0
+msgid "[EXHIBITION] Exhibition"
+msgstr "Ekspozitë"
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,carrier_id_type:0
+msgid "[ID] Personal ID number"
+msgstr "Numër Personal ID"
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,subsequent_delivery_type:0
+msgid "[NOINTERNET] When TCR operates in the area where there is no Internet available."
+msgstr "Kur TCR vepron në zonë ku nuk ka internet në dispozicion."
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,carrier_id_type:0
+msgid "[NUIS] NUIS number"
+msgstr "NIPT"
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,des_point:0 selection:stock.picking,start_point:0
+#: selection:stock.warehouse,warehouse_type:0
+msgid "[OTHER] Other"
+msgstr "Tjetër"
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,veh_ownership:0
+msgid "[OWNER] Issuer is owner of the vehicle."
+msgstr "Lëshuesi është pronar i automjetit."
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,wtn_transaction:0
+msgid "[SALES] Regular sales transaction type for fuels."
+msgstr "Lloji i veprimit I shitjeve për karburantet."
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,des_point:0 selection:stock.picking,start_point:0
+#: selection:stock.warehouse,warehouse_type:0
+msgid "[SALE] Point of sale"
+msgstr "Pikë Shitje"
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,wtn_type:0
+msgid "[SALE] Transport document for sale of fuels."
+msgstr "Dokument transporti për shitje të karburanteve."
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,subsequent_delivery_type:0
+msgid "[SERVICE] When there is an issue with the fiscalization service that blocks fiscalization."
+msgstr "Kur ka një problem me shërbimin e fiskalizimit që bllokon fiskalizimin."
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,des_point:0 selection:stock.picking,start_point:0
+#: selection:stock.warehouse,warehouse_type:0
+msgid "[STORE] Store"
+msgstr "Dyqan"
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,subsequent_delivery_type:0
+msgid "[TECHNICALERROR] When there is a temporary technical error at TCR side that prevents successful fiscalization."
+msgstr "Kur ka një gabim teknik të përkohshëm në anën e TCR që pengon fiskalizimin e suksesshëm."
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,veh_ownership:0
+msgid "[THIRDPARTY] Third party is owner of the vehicle."
+msgstr "Automjeti është pronë e palëve të tretë."
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,wtn_transaction:0
+msgid "[TRANSFER] Transfer transaction type."
+msgstr "Veprim Transferimi."
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,des_point:0 selection:stock.picking,start_point:0
+#: selection:stock.warehouse,warehouse_type:0
+msgid "[WAREHOUSE] Warehouse"
+msgstr "Magazinë"
+
+#. module: warehouse_transfer_note
+#: selection:stock.picking,wtn_type:0
+msgid "[WTN] WTN without changing ownership"
+msgstr "Faturë Shoqëruese pa ndryshuar pronësi"
