@@ -1,4 +1,15 @@
 # -*- coding: utf-8 -*-
+try:
+   import qrcode
+except ImportError:
+   qrcode = None
+try:
+   import base64
+except ImportError:
+   base64 = None
+from io import BytesIO
+from odoo.exceptions import UserError
+
 from collections import defaultdict
 
 from odoo import fields, models, api, _
@@ -14,6 +25,83 @@ class AccountMove(models.Model):
     serial_number = fields.Char(string="Serial No")
     delivery_time = fields.Char(string="Delivery Time")
     transportuesi = fields.Many2one('res.partner', string="Transportuesi")
+    qr_code_payment = fields.Binary('QRcode', compute="_generate_qr")
+    qr_code_product_details = fields.Binary('Product Barcode', compute="_generate_qr_product")
+
+    def _generate_qr(self):
+       "method to generate QR code"
+       for rec in self:
+           if qrcode and base64:
+              
+               qr = qrcode.QRCode(
+                   version=1,
+                   error_correction=qrcode.constants.ERROR_CORRECT_L,
+                   box_size=3,
+                   border=4,
+               )
+               qr.add_data("Payment Reference : ")
+               qr.add_data(rec.payment_reference)
+               qr.add_data("\n")
+               qr.add_data("Custome Name : ")
+               qr.add_data(rec.partner_id.name)
+               qr.add_data("\n")
+               qr.add_data("journal: ")
+               qr.add_data(rec.journal_id.name)
+               qr.add_data("Bank: ")
+               qr.add_data(rec.journal_id.name)
+               qr.add_data("\n")
+               qr.add_data("Total Amount: ")
+               qr.add_data(rec.amount_total)
+               qr.make(fit=True)
+               img = qr.make_image()
+               temp = BytesIO()
+               img.save(temp, format="PNG")
+               qr_image = base64.b64encode(temp.getvalue())
+               rec.update({'qr_code_payment':qr_image})
+           else:
+               raise UserError(_('Necessary Requirements To Run This Operation Is Not Satisfied'))
+
+    def _generate_qr_product(self):
+        for rec in self:
+           if qrcode and base64:
+                qr = qrcode.QRCode(
+                   version=1,
+                   error_correction=qrcode.constants.ERROR_CORRECT_L,
+                   box_size=3,
+                   border=4,
+                )
+                qr.add_data("Custome Name : ")
+                qr.add_data(rec.partner_id.name)
+                qr.add_data("\n")
+                qr.add_data("Product Details : ")
+                qr.add_data("\n")
+                for line in rec.invoice_line_ids:
+                    qr.add_data("Name : ")
+                    qr.add_data(line.product_id.name)
+                    qr.add_data(", ")
+                    qr.add_data("UOM : ")
+                    qr.add_data(line.product_uom_id.name)
+                    qr.add_data(", ")
+                    qr.add_data("Qty : ")
+                    qr.add_data(line.quantity)
+                    qr.add_data(", ")
+                    qr.add_data("Price : ")
+                    qr.add_data(line.price_unit)
+                    qr.add_data(", ")
+                    qr.add_data("Sub Total : ")
+                    qr.add_data(line.price_subtotal)
+                    qr.add_data(", ")
+                    qr.add_data("\n")
+                qr.add_data("Total Amount: ")
+                qr.add_data(rec.amount_total)
+                qr.make(fit=True)
+                img = qr.make_image()
+                temp = BytesIO()
+                img.save(temp, format="PNG")
+                qr_image = base64.b64encode(temp.getvalue())
+                rec.update({'qr_code_product_details':qr_image})
+           else:
+               raise UserError(_('Necessary Requirements To Run This Operation Is Not Satisfied'))
     
     def _compute_tax_subtotal(self):
         self.total_tax_subtotal = sum(line.tax_subtotal for line in self.invoice_line_ids)
@@ -81,7 +169,7 @@ class AccountMove(models.Model):
         if self.sudo().pos_order_ids:
             for order in self.sudo().pos_order_ids:
                 for line in order.lines:
-                    lots = line.pack_lot_ids or False
+                    lots = line.pack_lot_ids
                     for lot in lots:
                         lot_id = self.env['stock.production.lot'].search([('name', '=', lot.lot_name),('product_id', '=', lot.product_id.id)], limit=1)
                         res.append({

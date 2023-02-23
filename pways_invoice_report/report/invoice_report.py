@@ -106,3 +106,5 @@ class SaleTaxInvioiceReportDetails(models.AbstractModel):
             'get_date': self.get_date,
             'get_invoiced_lot_values': self.get_invoiced_lot_values
         }
+
+
