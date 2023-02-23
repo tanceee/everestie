@@ -29,11 +29,11 @@
                                 <field name="veh_ownership" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
                                 <field name="carrier_id"
                                        attrs="{'invisible': [('veh_ownership', '=', 'OWNER')], 'readonly': [('is_fiscalized', '=', True)]}"/>
-                                <field name="carrier_id_type" invisible="1"/>
-                                <field name="carrier_id_num" invisible="1"/>
-                                <field name="carrier_name" invisible="1"/>
-                                <field name="carrier_address" invisible="1"/>
-                                <field name="carrier_town" invisible="1"/>
+                                <field name="carrier_id_type" invisible="1" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                                <field name="carrier_id_num" invisible="1" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                                <field name="carrier_name" invisible="1" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                                <field name="carrier_address" invisible="1" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                                <field name="carrier_town" invisible="1" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
                                 <field name="veh_plates" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
                             </group>
 
@@ -45,16 +45,16 @@
 
                         <group>
                             <group string="Source">
-                                <field name="start_address" invisible="1"/>
-                                <field name="start_city" invisible="1"/>
+                                <field name="start_address" invisible="1"attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                                <field name="start_city" invisible="1" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
                                 <field name="start_date_time" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
-                                <field name="start_point" invisible="1"/>
+                                <field name="start_point" invisible="1" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
                             </group>
                             <group string="Destination">
-                                <field name="des_address" invisible="1"/>
-                                <field name="des_city" invisible="1"/>
+                                <field name="des_address" invisible="1" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                                <field name="des_city" invisible="1" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
                                 <field name="des_date_time" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
-                                <field name="des_point" invisible="1"/>
+                                <field name="des_point" invisible="1" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
                             </group>
                         </group>
 
