@@ -18,6 +18,7 @@ odoo.define("pos_qr_show.PaymentScreen", function (require) {
             }
             else {
                 this.invoice_report = true;
+                this.invoice_detais = false;
             }
             this.render();
         }
@@ -29,6 +30,7 @@ odoo.define("pos_qr_show.PaymentScreen", function (require) {
             }
             else {
                 this.invoice_detais = true;
+                this.invoice_report = false;
             }
             this.render();
         }
