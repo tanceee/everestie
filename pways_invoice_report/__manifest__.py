@@ -3,7 +3,7 @@
     "name": "Invoice Report",
     "version": "15.0.0",
     'category': 'Generic Modules/Accounting',
-    "depends": ['account', 'stock_account', 'sale_stock', 'point_of_sale', 'product_expiry', 'sale_management', 'dev_invoice_currency_rate'],
+    "depends": ['account', 'stock_account', 'sale_stock', 'point_of_sale', 'product_expiry', 'sale_management', 'dev_invoice_currency_rate', 'einvoice_register'],
     "data": [
         'views/account_move_view.xml',
         'views/res_partner_view.xml',

@@ -18,7 +18,6 @@ odoo.define("pos_qr_show.PaymentScreen", function (require) {
             }
             else {
                 this.invoice_report = true;
-                this.invoice_detais = false;
             }
             this.render();
         }
@@ -30,7 +29,6 @@ odoo.define("pos_qr_show.PaymentScreen", function (require) {
             }
             else {
                 this.invoice_detais = true;
-                this.invoice_report = false;
             }
             this.render();
         }
@@ -46,7 +44,11 @@ odoo.define("pos_qr_show.PaymentScreen", function (require) {
             let syncedOrderBackendIds = [];
             try {
                 if (this.currentOrder.is_to_invoice()) {
-                    if (this.invoice_report){
+                    if (this.invoice_report & this.invoice_detais){
+                        syncedOrderBackendIds = await this.env.pos.invoice_report_multiple(
+                        this.currentOrder);
+                    }
+                    else if (this.invoice_report){
                         syncedOrderBackendIds = await this.env.pos.invoice_report(
                         this.currentOrder
                         );

@@ -116,17 +116,6 @@
                                 <span t-field="o.user_id.partner_id.vat"/>
                             </div>
                             <div>
-                                <b><span>NIVF:</span></b>
-                               <!--  <t t-esc="o.fic_number"/> -->
-                            </div>
-                            <div>
-                                <b><span>NSLF:</span></b>
-                                <!-- <t t-esc="o.iic_code"/> -->
-                            </div>
-                            <div>
-                                <b><span>EIC:</span></b>
-                            </div>
-                            <div>
                                 <b><span>Delivery Time :</span></b>
                                 <span t-if="o.delivery_time">
                                     <span t-field="o.delivery_time"/>
@@ -156,7 +145,7 @@
                             </tr>
                             <span t-set="counter" t-value="1"/>
                             <span t-set="total_qty" t-value="0.0"/>
-                            <!-- <span t-set="lot_vals" t-value='get_invoiced_lot_values(o)'/> -->
+                            <span t-set="lot_vals" t-value='get_invoiced_lot_values(o)'/>
                             <tr t-foreach="o.invoice_line_ids" t-as="line" style="word-wrap: break-word;">
                                 
                                 <span t-set="lot_value" t-value="0"/>
@@ -174,7 +163,7 @@
                                     <td style="border: dashed black 1px;border-top: 1px dashed black;text-align: center;padding:1px">
                                         <span t-esc="'%.2f'%(line.quantity)"/>
                                     </td>
-                                   <!--  <t t-foreach='lot_vals' t-as='vals'>
+                                    <t t-foreach='lot_vals' t-as='vals'>
                                         <t t-if="vals['product_id'] == line.product_id.id">
                                             <span t-set="lot_value" t-value="1"/>
                                             <td style="border: dashed black 1px;border-top: 1px dashed black;text-align: center;padding:1px">
@@ -184,7 +173,7 @@
                                                 <span t-esc="vals['expiry_date']"/>
                                             </td>
                                         </t>
-                                    </t> -->
+                                    </t>
                                     <t t-if='lot_value == 0'>
                                         <td style="border: dashed black 1px;border-top: 1px dashed black;text-align: center;padding:1px">
                                             <span/>
@@ -212,6 +201,24 @@
                             </div>
                             <div class="col-6">
                                <span t-field="o.qr_code_product_details" t-options="{'widget': 'image', 'style':'width: 150px;height: 150px'}"/>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 30px; font-size:18px;">
+                            <div class="col-6" style="text-align:left;">
+                                <div>
+                                    <b><span>NIVF:</span></b>
+                                   <t t-esc="o.fic_number"/>
+                                </div>
+                                <div>
+                                    <b><span>NSLF:</span></b>
+                                    <t t-esc="o.iic_code"/>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div>
+                                    <b><span>EIC:</span></b>
+                                    <t t-esc="o.eic_number"/>
+                                </div>
                             </div>
                         </div>
                     </div>

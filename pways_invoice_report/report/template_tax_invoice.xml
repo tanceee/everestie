@@ -116,17 +116,6 @@
                                 <span t-field="o.user_id.partner_id.vat"/>
                             </div>
                             <div>
-                                <b><span>NIVF:</span></b>
-                               <!--  <t t-esc="o.fic_number"/> -->
-                            </div>
-                            <div>
-                                <b><span>NSLF:</span></b>
-                                <!-- <t t-esc="o.iic_code"/> -->
-                            </div>
-                            <div>
-                                <b><span>EIC:</span></b>
-                            </div>
-                            <div>
                                 <b><span>Delivery Time :</span></b>
                                 <span t-if="o.delivery_time">
                                     <span t-field="o.delivery_time"/>
@@ -244,6 +233,24 @@
                             </div>
                             <div class="col-6">
                                <span t-field="o.qr_code_product_details" t-options="{'widget': 'image', 'style':'width: 150px;height: 150px'}"/>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 30px; font-size:18px;">
+                            <div class="col-6" style="text-align:left;">
+                                <div>
+                                    <b><span>NIVF:</span></b>
+                                   <t t-esc="o.fic_number"/>
+                                </div>
+                                <div>
+                                    <b><span>NSLF:</span></b>
+                                    <t t-esc="o.iic_code"/>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div>
+                                    <b><span>EIC:</span></b>
+                                    <t t-esc="o.eic_number"/>
+                                </div>
                             </div>
                         </div>
                         <div class="row" style="text-align:center;margin-top: 80px; font-size:18px;">
