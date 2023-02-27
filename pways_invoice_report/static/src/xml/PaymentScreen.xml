@@ -17,4 +17,29 @@
             </div>
         </xpath>
     </t>
+
+    <t t-name="InvoiceButtonDetails" owl="1">
+        <div class="control-button">
+            <i class="fa fa-file-pdf-o"></i>
+            <span>Invoice Report Details</span>
+            <span><t t-esc="commandName"></t></span>
+        </div>
+    </t>
+
+    <t t-name="DetailsOfInvoice" owl="1">
+        <div class="control-button">
+            <i class="fa fa-file-pdf-o"></i>
+            <span>Details Of Invoice</span>
+            <span><t t-esc="commandName"></t></span>
+        </div>
+    </t>
+
+    <t t-name="TicketScreenAdd" t-inherit="point_of_sale.TicketScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('leftpane')]/div[hasclass('pads')]/div[hasclass('control-buttons')]" position="inside">
+            <InvoiceButtonDetails t-if="env.pos.config.module_account" order="_selectedSyncedOrder" />
+            <DetailsOfInvoice t-if="env.pos.config.module_account" order="_selectedSyncedOrder"/>
+        </xpath>
+    </t>
+
+
 </templates>

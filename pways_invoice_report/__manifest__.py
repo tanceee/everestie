@@ -16,6 +16,8 @@
         'point_of_sale.assets': [
             'pways_invoice_report/static/src/js/pos_models.js',
             'pways_invoice_report/static/src/js/pos_paymentScreen.js',
+            'pways_invoice_report/static/src/js/InvoiceButtonDetails.js',
+            'pways_invoice_report/static/src/js/DetailsOfInvoice.js',
         ],
         'web.assets_qweb': [
             'pways_invoice_report/static/src/xml/PaymentScreen.xml',
