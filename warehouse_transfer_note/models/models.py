@@ -138,7 +138,7 @@ class StockPicking(models.Model):
                 rec.issuer_address = partner._display_address()
             rec.issuer_town = rec.company_id.partner_id.city
 
-            rec._onchange_picking_type()
+            rec._onchange_picking_type_custom()
             # rec._onchange_partner_id()
         return rec
 
