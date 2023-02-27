@@ -137,7 +137,8 @@ class StockPicking(models.Model):
                 partner = rec.company_id.partner_id.browse(address_data['contact']).sudo()
                 rec.issuer_address = partner._display_address()
             rec.issuer_town = rec.company_id.partner_id.city
-
+            
+            rec.check_picking_type()
             rec._onchange_picking_type_custom()
             # rec._onchange_partner_id()
         return rec
