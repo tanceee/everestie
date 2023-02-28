@@ -11,7 +11,6 @@ class AccountMove(models.Model):
     def _get_invoiced_lot_values(self):
         """ Get and prepare data to show a table of invoiced lot on the invoice's report. """
         self.ensure_one()
-
         res = super(AccountMove, self)._get_invoiced_lot_values()
         res =[]
         if self.state == 'draft' or not self.invoice_date or self.move_type not in ('out_invoice', 'out_refund'):
@@ -57,7 +56,7 @@ class AccountMove(models.Model):
         if self.sudo().pos_order_ids:
             for order in self.sudo().pos_order_ids:
                 for line in order.lines:
-                    lots = line.pack_lot_ids or False
+                    lots = line.pack_lot_ids
                     for lot in lots:
                         lot_id = self.env['stock.production.lot'].search([('name', '=', lot.lot_name),('product_id', '=', lot.product_id.id)], limit=1)
                         res.append({
