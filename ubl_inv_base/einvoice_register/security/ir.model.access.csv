@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fiscalization_error_code,einvoice_register.fiscalization_error_code,model_fiscalization_error_code,,1,1,1,1
+access_attach_doc_link,einvoice_register.attach_doc_link,model_attach_doc_link,,1,1,1,1
+access_account_invoice_tax,einvoice_register.account_invoice_tax,model_account_invoice_tax,,1,1,1,1
+access_seller_einvoice_wizard,einvoice_register.seller_einvoice_wizard,model_seller_einvoice_wizard,,1,1,1,1
+access_seller_einvoice_line_wizard,einvoice_register.seller_einvoice_line_wizard,model_seller_einvoice_line_wizard,,1,1,1,1
