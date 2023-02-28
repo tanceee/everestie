@@ -1,0 +1,118 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="warehouse_transfer_note.picking_form_inherit">
+            <field name="name">warehouse_transfer_note picking form inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='picking_type_id']" position="after">
+                    <field name="is_internal_picking" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//notebook" position="inside">
+                    <page string="WTN Fields" attrs="{'invisible': [('is_internal_picking', '=', False)]}">
+                        <group col="4">
+                            <field name="wtn_type" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                            <field name="wtn_transaction" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                            <field name="subsequent_delivery_type"
+                                   attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                            <field name="issue_date_time"
+                                   attrs="{'invisible': [('subsequent_delivery_type', '=', False)], 'readonly': [('is_fiscalized', '=', True)]}"/>
+                            <field name="wtn_ordinal_number" readonly="1" invisible="1"/>
+                            <field name="wth_number" readonly="1" invisible="1"/>
+                            <field name="value_of_goods" attrs="{'invisible': [('value_of_goods', '=', 0)]}"
+                                   readonly="1"/>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="veh_ownership" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                                <field name="carrier_id"
+                                       attrs="{'invisible': [('veh_ownership', '=', 'OWNER')], 'readonly': [('is_fiscalized', '=', True)]}"/>
+                                <field name="carrier_id_type" invisible="1"/>
+                                <field name="carrier_id_num" invisible="1"/>
+                                <field name="carrier_name" invisible="1"/>
+                                <field name="carrier_address" invisible="1"/>
+                                <field name="carrier_town" invisible="1"/>
+                                <field name="veh_plates" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                            </group>
+
+                            <group>
+                                <field name="is_goods_flammable" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                                <field name="is_escort_required" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group string="Source">
+                                <field name="start_address" invisible="1"/>
+                                <field name="start_city" invisible="1"/>
+                                <field name="start_date_time" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                                <field name="start_point" invisible="1"/>
+                            </group>
+                            <group string="Destination">
+                                <field name="des_address" invisible="1"/>
+                                <field name="des_city" invisible="1"/>
+                                <field name="des_date_time" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                                <field name="des_point" invisible="1"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group string="Packaging">
+                                <field name="pack_type" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                                <field name="pack_num" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                                <field name="items_num" attrs="{'readonly': [('is_fiscalized', '=', True)]}"/>
+                            </group>
+                        </group>
+
+
+                        <group col="4" string="Issuer Details" invisible="1">
+                            <field name="issuer_nuis" readonly="1"/>
+                            <field name="issuer_name" readonly="1"/>
+                            <field name="issuer_address" readonly="1"/>
+                            <field name="issuer_town" readonly="1"/>
+                        </group>
+
+                        <group>
+                            <field name="is_fiscalized" readonly="1"/>
+                            <field name="wtnic" readonly="1" string="WTNIC"/>
+                            <field name="fwtnic" readonly="1" string="FWTNIC"/>
+                        </group>
+                    </page>
+                </xpath>
+
+                <xpath expr="//header/button[@name='do_print_picking']" position="before">
+                    <button name="register_wtn" string="WTN Register" type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|','|',  ('is_fiscalized', '=', True), ('state','!=', 'done'), ('is_internal_picking', '=', False)]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='move_type']" position="after">
+                    <field name="transfer_user_id" string="Transfer Representative"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="warehouse_transfer_note.stock_warehouse_form_inherit">
+            <field name="name">warehouse_transfer_note stock_warehouse form inherit</field>
+            <field name="model">stock.warehouse</field>
+            <field name="inherit_id" ref="stock.view_warehouse"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='code']" position="after">
+                    <field name="warehouse_type"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="company_wtn_fiscalization_detail">
+            <field name="name">company_wtn_fiscalization_detail form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="fiscalization_base.company_fiscalization_detail"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_check_endpoint']" position="after">
+                    <field name="wtn_check_endpoint"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
