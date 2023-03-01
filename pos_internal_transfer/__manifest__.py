@@ -8,7 +8,7 @@
     'author': 'ErpMstar Solutions',
     'summary': 'Allows you to transfer internal picking from POS.',
     'description': "Allows you to transfer internal picking from POS.",
-    'depends': ['point_of_sale'],
+    'depends': ['point_of_sale', 'stock_operating_unit'],
     'data': [
         # 'security/ir.model.access.csv',
         'views/views.xml',

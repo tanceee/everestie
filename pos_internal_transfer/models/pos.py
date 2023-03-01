@@ -18,7 +18,7 @@ class PosOrderInherit(models.Model):
 
 	@api.model
 	def create_stock_picking(self,client,picking_type,src,dest,state,product,company_id):
-		print("Testing>>>>>>>>>>>>>>>>>>>>>",client,picking_type,src,dest,state,product)
+		# print("Testing>>>>>>>>>>>>>>>>>>>>>",client,picking_type,src,dest,state,product)
 		pick = self.env['stock.picking'].create({
 				'company_id': company_id,
 				'partner_id': client or False,
@@ -26,6 +26,8 @@ class PosOrderInherit(models.Model):
 				'location_dest_id': int(dest),
 				'picking_type_id': int(picking_type),
 				})
+		if pick.picking_type_id:
+            pick.operating_unit_id = pick.picking_type_id.warehouse_id.operating_unit_id.id
 		for i in product:
 			product_obj = self.env['product.product'].search([('id','=',i.get('product_id')),('type','in',['consu','product'])])
 			if product_obj:
