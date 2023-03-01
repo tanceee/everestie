@@ -27,7 +27,7 @@ class PosOrderInherit(models.Model):
 				'picking_type_id': int(picking_type),
 				})
 		if pick.picking_type_id:
-            pick.operating_unit_id = pick.picking_type_id.warehouse_id.operating_unit_id.id
+			pick.operating_unit_id = pick.picking_type_id.warehouse_id.operating_unit_id.id
 		for i in product:
 			product_obj = self.env['product.product'].search([('id','=',i.get('product_id')),('type','in',['consu','product'])])
 			if product_obj:
