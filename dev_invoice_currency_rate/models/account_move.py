@@ -9,10 +9,7 @@
 ##############################################################################
 
 from odoo import models, fields, api, tools, _
-<<<<<<< HEAD
-=======
 from odoo.exceptions import UserError
->>>>>>> 00746b09d640d62892b25aefd7d845975ca8a505
 from odoo.tools import float_round
 
 
@@ -115,11 +112,7 @@ class SaleOrder(models.Model):
     def _prepare_invoice(self):
         invoice_vals = super(SaleOrder, self)._prepare_invoice()
         if invoice_vals and self.currency_rate:
-<<<<<<< HEAD
-            invoice_vals.update(currency_rate=1 / self.currency_rate)
-=======
             invoice_vals.update(currency_rate=self.currency_id.inverse_rate)
->>>>>>> 00746b09d640d62892b25aefd7d845975ca8a505
         return invoice_vals
 
 
@@ -233,8 +226,6 @@ class StockMove(models.Model):
             return price_unit
         return super(StockMove, self)._get_price_unit()
 
-<<<<<<< HEAD
-=======
 
 class AccountPayment(models.Model):
     _inherit = "account.payment"
@@ -444,7 +435,6 @@ class AccountPaymentReg(models.TransientModel):
     #                                                                        wizard.payment_date or fields.Date.today())
     #             wizard.payment_difference = amount_payment_currency - wizard.amount
 
->>>>>>> 00746b09d640d62892b25aefd7d845975ca8a505
 # class StockValuationLayer(models.Model):
 #     """Stock Valuation Layer"""
 #

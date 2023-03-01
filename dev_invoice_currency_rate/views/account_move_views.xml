@@ -17,11 +17,7 @@ For Module Support : devintelle@gmail.com  or Skype : devintelle
                        attrs="{'invisible':[('is_same_currency','=',True)]}"/>
                 <div groups="base.group_multi_currency" attrs="{'invisible':[('is_same_currency','=',True)]}">
                     <field name="currency_rate" attrs="{'invisible':[('is_same_currency','=',True)]}"/>
-<<<<<<< HEAD
-<!--                    <button name="onchange_currency_rate" type="object">UPDATE</button>-->
-=======
                     <!--                    <button name="onchange_currency_rate" type="object">UPDATE</button>-->
->>>>>>> 00746b09d640d62892b25aefd7d845975ca8a505
                 </div>
             </xpath>
         </field>
@@ -39,8 +35,6 @@ For Module Support : devintelle@gmail.com  or Skype : devintelle
             </xpath>
         </field>
     </record>
-<<<<<<< HEAD
-=======
 
     <record id="view_account_payment_form_inherit" model="ir.ui.view">
         <field name="name">account.payment.form</field>
@@ -67,6 +61,5 @@ For Module Support : devintelle@gmail.com  or Skype : devintelle
         </field>
     </record>
 
->>>>>>> 00746b09d640d62892b25aefd7d845975ca8a505
 </odoo>
 <!-- -d portal_pricelist_15 -u dev_invoice_currency_rate-->
