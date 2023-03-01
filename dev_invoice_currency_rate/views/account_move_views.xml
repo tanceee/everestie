@@ -17,7 +17,11 @@ For Module Support : devintelle@gmail.com  or Skype : devintelle
                        attrs="{'invisible':[('is_same_currency','=',True)]}"/>
                 <div groups="base.group_multi_currency" attrs="{'invisible':[('is_same_currency','=',True)]}">
                     <field name="currency_rate" attrs="{'invisible':[('is_same_currency','=',True)]}"/>
+<<<<<<< HEAD
 <!--                    <button name="onchange_currency_rate" type="object">UPDATE</button>-->
+=======
+                    <!--                    <button name="onchange_currency_rate" type="object">UPDATE</button>-->
+>>>>>>> 00746b09d640d62892b25aefd7d845975ca8a505
                 </div>
             </xpath>
         </field>
@@ -35,4 +39,34 @@ For Module Support : devintelle@gmail.com  or Skype : devintelle
             </xpath>
         </field>
     </record>
+<<<<<<< HEAD
+=======
+
+    <record id="view_account_payment_form_inherit" model="ir.ui.view">
+        <field name="name">account.payment.form</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='currency_id']/.." position="after">
+                <field name="inverse_currency_rate" attrs="{'invisible':[('is_same_currency','=',True)]}"/>
+                <field name="is_same_currency" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_account_payment_register_form" model="ir.ui.view">
+        <field name="name">account.payment.register.form</field>
+        <field name="model">account.payment.register</field>
+        <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='currency_id']/.." position="after">
+                <field name="inverse_currency_rate" attrs="{'invisible':[('is_same_currency','=',True)]}"/>
+                <field name="is_same_currency" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+>>>>>>> 00746b09d640d62892b25aefd7d845975ca8a505
 </odoo>
+<!-- -d portal_pricelist_15 -u dev_invoice_currency_rate-->
