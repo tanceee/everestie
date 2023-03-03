@@ -250,10 +250,10 @@
                                 </div>
                             </div>
                            <div class="col-6"> 
-                                <div>
+                                <!-- <div>
                                     <b><span>EIC:</span></b>
                                     <t t-esc="o.eic_number"/>
-                                </div>
+                                </div> -->
                                 <div> <strong>Business Unit</strong>: 
                             <t t-esc="o.operating_unit_id.business_unit_code"/>
                     </div> 
