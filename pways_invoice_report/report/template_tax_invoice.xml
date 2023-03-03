@@ -74,57 +74,77 @@
                             </div>
                         </div><br/>
                         <!--salesperson section-->
-                        <div style="font-size:20px;">
-                            <div>
-                                <span><b>Transportuesi :</b></span>
-                                <span t-field="o.transportuesi.name"/>
-                            </div>
-                            <div>
-                                <span><b>Address :</b></span>
-                                <span t-if="o.transportuesi">
-                                    <span t-if="o.transportuesi.street">
-                                        <span t-field="o.transportuesi.street"/>,&#160;
-                                    </span>
-                                     <span t-if="o.transportuesi.zip">
-                                            <span t-field="o.transportuesi.zip"/>,&#160;
+                        <div class="col-6">
+                        <div style="border-collapse:separate;border:solid #85C1E9 1px;border-radius:20px;-moz-border-radius:20px;margin-top: 10px;min-height:140px;height:auto;width:400px;align: center;">
+                            <table id="righttable" width="100%"
+                                   style="margin-top: 5px;margin-left: 15px;table-layout: fixed; width:365px;">
+                                <tr id="transportuesitr"
+                                    style="word-wrap: break-word;margin-top: 50px;line-height:20px;">
+                                    <td width="45%" style="font-size:16px;">
+                                        <b>Transporter:</b>
+                                    </td>
+                                    <td width="55%">
+                                        <span t-field="o.transportuesi.name"/>
+                                    </td>
+                                </tr>
+                                <tr style="word-wrap: break-word;line-height:20px;">
+                                    <td>Address:</td>
+                                    <td>
+                                        <span t-if="o.transportuesi">
+                                            <span t-if="o.transportuesi.street">
+                                                <span t-field="o.transportuesi.street"/>,&#160;
+                                            </span>
+                                            <span t-if="o.transportuesi.zip">
+                                                <span t-field="o.transportuesi.zip"/>,&#160;
+                                            </span>
+                                            <span t-if="o.transportuesi.city">
+                                                <span t-field="o.transportuesi.city"/>,&#160;
+                                            </span>
+                                            <span t-if="o.transportuesi.country_id.name">
+                                                <span t-field="o.transportuesi.country_id.name"/>
+                                            </span>
                                         </span>
-                                    <span t-if="o.transportuesi.city">
-                                        <span t-field="o.transportuesi.city"/>
-                                    </span>
-                                    <span t-if="o.transportuesi.country_id.name">
-                                        <span t-field="o.transportuesi.country_id.name"/>
-                                    </span>
-                                </span>
-                                <span t-if="not o.transportuesi and o.user_id and o.user_id.partner_id">
-                                    <span t-if="o.user_id.partner_id.street"><span
-                                            t-field="o.user_id.partner_id.street"/>,&#160;
-                                    </span>
-                                    <span t-if="o.user_id.partner_id.zip"><span
-                                            t-field="o.user_id.partner_id.zip"/>,&#160;
-                                    </span>
-                                    <span t-if="o.user_id.partner_id.city">
-                                        <span t-field="o.user_id.partner_id.city"/>,&#160;
-                                    </span>
-                                    <span t-if="o.user_id.partner_id.country_id.name">
-                                        <span t-field="o.user_id.partner_id.country_id.name"/>
-                                    </span>
-                                </span>
-                            </div>
-                            <div>
-                                <b><span>License Plate No :</span></b>
-                                <span t-field="o.user_id.license_plate_no"/>
-                            </div>
-                            <div>
-                                <b><span>Vat No :</span></b>
-                                <span t-field="o.user_id.partner_id.vat"/>
-                            </div>
-                            <div>
-                                <b><span>Delivery Time :</span></b>
-                                <span t-if="o.delivery_time">
-                                    <span t-field="o.delivery_time"/>
-                                </span>
-                            </div>
+                                        <span t-if="not o.transportuesi and o.user_id and o.user_id.partner_id">
+                                            <span t-if="o.user_id.partner_id.street"><span
+                                                    t-field="o.user_id.partner_id.street"/>,&#160;
+                                            </span>
+                                            <span t-if="o.user_id.partner_id.zip"><span
+                                                    t-field="o.user_id.partner_id.zip"/>,&#160;
+                                            </span>
+                                            <span t-if="o.user_id.partner_id.city">
+                                                <span t-field="o.user_id.partner_id.city"/>,&#160;
+                                            </span>
+                                            <span t-if="o.user_id.partner_id.country_id.name">
+                                                <span t-field="o.user_id.partner_id.country_id.name"/>
+                                            </span>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr id="licplateno" style="word-wrap: break-word;line-height:20px;">
+                                    <td>License Plate No:</td>
+                                    <td>
+                                        <span t-field="o.license_plate_no"/>
+                                    </td>
+                                </tr>
+                                <tr id="vatno" style="word-wrap: break-word;line-height:20px;">
+                                    <td>Vat No:</td>
+                                    <td>
+                                        <span t-if="o.transportuesi.vat" t-field="o.transportuesi.vat"/>
+                                        <span t-if="not o.transportuesi.vat" t-field="o.user_id.partner_id.vat"/>
+                                    </td>
+                                </tr>
+                                <tr id="deliverytr" style="word-wrap: break-word;line-height:20px;">
+                                    <td>Delivery Time:</td>
+                                    <td>
+                                        <span t-if="o.delivery_time">
+                                            <span t-field="o.delivery_time"/>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
+                    </div>
+                </div>
 
                         <!-- Is there a discount on at least one line? -->
                         <t t-set="display_discount" t-value="any([l.discount for l in o.invoice_line_ids])"/>
@@ -229,7 +249,53 @@
                                     <span/><span t-esc="'%.0f'%(total_amount_total)"/>
                                 </th>
                             </tr>
+
+
+                            <tr id="tatueshme" style=" font-size:11px;">
+                        <td colspan="5">
+                        </td>
+                        <th colspan="3" style="border-bottom: solid white 1px;padding:5px">
+                            Furnizime te tatueshme
+                        </th>
+                        <th style="border-bottom: solid black 1px;text-align: right;padding:5px;font-size:0px">
+                            <t t-if="o.total_tax_subtotal > 0 or o.amount_tax == 0">
+                                <span style="font-size:12px;" t-if="o.type == 'out_refund'">-</span><span style="font-size:12px;" t-esc="'{0:,.2f}'.format(o.total_tax_subtotal)"/>
+
+                            </t>
+                        </th>
+                        <th>
+
+                        </th>
+                        <!--                        <th style="border: solid black 1px;text-align: right;padding:5px;">-->
+                        <!--                            <span t-esc="'{0:,.2f}'.format(get_base_currency_total(total_amount_total, o))"/>-->
+                        <!--                        </th>-->
+                    </tr>
+                    <tr id="patatueshme" style=" font-size:11px;">
+                        <td colspan="5">
+                        </td>
+                        <th colspan="3" style="border-bottom: solid white 1px;padding:5px">
+                            Furnizime te patatueshme
+                        </th>
+                        <th style="border-bottom: solid black 1px;text-align: right;padding:5px">
+                            <t t-if=" o.total_no_tax_subtotal &lt; 0.005 ">
+<!--                            <span t-esc="'{0:,.2f}'.format(o.total_no_tax_subtotal)"/>-->
+                                <span>0.00</span>
+                            </t>
+                            <t t-if="not o.total_no_tax_subtotal &lt; 0.005">
+                            <span t-esc="'{0:,.2f}'.format(o.total_no_tax_subtotal)"/>
+                            </t>
+                        </th>
+                        <th>
+
+                        </th>
+                        <!--                        <th style="border: solid black 1px;text-align: right;padding:5px;">-->
+                        <!--                            <span t-esc="'{0:,.2f}'.format(get_base_currency_total(total_amount_total, o))"/>-->
+                        <!--                        </th>-->
+                    </tr>
                         </table>
+
+
+
                         <div class="row" style="text-align:center;margin-top: 80px; font-size:18px;">
                             <!-- <div class="col-6">
                                 <span t-field="o.qr_code_payment"  t-options="{'widget': 'image', 'style':'width: 150px;height: 150px'}"/>
@@ -237,22 +303,60 @@
                             <div class="col-6">
                                <span t-field="o.qr_code_product_details" t-options="{'widget': 'image', 'style':'width: 150px;height: 150px'}"/>
                             </div> -->
-                            <div t-if="o.qrcode_from_pos">
-                                <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode_from_pos)" width="140px" height="140px"/>
-                            </div>
-                        </div>
-                        <div t-if="o.from_pos">
-                              <p><strong>NIVF</strong>(FIC):
-                                <t t-esc="o.fic_from_pos"/>
-                                       </p>
-                                 <p><strong>NSLF</strong>(IIC):
-                                   <t t-esc="o.iic_from_pos"/>
-                                      </p>
-                                      <p><strong>Business Unit</strong>: <t t-esc="o.operating_unit_id.business_unit_code"/>
-                                     </p>
-                                  <p><strong>Operator</strong>: <t t-esc="o.user_id.operator_code"/>
-                                         </p>
-                             </div>
+                            <div id="fiskalizimi" class="row" style="text-align:center;margin-top: 80px;">
+                    <div t-if="o.fic_number" class="text-left col-6" style="float:left;">
+                        <p>
+                            <strong>NIVF</strong>:
+                            <t t-esc="o.fic_number"/>
+                        </p>
+                        <p>
+                            <strong>NSLF</strong>:
+                            <t t-esc="o.iic_code"/>
+                        </p>
+                        <p>
+                            <strong>Business Unit</strong>:
+                            <t t-esc="o.operating_unit_id.business_unit_code"/>
+                        </p>
+                        <p>
+                            <strong>Operator</strong>:
+                            <t t-esc="o.user_id.operator_code"/>
+
+                        </p>
+                        <strong>Menyra e Pageses: Fature Pa Para Ne Dore</strong>
+
+                    </div>
+
+                    <div t-if="o.fic_number" class="col-6">
+                        <img t-att-src="'data:image/*;base64,%s' % to_text(o.make_invoice_qr_code(o.iic_code, o.header_send_datetime, o.invoice_order_number, o.amount_total if o.type == 'out_invoice' else o.amount_total * -1))"
+                             width="250px" height="250px"/>
+                    </div>
+                    <div t-if="o.from_pos" class="col-12" style="float: left;">
+                        <p>
+                            <strong>NIVF</strong>:
+                            <t t-esc="o.fic_from_pos"/>
+                        </p>
+                        <p>
+                            <strong>NSLF</strong>:
+                            <t t-esc="o.iic_from_pos"/>
+                        </p>
+                        <p>
+                            <strong>Business Unit</strong>:
+                            <t t-esc="o.operating_unit_id.business_unit_code"/>
+                        </p>
+                        <p>
+                            <strong>Operator</strong>:
+                            <t t-esc="o.user_id.operator_code"/>
+                        </p>
+                        <strong>Menyra e Pageses: Fature Me Para Ne Dore</strong>
+
+                        <p t-if="o.qrcode_from_pos">
+                            <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode_from_pos)" width="250px"
+                                 height="250px"/>
+                        </p>
+                    </div>
+
+
+                </div>
                         <div class="row" style="text-align:center;margin-top: 80px; font-size:18px;">
                             <div class="col-4">
                                 <span>Kopje 1: Bleresi</span><br/>
