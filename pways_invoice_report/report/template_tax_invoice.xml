@@ -73,8 +73,7 @@
                         <!--salesperson section-->
                         <div style="font-size:20px;">
                             <div>
-                                <span><b>Transportuesi :</b></span>  
-                                 <span t-if="o.transportuesi.name"/>
+                                <span><b>Transportuesi :</b></span>
                                 <span t-field="o.transportuesi.name"/>
                             </div>
                             <div>
@@ -228,23 +227,26 @@
                                 </th>
                             </tr>
                         </table>
-                        <!-- <div class="row" style="text-align:center;margin-top: 80px; font-size:18px;">
-                            <div class="col-6">
+                        <div class="row" style="text-align:center;margin-top: 80px; font-size:18px;">
+                            <!-- <div class="col-6">
                                 <span t-field="o.qr_code_payment"  t-options="{'widget': 'image', 'style':'width: 150px;height: 150px'}"/>
                             </div>
                             <div class="col-6">
                                <span t-field="o.qr_code_product_details" t-options="{'widget': 'image', 'style':'width: 150px;height: 150px'}"/>
-                            </div> 
-                        </div>-->
-                        <!-- <div class="row" style="margin-top: 30px; font-size:18px;">
+                            </div> -->
+                            <div t-if="o.qrcode_from_pos">
+                                <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode_from_pos)" width="140px" height="140px"/>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 30px; font-size:18px;">
                             <div class="col-6" style="text-align:left;">
                                 <div>
                                     <b><span>NIVF:</span></b>
-                                   <t t-esc="o.fic_number"/>
+                                   <t t-esc="o.fic_from_pos"/>
                                 </div>
                                 <div>
                                     <b><span>NSLF:</span></b>
-                                    <t t-esc="o.iic_code"/>
+                                    <t t-esc="o.iic_from_pos"/>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -253,32 +255,7 @@
                                     <t t-esc="o.eic_number"/>
                                 </div>
                             </div>
-                        </div> -->
-                  <xpath expr="//div[@id='qrcode']" position="after">
-                <div t-if="o.from_pos">
-                    <p><strong>NIVF</strong>(FIC):
-                    <t t-if="o.fic_from_pos"/>
-                        <t t-esc="o.fic_from_pos"/>
-                    </p>
-                    <p><strong>NSLF</strong>(IIC):
-                    <t t-if="o.iic_from_pos"/>
-                        <t t-esc="o.iic_from_pos"/>
-                    </p>
-                    <p><strong>Business Unit</strong>: 
-                     <t t-if="o.operating_unit_id.business_unit_code"/>
-                    <t t-esc="o.operating_unit_id.business_unit_code"/>
-                    </p>
-                    <p><strong>Operator</strong>: 
-                     <t t-if="o.user_id.operator_code"/>
-                    <t t-esc="o.user_id.operator_code"/>
-                    </p>
-                </div>
-
-                <div t-if="o.qrcode_from_pos">
-                    <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode_from_pos)"
-                         width="140px" height="140px"/>
-                </div>
-            </xpath>
+                        </div>
                         <div class="row" style="text-align:center;margin-top: 80px; font-size:18px;">
                             <div class="col-4">
                                 <span>Kopje 1: Bleresi</span><br/>
