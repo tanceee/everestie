@@ -22,11 +22,10 @@ odoo.define('CashOpeningPopupExtend', function(require) {
                     method: 'set_cashbox_pos',
                     args: [this.env.pos.pos_session.id, this.state.openingCash, this.state.notes, this.state.is_initial_cash],
                 }).then(function(res){
-                    console.log("res", res)
+                    console.log("<<<<<<<<res>>>>>>>>>>>>", res)
                     var res = JSON.parse(res)
                     if(res.response == "OK"){
                         $("#cash_reg_res").html(`<span style='color:green'>${res.response}</span>`)
-
                         self.cancel();
                     }
                     else{
