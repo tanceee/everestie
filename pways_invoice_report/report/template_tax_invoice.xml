@@ -241,20 +241,20 @@
                         <div class="row" style="margin-top: 30px; font-size:18px;">
                             <div class="col-6" style="text-align:left;">
                                 <div>
-                                   <p><strong>NIVF</strong>(FIC):
-                        <t t-esc="o.fic_from_pos"/>
-                    </p>
-                    <p><strong>NSLF</strong>(IIC):
-                        <t t-esc="o.iic_from_pos"/>
-                    </p>
-                    <p><strong>Business Unit</strong>: <t t-esc="o.operating_unit_id.business_unit_code"/>
-                    </p>
-                    <p><strong>Operator</strong>: <t t-esc="o.user_id.operator_code"/>
-                    </p>
-                </div>
-                    </div>
-                            
-                         </div>
+                                    <b><span>NIVF:</span></b>
+                                   <t t-esc="o.fic_from_pos"/>
+                                </div>
+                                <div>
+                                    <b><span>NSLF:</span></b>
+                                    <t t-esc="o.iic_from_pos"/>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div>
+                                    <b><span>EIC:</span></b>
+                                    <t t-esc="o.eic_number"/>
+                                </div>
+                            </div>
                         </div>
                         <div class="row" style="text-align:center;margin-top: 80px; font-size:18px;">
                             <div class="col-4">
