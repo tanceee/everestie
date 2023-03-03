@@ -251,8 +251,10 @@
                             </div>
                             <div class="col-6">
                                 <div>
-                                    <b><span>EIC:</span></b>
-                                    <t t-esc="o.eic_number"/>
+                                     <b><strong>Business Unit</strong>: <t t-esc="o.operating_unit_id.business_unit_code"/>
+                    </b>
+                    <b><strong>Operator</strong>: <t t-esc="o.user_id.operator_code"/>
+                    </b>
                                 </div>
                             </div>
                         </div>
