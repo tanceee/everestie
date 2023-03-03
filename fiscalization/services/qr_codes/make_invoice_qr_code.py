@@ -10,10 +10,10 @@ def make_invoice_qr_code(inv_check_api_endpoint,
         invoice_tot_price
 ):
     qr = qrcode.QRCode(
-        version=None,
-        error_correction=qrcode.constants.ERROR_CORRECT_Q,
+        version=1,
+        # error_correction=qrcode.constants.ERROR_CORRECT_Q,
         box_size=10,
-        border=4,
+        border=5,
     )
     print("11111111111",invoice_tot_price)
     qr.add_data(
