@@ -3,71 +3,30 @@
     <template id="main_sale_tax_invoice110">
         <t t-call="web.html_container">
             <t t-call="web.basic_layout">
-                <div class="page" style="font-size:17px;">
-                <div class="header1" style="font-size: 14px;">
-                    <t t-if="not o and doc">
-                        <t t-set="o" t-value="doc"/>
-                    </t>
-                    <t t-if="o and 'company_id' in o">
-                        <t t-set="company" t-value="o.company_id"/>
-                    </t>
-                    <t t-if="not o or not 'company_id' in o">
-                        <t t-set="company" t-value="res_company"/>
-                    </t>
-                    <div class="row">
-                        <div class="col-7">
-                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
-                                 style="max-width: 250px;max-height: 250px;"/>
-                        </div>
-                        <div class="col-5" style="font-size:24px;">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page" style="font-size:17px;">
+                        <div class="custom_header" style="font-size: 14px;">
+                            <t t-if="not o and doc">
+                                <t t-set="o" t-value="doc"/>
+                            </t>
+                            <t t-if="o and 'company_id' in o">
+                                <t t-set="company" t-value="o.company_id"/>
+                            </t>
+                            <t t-if="not o or not 'company_id' in o">
+                                <t t-set="company" t-value="res_company"/>
+                            </t>
+
                             <div style="font-size:24px;">
                                 <b>
-                                    <span t-esc="company.name"/>
+                                    <center><span>FATURE TATIMORE SHITJE</span></center>
                                 </b>
                             </div>
-                            <div style="font-size:20px;">
-                                <span t-field="company.street"/>,<span t-field="company.street2"/>,
-                                <span t-if="company.city">
-                                    <span t-field="company.city"/>
-                                </span>
-                                <span t-if="company.country_id">,
-                                    <span t-field="company.country_id.name"/>
-                                </span>
-                            </div>
-                            <div style="font-size:20px;word-wrap: break-word;">
-                                Vat :
-                                <span t-field="company.vat"/>
-                            </div>
-                            <div style="font-size:20px;word-wrap: break-word;">
-                                Phone:
-                                <span t-field="company.phone"/>
-                            </div>
-                            <div style="font-size:18px;word-wrap: break-word;">
-                                <span t-if="company.email">Email:
-                                    <span t-field="company.email"/>
-                                </span>
-                            </div>
-                            <div style="font-size:20px;word-wrap: break-word;">
-                                <span t-if="company.website">Website:
-                                    <span t-field="company.website"/>
-                                </span>
-                            </div>
-                        </div>
-                        </div>
-                       </div>
-                        <div>
-                                 <b>   <center><span>FATURE TATIMORE SHITJE</span></center>
-                                </b>
-                            </div>
-                            <div class='row' style="font-size:18px;"> 
-                                <div class="col-4"><b>No.Fature:<span t-field='o.name'/></b></div>
+                            <div class='row'>
+                                <div class="col-4"><b>No. Fature :<span t-field='o.name'/></b></div>
                                 <div class='col-4'/>
                                 <div class='col-4'><b>Date : <span t-esc="get_date(o)"/></b></div>
                             </div>
                             <div style="font-size:20px;">
-                            <t t-if="company.name">
-                                    <span t-field="company.name"/>,
-                                </t>
                                 <t t-if="company.street">
                                     <span t-field="company.street"/>,
                                 </t>
@@ -86,117 +45,84 @@
 
                         <hr style="border-top: 1px dashed black"/>
                         <!--customer section-->
-                           <div class="col-6">
-                             <div style="font-size:20px;">
-                                <table width="100%" style="margin-top: 10px;margin-left: 15px;table-layout: fixed;">
-                                <tr style="word-wrap: break-word;margin-top: 50px;line-height:20px;">
-                                    <td width="35%" style="font-size:22px;">
-                                        <b>Customer</b>
-                                    </td>
-                                    <td width="70%">
-                                        <span t-field="o.partner_id.name"/>
-                                    </td>
-                                </tr>
-                                <tr style="word-wrap: break-word;line-height:20px;">
-                                    <td>Address:</td>
-                                    <td>
-                                        <span t-if="o.partner_id">
-                                            <span t-if="o.partner_id.street"><span t-field="o.partner_id.street"/>, 
-                                            </span>
-                                            <span t-if="o.partner_id.city">
-                                                <span t-field="o.partner_id.city"/>
-                                            </span>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr style="word-wrap: break-word;line-height:20px;">
-                                    <td>Vat No:</td>
-                                    <td>
-                                        <span t-field="o.partner_id.vat"/>
-                                    </td>
-                                </tr>
-                                <tr style="word-wrap: break-word;line-height:20px;">
-                                    <td>Phone</td>
-                                    <td>
-                                        <span t-field="o.partner_id.phone"/>
-                                    </td>
-                                </tr>
-                          </table>
-                             </div>
-                             </div>
-                                <br/>
+                        <div style="font-size:20px;">
+                            <div>
+                                <span><b>Customer :</b></span>
+                                <span t-field="o.partner_id.name"/>
+                            </div>
+                            <div>
+                                <span><b>Address :</b></span>
+                                <span t-if="o.partner_id">
+                                    <span t-if="o.partner_id.street">
+                                        <span t-field="o.partner_id.street"/>,
+                                    </span>
+                                    <span t-if="o.partner_id.city">
+                                        <span t-field="o.partner_id.city"/>
+                                    </span>
+                                </span>
+                            </div>
+                            <div>
+                                <b><span>Vat No :</span></b>
+                                <span t-field="o.partner_id.vat"/>
+                            </div>
+                            <div>
+                                <b><span>Phone :</span></b>
+                                <span t-field="o.partner_id.phone"/>
+                            </div>
+                        </div><br/>
                         <!--salesperson section-->
-                        <div class="col-6">
-                        <div style="border-collapse:separate;border:solid #85C1E9 1px;border-radius:20px;-moz-border-radius:20px;margin-top: 10px;min-height:140px;height:auto;width:400px;align: center;">
-                            <table id="righttable" width="100%"
-                                   style="margin-top: 5px;margin-left: 15px;table-layout: fixed; width:365px;">
-                                <tr id="transportuesitr"
-                                    style="word-wrap: break-word;margin-top: 50px;line-height:20px;">
-                                    <td width="45%" style="font-size:16px;">
-                                        <b>Transporter:</b>
-                                    </td>
-                                    <td width="55%">
-                                        <span t-field="o.transportuesi.name"/>
-                                    </td>
-                                </tr>
-                                <tr style="word-wrap: break-word;line-height:20px;">
-                                    <td>Address:</td>
-                                    <td>
-                                        <span t-if="o.transportuesi">
-                                            <span t-if="o.transportuesi.street">
-                                                <span t-field="o.transportuesi.street"/>,&#160;
-                                            </span>
-                                            <span t-if="o.transportuesi.zip">
-                                                <span t-field="o.transportuesi.zip"/>,&#160;
-                                            </span>
-                                            <span t-if="o.transportuesi.city">
-                                                <span t-field="o.transportuesi.city"/>,&#160;
-                                            </span>
-                                            <span t-if="o.transportuesi.country_id.name">
-                                                <span t-field="o.transportuesi.country_id.name"/>
-                                            </span>
+                        <div style="font-size:20px;">
+                            <div>
+                                <span><b>Transportuesi :</b></span>
+                                <span t-field="o.transportuesi.name"/>
+                            </div>
+                            <div>
+                                <span><b>Address :</b></span>
+                                <span t-if="o.transportuesi">
+                                    <span t-if="o.transportuesi.street">
+                                        <span t-field="o.transportuesi.street"/>,&#160;
+                                    </span>
+                                     <span t-if="o.transportuesi.zip">
+                                            <span t-field="o.transportuesi.zip"/>,&#160;
                                         </span>
-                                        <span t-if="not o.transportuesi and o.user_id and o.user_id.partner_id">
-                                            <span t-if="o.user_id.partner_id.street"><span
-                                                    t-field="o.user_id.partner_id.street"/>,&#160;
-                                            </span>
-                                            <span t-if="o.user_id.partner_id.zip"><span
-                                                    t-field="o.user_id.partner_id.zip"/>,&#160;
-                                            </span>
-                                            <span t-if="o.user_id.partner_id.city">
-                                                <span t-field="o.user_id.partner_id.city"/>,&#160;
-                                            </span>
-                                            <span t-if="o.user_id.partner_id.country_id.name">
-                                                <span t-field="o.user_id.partner_id.country_id.name"/>
-                                            </span>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr id="licplateno" style="word-wrap: break-word;line-height:20px;">
-                                    <td>License Plate No:</td>
-                                    <td>
-                                        <span t-field="o.license_plate_no"/>
-                                    </td>
-                                </tr>
-                                <tr id="vatno" style="word-wrap: break-word;line-height:20px;">
-                                    <td>Vat No:</td>
-                                    <td>
-                                        <span t-if="o.transportuesi.vat" t-field="o.transportuesi.vat"/>
-                                        <span t-if="not o.transportuesi.vat" t-field="o.user_id.partner_id.vat"/>
-                                    </td>
-                                </tr>
-                                <tr id="deliverytr" style="word-wrap: break-word;line-height:20px;">
-                                    <td>Delivery Time:</td>
-                                    <td>
-                                        <span t-if="o.delivery_time">
-                                            <span t-field="o.delivery_time"/>
-                                        </span>
-                                    </td>
-                                </tr>
-                            </table>
+                                    <span t-if="o.transportuesi.city">
+                                        <span t-field="o.transportuesi.city"/>
+                                    </span>
+                                    <span t-if="o.transportuesi.country_id.name">
+                                        <span t-field="o.transportuesi.country_id.name"/>
+                                    </span>
+                                </span>
+                                <span t-if="not o.transportuesi and o.user_id and o.user_id.partner_id">
+                                    <span t-if="o.user_id.partner_id.street"><span
+                                            t-field="o.user_id.partner_id.street"/>,&#160;
+                                    </span>
+                                    <span t-if="o.user_id.partner_id.zip"><span
+                                            t-field="o.user_id.partner_id.zip"/>,&#160;
+                                    </span>
+                                    <span t-if="o.user_id.partner_id.city">
+                                        <span t-field="o.user_id.partner_id.city"/>,&#160;
+                                    </span>
+                                    <span t-if="o.user_id.partner_id.country_id.name">
+                                        <span t-field="o.user_id.partner_id.country_id.name"/>
+                                    </span>
+                                </span>
+                            </div>
+                            <div>
+                                <b><span>License Plate No :</span></b>
+                                <span t-field="o.user_id.license_plate_no"/>
+                            </div>
+                            <div>
+                                <b><span>Vat No :</span></b>
+                                <span t-field="o.user_id.partner_id.vat"/>
+                            </div>
+                            <div>
+                                <b><span>Delivery Time :</span></b>
+                                <span t-if="o.delivery_time">
+                                    <span t-field="o.delivery_time"/>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                
+
                         <!-- Is there a discount on at least one line? -->
                         <t t-set="display_discount" t-value="any([l.discount for l in o.invoice_line_ids])"/>
                         <table width="100%" class="my_tab" style="margin-top: 20px;table-layout: fixed;font-size:17px;">
@@ -301,9 +227,6 @@
                                 </th>
                             </tr>
                         </table>
-
-
-
                         <div class="row" style="text-align:center;margin-top: 80px; font-size:18px;">
                             <!-- <div class="col-6">
                                 <span t-field="o.qr_code_payment"  t-options="{'widget': 'image', 'style':'width: 150px;height: 150px'}"/>
@@ -311,59 +234,27 @@
                             <div class="col-6">
                                <span t-field="o.qr_code_product_details" t-options="{'widget': 'image', 'style':'width: 150px;height: 150px'}"/>
                             </div> -->
-                            <div id="fiskalizimi" class="row" style="text-align:center;margin-top: 80px;">
-                      <div t-if="o.fic_number" class="text-left col-6" style="float:left;">
-                        <p>
-                            <strong>NIVF</strong>:
-                            <t t-esc="o.fic_number"/>
-                        </p>
-                        <p>
-                            <strong>NSLF</strong>:
-                            <t t-esc="o.iic_code"/>
-                        </p>
-                        <p>
-                            <strong>Business Unit</strong>:
-                            <t t-esc="o.operating_unit_id.business_unit_code"/>
-                        </p>
-                        <p>
-                            <strong>Operator</strong>:
-                            <t t-esc="o.user_id.operator_code"/>
-
-                        </p>
-                        <strong>Menyra e Pageses: Fature Pa Para Ne Dore</strong>
-
-                      </div>
-
-                      <div t-if="o.fic_number" class="col-6">
-                        <img t-att-src="'data:image/*;base64,%s' % to_text(o.make_invoice_qr_code(o.iic_code, o.header_send_datetime, o.invoice_order_number, o.amount_total if o.type == 'out_invoice' else o.amount_total * -1))"
-                             width="250px" height="250px"/>
-                      </div>
-                      <div t-if="o.from_pos" class="col-12" style="float: left;">
-                        <p>
-                            <strong>NIVF</strong>:
-                            <t t-esc="o.fic_from_pos"/>
-                        </p>
-                        <p>
-                            <strong>NSLF</strong>:
-                            <t t-esc="o.iic_from_pos"/>
-                        </p>
-                        <p>
-                            <strong>Business Unit</strong>:
-                            <t t-esc="o.operating_unit_id.business_unit_code"/>
-                        </p>
-                        <p>
-                            <strong>Operator</strong>:
-                            <t t-esc="o.user_id.operator_code"/>
-                        </p>
-                        <strong>Menyra e Pageses: Fature Me Para Ne Dore</strong>
-
-                        <p t-if="o.qrcode_from_pos">
-                            <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode_from_pos)" width="250px"
-                                 height="250px"/>
-                        </p>
+                            <div t-if="o.qrcode_from_pos">
+                                <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode_from_pos)" width="140px" height="140px"/>
+                            </div>
                         </div>
-
-
+                        <div class="row" style="margin-top: 30px; font-size:18px;">
+                            <div class="col-6" style="text-align:left;">
+                                <div>
+                                    <b><span>NIVF:</span></b>
+                                   <t t-esc="o.fic_from_pos"/>
+                                </div>
+                                <div>
+                                    <b><span>NSLF:</span></b>
+                                    <t t-esc="o.iic_from_pos"/>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div>
+                                    <b><span>EIC:</span></b>
+                                    <t t-esc="o.eic_number"/>
+                                </div>
+                            </div>
                         </div>
                         <div class="row" style="text-align:center;margin-top: 80px; font-size:18px;">
                             <div class="col-4">
@@ -453,6 +344,7 @@
                             </div>
                         </div>
                     </div>
+                </t>
             </t>
         </t>
     </template>
