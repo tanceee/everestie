@@ -87,8 +87,8 @@
                         <hr style="border-top: 1px dashed black"/>
                         <!--customer section-->
                            <div class="col-6">
-                        <div style="font-size:20px;">
-                            <table width="100%" style="margin-top: 10px;margin-left: 15px;table-layout: fixed;">
+                             <div style="font-size:20px;">
+                                <table width="100%" style="margin-top: 10px;margin-left: 15px;table-layout: fixed;">
                                 <tr style="word-wrap: break-word;margin-top: 50px;line-height:20px;">
                                     <td width="35%" style="font-size:22px;">
                                         <b>Customer</b>
@@ -121,8 +121,10 @@
                                         <span t-field="o.partner_id.phone"/>
                                     </td>
                                 </tr>
-                            </div>
-                        </div><br/>
+                          </table>
+                             </div>
+                             </div>
+                                <br/>
                         <!--salesperson section-->
                         <div class="col-6">
                         <div style="border-collapse:separate;border:solid #85C1E9 1px;border-radius:20px;-moz-border-radius:20px;margin-top: 10px;min-height:140px;height:auto;width:400px;align: center;">
