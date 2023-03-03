@@ -278,7 +278,7 @@
                                 </p>
                                 <strong>Menyra e Pageses: Fature Pa Para Ne Dore</strong>
 
-                    </div>
+                           </div>
 
                     <div t-if="o.fic_number" class="col-6" style="text-align:center;margin-top: 80px;float:right;">
                         <img t-att-src="'data:image/*;base64,%s' % to_text(o.make_invoice_qr_code(o.iic_code, o.header_send_datetime, o.invoice_order_number, o.amount_total if o.type == 'out_invoice' else o.amount_total * -1))"
@@ -302,14 +302,14 @@
                             <t t-esc="o.user_id.operator_code"/>
                         </p>
                         <strong>Menyra e Pageses: Fature Me Para Ne Dore</strong>
-                   
+                   </div>
 
-                    <div t-if="o.qrcode_from_pos" class="col-6" style="text-align:center;margin-top: 80px;float:right;">
+                        <div t-if="o.qrcode_from_pos" class="col-6" style="text-align:center;margin-top: 80px;float:right;">
                         <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode_from_pos)" width="140px"
                              height="140px"/>
+                      
                     </div>
                 </t>
-            </div>
             <!--            </div>-->
         </t>
       
