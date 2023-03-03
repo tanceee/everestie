@@ -196,8 +196,7 @@
                             </table>
                         </div>
                     </div>
-                </div>
-
+                
                         <!-- Is there a discount on at least one line? -->
                         <t t-set="display_discount" t-value="any([l.discount for l in o.invoice_line_ids])"/>
                         <table width="100%" class="my_tab" style="margin-top: 20px;table-layout: fixed;font-size:17px;">
