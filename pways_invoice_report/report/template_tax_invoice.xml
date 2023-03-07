@@ -257,9 +257,8 @@
                             </div>
                         </div> -->
 
-
 <data inherit_id="account.report_invoice_document">
-            <!-- <xpath expr="//div[@id='qrcode']" position="after"> -->
+            <xpath expr="//div[@id='qrcode']" position="after">
                 <div t-if="o.fic_number">
                     <p><strong>NIVF</strong>(FIC):
                         <t t-esc="o.fic_number"/>
@@ -274,9 +273,9 @@
                 </div>
 
                 <div t-if="o.fic_number">
-                    <img t-att-src="'data:image/*;base64,%s' % to_text(o.make_invoice_qr_code)" width="140px" height="140px"/>
+                    <img t-att-src="'data:image/*;base64,%s' % to_text(o.make_invoice_qr_code(o.iic_code, o.header_send_datetime, o.invoice_order_number))" width="140px" height="140px"/>
                 </div>
-            <!-- </xpath> -->
+            </xpath>
         </data>
 
                             <div t-if="o.qrcode_from_pos">
