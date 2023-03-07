@@ -255,8 +255,7 @@
                             <strong>Operator</strong>:
                             <t t-esc="o.user_id.operator_code"/>
                         </p>
-                        <img t-att-src="'data:image/*;base64,%s' % to_text(o.make_invoice_qr_code(o.iic_code, o.header_send_datetime, o.invoice_order_number, o.amount_total if o.type == 'out_invoice' else o.amount_total * -1))"
-                             width="140px" height="140px"/>
+                         <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode)" width="140px" height="140px"/>
                     </div>
 
 
