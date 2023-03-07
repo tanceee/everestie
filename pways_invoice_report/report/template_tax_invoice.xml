@@ -237,26 +237,7 @@
                             <div class="col-6">
                                <span t-field="o.qr_code_product_details" t-options="{'widget': 'image', 'style':'width: 150px;height: 150px'}"/>
                             </div> -->
-<div
-                         style="text-align:center;margin-top: 80px;float:left;">
-                        <p>
-                            <strong>NIVF</strong>:
-                            <t t-esc="o.fic_number"/>
-                        </p>
-                        <p>
-                            <strong>NSLF</strong>:
-                            <t t-esc="o.iic_code"/>
-                        </p>
-                        <p>
-                            <strong>Business Unit</strong>:
-                            <t t-esc="o.operating_unit_id.business_unit_code"/>
-                        </p>
-                        <p>
-                            <strong>Operator</strong>:
-                            <t t-esc="o.user_id.operator_code"/>
-                        </p>
-                         <img t-att-src="'data:image/*;base64,%s' % to_text(o.make_invoice_qr_code)" width="140px" height="140px"/>
-                    </div>
+
 
 
 
