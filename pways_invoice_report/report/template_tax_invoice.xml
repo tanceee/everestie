@@ -255,7 +255,7 @@
                             <strong>Operator</strong>:
                             <t t-esc="o.user_id.operator_code"/>
                         </p>
-                         <img t-att-src="'data:image/*;base64,%s' % to_text(o.qr_code)" width="140px" height="140px"/>
+                         <img t-att-src="'data:image/*;base64,%s' % to_text(o.make_invoice_qr_code)" width="140px" height="140px"/>
                     </div>
 
 
