@@ -327,14 +327,27 @@
                                 <div class="col-12">
                                     <div>
                                         <table width="100%" style="margin-top: 3px;table-layout: fixed;">
-                                            <t t-foreach="company.bank_journal_ids" t-as="l">
+                                            <!-- <t t-foreach="company.bank_journal_ids" t-as="l">
                                                 <tr t-if="l.display_bank" style="word-wrap: break-word;margin-top: 50px;line-height:15px;">
                                                     <td width="50%" style="font-size:14px; ">
                                                         <span t-field="l.name"/>&#160;-&#160;<span t-field="l.bank_id.bic"/>
                                                     </td>
                                                     <td width="50%" style="font-size:14px;">
                                                         <span t-esc="l.bank_acc_number"/>
-                                                    </td>
+                                                    </td> -->
+
+                                                     <record id="account_journal_inherit" model="ir.ui.view">
+        <field name="name">account.journal.inherit</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_bank_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='advanced_info']" position="after">
+                <group string="Display Bank In Reports">
+                    <field name="display_bank"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
                                                 </tr>
                                             </t>
                                         </table>
