@@ -237,7 +237,7 @@
                             <div class="col-6">
                                <span t-field="o.qr_code_product_details" t-options="{'widget': 'image', 'style':'width: 150px;height: 150px'}"/>
                             </div> -->
-                            <div t-if="o.qrcode_from_pos">
+                            <!-- <div t-if="o.qrcode_from_pos">
                                 <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode_from_pos)" width="140px" height="140px"/>
                             </div>
                         </div>
@@ -254,7 +254,62 @@
                     <p><strong>Operator</strong>: <t t-esc="o.user_id.operator_code"/>
                     </p>
                             </div>
+                        </div> -->
+
                         </div>
+                <div id="fiskalizimi" class="row" style="text-align:center;margin-top: 80px;">
+                    <!-- <div t-if="o.fic_number" class="text-left col-6"> -->
+                        <p>
+                            <strong>NIVF</strong>:
+                            <t t-esc="o.fic_number"/>
+                        </p>
+                        <p>
+                            <strong>NSLF</strong>:
+                            <t t-esc="o.iic_code"/>
+                        </p>
+                        <p>
+                            <strong>Business Unit</strong>:
+                            <t t-esc="o.operating_unit_id.business_unit_code"/>
+                        </p>
+                        <p>
+                            <strong>Operator</strong>:
+                            <t t-esc="o.user_id.operator_code"/>
+                        </p>
+                        <strong>Menyra e Pageses: Fature Pa Para Ne Dore</strong>
+
+                    <!-- </div> -->
+
+                    <!-- <div t-if="o.fic_number" class="col-6"> -->
+                        <img t-att-src="'data:image/*;base64,%s' % to_text(o.make_invoice_qr_code(o.iic_code, o.header_send_datetime, o.invoice_order_number, o.amount_total if o.type == 'out_invoice' else o.amount_total * -1))"
+                             width="250px" height="250px"/>
+                    <!-- </div> -->
+                    <div t-if="o.from_pos" class="text-left col-12">
+                        <p>
+                            <strong>NIVF</strong>:
+                            <t t-esc="o.fic_from_pos"/>
+                        </p>
+                        <p>
+                            <strong>NSLF</strong>:
+                            <t t-esc="o.iic_from_pos"/>
+                        </p>
+                        <p>
+                            <strong>Business Unit</strong>:
+                            <t t-esc="o.operating_unit_id.business_unit_code"/>
+                        </p>
+                        <p>
+                            <strong>Operator</strong>:
+                            <t t-esc="o.user_id.operator_code"/>
+                        </p>
+                        <strong>Menyra e Pageses: Fature Me Para Ne Dore</strong>
+
+                        <p t-if="o.qrcode_from_pos">
+                            <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode_from_pos)" width="250px"
+                                 height="250px"/>
+                        </p>
+                    </div>
+
+
+                </div>
                         <div class="row" style="text-align:center;margin-top: 80px; font-size:18px;">
                             <div class="col-4">
                                 <span>Kopje 1: Bleresi</span><br/>
