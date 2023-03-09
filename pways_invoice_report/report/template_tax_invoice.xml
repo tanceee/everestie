@@ -315,7 +315,6 @@
                                 <div>
                                     <table width="100%" style="margin-top: 10px;table-layout: fixed;">
                                         <tr style="word-wrap: break-word;margin-top: 50px;line-height:20px;">
-                                            <!--                                <th width="10%" style="border-bottom: solid black 1px; font-size:16px;"></th>-->
                                             <th width="50%" style="border-bottom: solid black 1px; font-size:16px;">Banka
                                             </th>
                                             <th width="50%" style="border-bottom: solid black 1px; font-size:16px;">Iban
