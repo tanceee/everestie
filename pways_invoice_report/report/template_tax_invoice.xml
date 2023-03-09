@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="main_sale_tax_invoice110">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page" style="font-size:17px;">
+                        <div class="custom_header" style="font-size: 14px;">
+                            <t t-if="not o and doc">
+                                <t t-set="o" t-value="doc"/>
+                            </t>
+                            <t t-if="o and 'company_id' in o">
+                                <t t-set="company" t-value="o.company_id"/>
+                            </t>
+                            <t t-if="not o or not 'company_id' in o">
+                                <t t-set="company" t-value="res_company"/>
+                            </t>
+
+                            <div style="font-size:24px;">
+                                <b>
+                                    <center><span>FATURE TATIMORE SHITJE</span></center>
+                                </b>
+                            </div>
+                            <div class='row' style="font-size: 14px;">
+                                <div class="col-4"><b>No. Fature :<span t-field='o.name'/></b></div>
+                                <div class='col-4'/>
+                                <div class='col-4'><b>Date : <span t-esc="get_date(o)"/></b></div>
+                            </div>
+                            <div style="font-size:20px;">
+                            <t t-if="company.name">
+                                    <span t-field="company.name"/>,
+                                </t>
+                                <t t-if="company.street">
+                                    <span t-field="company.street"/>,
+                                </t>
+                                <t t-if="company.street2">
+                                    <span t-field="company.street2"/>,
+                                </t>
+
+                                <t t-if="company.city">
+                                    <span t-field="company.city"/>
+                                </t>
+                                <t t-if="company.country_id">,
+                                    <span t-field="company.country_id.name"/>
+                                </t>
+                            </div><br/>
+                        </div>
+
+                        <hr style="border-top: 1px dashed black"/>
+                        <!--customer section-->
+                        <div style="font-size:20px;">
+                            <div>
+                                <span><b>Customer :</b></span>
+                                <span t-field="o.partner_id.name"/>
+                            </div>
+                            <div>
+                                <span><b>Address :</b></span>
+                                <span t-if="o.partner_id">
+                                    <span t-if="o.partner_id.street">
+                                        <span t-field="o.partner_id.street"/>,
+                                    </span>
+                                    <span t-if="o.partner_id.city">
+                                        <span t-field="o.partner_id.city"/>
+                                    </span>
+                                </span>
+                            </div>
+                            <div>
+                                <b><span>Vat No :</span></b>
+                                <span t-field="o.partner_id.vat"/>
+                            </div>
+                            <div>
+                                <b><span>Phone :</span></b>
+                                <span t-field="o.partner_id.phone"/>
+                            </div>
+                        </div><br/>
+                        <!--salesperson section-->
+                        <div style="font-size:20px;">
+                            <div>
+                                <span><b>Transportuesi :</b></span>
+                                <span t-field="o.transportuesi.name"/>
+                            </div>
+                            <div>
+                                <span><b>Address :</b></span>
+                                <span t-if="o.transportuesi">
+                                    <span t-if="o.transportuesi.street">
+                                        <span t-field="o.transportuesi.street"/>,&#160;
+                                    </span>
+                                     <span t-if="o.transportuesi.zip">
+                                            <span t-field="o.transportuesi.zip"/>,&#160;
+                                        </span>
+                                    <span t-if="o.transportuesi.city">
+                                        <span t-field="o.transportuesi.city"/>
+                                    </span>
+                                    <span t-if="o.transportuesi.country_id.name">
+                                        <span t-field="o.transportuesi.country_id.name"/>
+                                    </span>
+                                </span>
+                                <span t-if="not o.transportuesi and o.user_id and o.user_id.partner_id">
+                                    <span t-if="o.user_id.partner_id.street"><span
+                                            t-field="o.user_id.partner_id.street"/>,&#160;
+                                    </span>
+                                    <span t-if="o.user_id.partner_id.zip"><span
+                                            t-field="o.user_id.partner_id.zip"/>,&#160;
+                                    </span>
+                                    <span t-if="o.user_id.partner_id.city">
+                                        <span t-field="o.user_id.partner_id.city"/>,&#160;
+                                    </span>
+                                    <span t-if="o.user_id.partner_id.country_id.name">
+                                        <span t-field="o.user_id.partner_id.country_id.name"/>
+                                    </span>
+                                </span>
+                            </div>
+                            <div>
+                                <b><span>License Plate No :</span></b>
+                                <span t-field="o.user_id.license_plate_no"/>
+                            </div>
+                            <div>
+                                <b><span>Vat No :</span></b>
+                                <span t-field="o.user_id.partner_id.vat"/>
+                            </div>
+                            <div>
+                                <b><span>Delivery Time :</span></b>
+                                <span t-if="o.delivery_time">
+                                    <span t-field="o.delivery_time"/>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Is there a discount on at least one line? -->
+                        <t t-set="display_discount" t-value="any([l.discount for l in o.invoice_line_ids])"/>
+                        <table width="100%" class="my_tab" style="margin-top: 20px;table-layout: fixed;font-size:17px;">
+                            <tr>
+                                <t t-set="colspan" t-value="8"/>
+                                <th style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                    <span>No.</span>
+                                </th>
+                                <th t-if="not display_discount" colspan="2"
+                                    style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                    <span>Description</span>
+                                </th>
+                                <th t-if="display_discount" width="20%"
+                                    style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                    <span>Description</span>
+                                </th>
+                                <th style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                    <span>Unit of<br/>Measure</span>
+                                </th>
+                                <th style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                    <span>Quantity</span>
+                                </th>
+                                <th style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                    <span>Price</span>
+                                </th>
+                                <th t-if="display_discount" width="7%" style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                    <span>Disc(%)</span>
+                                    <!-- TODO: remove in master -->
+                                    <t t-set="colspan" t-value="colspan+1"/>
+                                </th>
+                                <th style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                    <span>Taxable<br/>Amount</span>
+                                </th>
+                                <th style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                    <span>Tax Amount</span>
+                                </th>
+                                <th style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                    <span>Total With Tax</span>
+                                </th>
+                            </tr>
+                            <span t-set="counter" t-value="1"/>
+                            <span t-set="taxable_amount_total" t-value="0.0"/>
+                            <span t-set="tax_amount_total" t-value="0.0"/>
+                            <span t-set="total_amount_total" t-value="0.0"/>
+                            <tr t-foreach="o.invoice_line_ids" t-as="line" style="word-wrap: break-word;">
+                                <span t-set="taxable_amount" t-value="get_amounts(line)[2]"/>
+                                <span t-set="tax_amount" t-value="get_amounts(line)[3]"/>
+                                <span t-set="total_amount" t-value="get_amounts(line)[4]"/>
+                                <td style="border: dashed black 1px;border-top: 1px dashed black;text-align: center;padding:1px">
+                                    <span t-esc="counter"/>
+                                </td>
+                                <td t-if="not display_discount" colspan="8" style="border: dashed black 1px;border-top: 1px dashed black;padding:1px">
+                                    <span t-esc="line.product_id.barcode"/> &#160;&#160; <span t-esc="line.product_id.name"/>
+                                </td>
+                                <td t-if="display_discount" width="20%" style="border: dashed black 1px;border-top: 1px dashed black;padding:1px">
+                                    <span t-esc="line.product_id.name"/>
+                                </td>
+                                <tr style="word-wrap: break-word;">
+                                    <td colspan='3' style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px"/>
+                                    <td style="border: dashed black 1px;text-align: center;border-top: 1px dashed black;padding:1px">
+                                        <span t-esc="line.product_uom_id and line.product_uom_id.name or ''"/>
+                                    </td>
+                                    <td style="border: dashed black 1px;border-top: 1px dashed black;text-align: center;padding:1px">
+                                        <span t-esc="'%.2f'%(line.quantity)"/>
+                                    </td>
+                                    <td width="7%"
+                                        style="border: dashed black 1px;border-top: 1px dashed black;text-align: right;padding:1px">
+                                        <span t-esc="'%.2f'%(get_amounts(line)[0])"/>
+                                    </td>
+                                    <td t-if="display_discount" style="border: dashed black 1px;border-top: 1px dashed black;text-align: right;padding:1px">
+                                        <span t-esc="get_discount(line)"/>
+                                    </td>
+                                    <td style="border: dashed black 1px;border-top: 1px dashed black;text-align: right;padding:1px">
+                                        <span t-esc="'%.0f'%(taxable_amount)"/>
+                                    </td>
+                                    <td style="border: dashed black 1px;border-top: 1px dashed black;text-align: right;padding:1px">
+                                        <span t-esc="'%.0f'%(tax_amount)"/>
+                                    </td>
+                                    <td style="border: dashed black 1px;border-top: 1px dashed black;text-align: right;padding:1px">
+                                        <span t-esc="'%.0f'%(total_amount)"/>
+                                    </td>
+                                </tr>
+                                <span t-set="counter" t-value="counter + 1"/>
+                                <span t-set="taxable_amount_total" t-value="taxable_amount_total + taxable_amount"/>
+                                <span t-set="tax_amount_total" t-value="tax_amount_total + tax_amount"/>
+                                <span t-set="total_amount_total" t-value="total_amount_total + total_amount"/>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                </td>
+                                <th colspan="4" style="border: dashed black 1px;padding:1px">
+                                    Total (<span t-esc="o.currency_id.name"/>)
+                                </th>
+                                <th style="border: dashed black 1px;text-align: right;padding:1px">
+                                    <span/><span t-esc="'%.0f'%(taxable_amount_total)"/>
+                                </th>
+                                <th style="border: dashed black 1px;text-align: right;padding:1px">
+                                    <span/><span t-esc="'%.0f'%(tax_amount_total)"/>
+                                </th>
+                                <th style="border: dashed black 1px;text-align: right;padding:1px">
+                                    <span/><span t-esc="'%.0f'%(total_amount_total)"/>
+                                </th>
+                            </tr>
+                        </table>
+                        <div class="row" style="text-align:center;margin-top: 80px; font-size:18px;">
+                            <!-- <div class="col-6">
+                                <span t-field="o.qr_code_payment"  t-options="{'widget': 'image', 'style':'width: 150px;height: 150px'}"/>
+                            </div>
+                            <div class="col-6">
+                               <span t-field="o.qr_code_product_details" t-options="{'widget': 'image', 'style':'width: 150px;height: 150px'}"/>
+                            </div> -->
+
+<!-- <div class="row" style="margin-top: 30px; font-size:18px;">
+                            <div class="col-6" style="text-align:left;">
+                                <div>
+                                    <b><span>NIVF:</span></b>
+                                   <t t-esc="o.fic_number"/>
+                                </div>
+                                <div>
+                                    <b><span>NSLF:</span></b>
+                                    <t t-esc="o.iic_code"/>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div>
+                                    <b><span>EIC:</span></b>
+                                    <t t-esc="o.eic_number"/>
+                                </div>
+                            </div>
+                        </div> -->
+
+
+
+                            <div t-if="o.qrcode_from_pos">
+                                <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode_from_pos)" width="140px" height="140px"/>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 30px; font-size:18px;">
+                            <div class="col-6" style="text-align:left;">
+                                 <p><strong>NIVF</strong>(FIC):
+                        <t t-esc="o.fic_from_pos"/>
+                    </p>
+                    <p><strong>NSLF</strong>(IIC):
+                        <t t-esc="o.iic_from_pos"/>
+                    </p>
+                    <p><strong>Business Unit</strong>: <t t-esc="o.operating_unit_id.business_unit_code"/>
+                    </p>
+                    <p><strong>Operator</strong>: <t t-esc="o.user_id.operator_code"/>
+                    </p>
+                            </div>
+                        </div>
+
+                      
+                        <div class="row" style="text-align:center;margin-top: 80px; font-size:18px;">
+                            <div class="col-4">
+                                <span>Kopje 1: Bleresi</span><br/>
+                                <span>
+                                    <b>BLERESI</b>
+                                </span>
+                                <br/>
+                                <b>(Emer, Mbiemer, Firma)</b>
+                                <br/>
+                                <br/>
+                                _____________________
+                            </div>
+                            <div class="col-4">
+                                <span>Kopje 2: Transportuesi</span><br/>
+                                <span>
+                                    <b>TRANSPORTUESI</b>
+                                </span>
+                                <br/>
+                                <b>(Emer, Mbiemer, Firma)</b>
+                                <br/>
+                                <br/>
+                                _____________________
+                            </div>
+                            <div class="col-4">
+                                <span>Kopje 3: Shitesi</span><br/>
+                                <span>
+                                    <b>SHITESI</b>
+                                </span>
+                                <br/>
+                                <b>(Emer, Mbiemer, Firma)</b>
+                                <br/>
+                                <br/>
+                                _____________________
+                            </div>
+                        </div>
+                        <div class="footer o_standard_footer" style="font-size:15px;">
+                            <hr style="height:3px; border-top:1px solid black;"/>
+                            <!-- <div style="text-align:left;" >
+                                <t t-foreach="company.bank_journal_ids" t-as="l">
+                                    <span>Bank Name :</span>
+                                    <t t-if="l.display_bank">
+                                        <span t-field='l.name'/>&#160;&#160;&#160;&#160;
+                                    </t>
+                                    <span>Account Number:</span>
+                                    <t t-if="l.display_bank">
+                                        <span t-esc="l.bank_acc_number"/>
+                                    </t>
+                                </t>
+                            </div><br/>
+                            <div style="float:center; text-align:center;">
+                                <t t-if='company.website'>
+                                    <span t-field='company.website'/>
+                                </t>
+                            </div>
+                        </div> -->
+                        <div class="text-center">
+                            <div class="col-12">
+                                <div>
+                                    <table width="100%" style="margin-top: 10px;table-layout: fixed;">
+                                        <tr style="word-wrap: break-word;margin-top: 50px;line-height:20px;">
+                                            <!--                                <th width="10%" style="border-bottom: solid black 1px; font-size:16px;"></th>-->
+                                            <th width="50%" style="border-bottom: solid black 1px; font-size:16px;">Banka
+                                            </th>
+                                            <th width="50%" style="border-bottom: solid black 1px; font-size:16px;">Iban
+                                            </th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                                <div class="col-12">
+                                    <div>
+                                         <table width="100%" style="margin-top: 3px;table-layout: fixed;">
+                                    <t t-foreach="company.bank_journal_ids" t-as="l">
+                                        <tr t-if="l.display_bank"
+                                            style="word-wrap: break-word;margin-top: 50px;line-height:15px;">
+                                            <td width="50%" style="font-size:14px; ">
+                                                <span t-field="l.name"/>&#160;-&#160;<span t-field="l.bank_id.bic"/>
+                                            </td>
+                                            <td width="50%" style="font-size:14px;">
+                                                <span t-esc="l.bank_acc_number"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                    </div>
+                                </div>              
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
