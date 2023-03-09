@@ -253,10 +253,8 @@
             </xpath>
         </data>
 
-                            
-
-                        <div class="row" style="margin-top: 30px; font-size:18px;">
-                         <div t-if="o.from_pos" class="col-6" style="text-align:center; margin-top: 30px;float:center;">
+                        <div class="row" style="text-align:center;margin-top: 80px; font-size:18px;">
+                         <div t-if="o.from_pos" class="col-6">
                                  <p><strong>NIVF</strong>(FIC):
                         <t t-esc="o.fic_from_pos"/>
                     </p>
@@ -312,24 +310,6 @@
                         </div>
                         <div class="footer o_standard_footer" style="font-size:15px;">
                             <hr style="height:3px; border-top:1px solid black;"/>
-                            <!-- <div style="text-align:left;" >
-                                <t t-foreach="company.bank_journal_ids" t-as="l">
-                                    <span>Bank Name :</span>
-                                    <t t-if="l.display_bank">
-                                        <span t-field='l.name'/>&#160;&#160;&#160;&#160;
-                                    </t>
-                                    <span>Account Number:</span>
-                                    <t t-if="l.display_bank">
-                                        <span t-esc="l.bank_acc_number"/>
-                                    </t>
-                                </t>
-                            </div><br/>
-                            <div style="float:center; text-align:center;">
-                                <t t-if='company.website'>
-                                    <span t-field='company.website'/>
-                                </t>
-                            </div>
-                        </div> -->
                         <div class="text-center">
                             <div class="col-12">
                                 <div>
