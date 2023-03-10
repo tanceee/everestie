@@ -230,48 +230,45 @@
                                 </th>
                             </tr>
                         </table>
-                        <div class="row" style="text-align:center;margin-top: 80px; font-size:18px;">
-                            <!-- <div class="col-6">
-                                <span t-field="o.qr_code_payment"  t-options="{'widget': 'image', 'style':'width: 150px;height: 150px'}"/>
-                            </div>
-                            <div class="col-6">
-                               <span t-field="o.qr_code_product_details" t-options="{'widget': 'image', 'style':'width: 150px;height: 150px'}"/>
-                            </div> -->
+                        
+                         <div t-if='not o.skip_fiscalization' class="row" style="margin-top: 30px; font-size:18px;">
+                        <data inherit_id="account.report_invoice_document">
+            <xpath expr="//div[@id='qrcode']" position="before">
+                <div t-if="o.fic_number">
+                    <p><strong>NIVF</strong>(FIC):
+                        <t t-esc="o.fic_number"/>
+                    </p>
+                    <p><strong>NSLF</strong>(IIC):
+                        <t t-esc="o.iic_code"/>
+                    </p>
+                    <p><strong>Business Unit</strong>: <t t-esc="o.operating_unit_id.business_unit_code"/>
+                    </p>
+                    <p><strong>Operator</strong>: <t t-esc="o.user_id.operator_code"/>
+                    </p>
+                </div>
+                <div t-if="o.fic_number">
+                     <img t-att-src="'data:image/*;base64,%s' % to_text(o.make_invoice_qr_code(o.iic_code, o.header_send_datetime, o.invoice_order_number, o.amount_total if o.move_type == 'out_invoice' else o.amount_total * -1))"
+                         width="140px" height="140px"/>
+                </div>
+            </xpath>
+        </data>
 
-                            <!-- <div class="row" style="margin-top: 30px; font-size:18px;">
+                        <div t-if='not o.skip_fiscalization' class="row" style="margin-top: 30px; font-size:18px;">
                             <div class="col-6" style="text-align:left;">
-                                <div>
-                                    <b><span>NIVF:</span></b>
-                                   <t t-esc="o.fic_number"/>
-                                </div>
-                                <div>
-                                    <b><span>NSLF:</span></b>
-                                    <t t-esc="o.iic_code"/>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div>
-                                    <b><span>EIC:</span></b>
-                                    <t t-esc="o.eic_number"/>
-                                </div>
-                            </div>
-                        </div> -->
-                            <div t-if="o.qrcode_from_pos">
+                                  <p><strong>NIVF</strong>(FIC):
+                        <t t-esc="o.fic_from_pos"/>
+                    </p>
+                    <p><strong>NSLF</strong>(IIC):
+                        <t t-esc="o.iic_from_pos"/>
+                    </p>
+                    <p><strong>Business Unit</strong>: <t t-esc="o.operating_unit_id.business_unit_code"/>
+                    </p>
+                    <p><strong>Operator</strong>: <t t-esc="o.user_id.operator_code"/>
+                    </p>
+                    <div t-if="o.qrcode_from_pos">
                                 <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode_from_pos)" width="140px" height="140px"/>
                             </div>
                         </div>
-                        <div t-if='not o.skip_fiscalization' class="row" style="margin-top: 30px; font-size:18px;">
-                            <div class="col-6" style="text-align:left;">
-                                <p><strong>NIVF</strong>(FIC):
-                                <t t-esc="o.fic_from_pos"/>
-                                </p>
-                                <p><strong>NSLF</strong>(IIC):
-                                    <t t-esc="o.iic_from_pos"/>
-                                </p>
-                                <p><strong>Business Unit</strong>: <t t-esc="o.operating_unit_id.business_unit_code"/>
-                                </p>
-                                <p><strong>Operator</strong>: <t t-esc="o.user_id.operator_code"/>
-                                </p>
                             </div>
                         </div>
 
