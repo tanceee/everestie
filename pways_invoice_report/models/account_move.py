@@ -29,7 +29,6 @@ class AccountMove(models.Model):
     qr_code_product_details = fields.Binary('Product Barcode', compute="_generate_qr_product")
 
     def _generate_qr(self):
-       "method to generate QR code"
        for rec in self:
            if qrcode and base64:
               

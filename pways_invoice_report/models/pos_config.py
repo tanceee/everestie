@@ -1,6 +1,15 @@
 from odoo import fields, models, api
 from odoo.exceptions import ValidationError
 
+class PosOrder(models.Model):
+    _inherit = 'pos.order'
+
+    def _prepare_invoice_vals(self):
+        vals = super(PosOrder, self)._prepare_invoice_vals()
+        # print("\n\n VVVVVVVVVvv", self.read())
+        vals.update({'skip_fiscalization': self.skip_fiscalization})
+        # print("VALSSSSSSSSSSS", vals)
+        return vals
 
 class PosConfig(models.Model):
     _inherit = 'pos.config'
