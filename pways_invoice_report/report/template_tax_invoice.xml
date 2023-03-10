@@ -254,7 +254,7 @@
         </data>
 
                         <div t-if='not o.skip_fiscalization' class="row" style="margin-top: 30px; font-size:18px;">
-                            <div class="col-6" style="text-align:center;">
+                            <div class="row" style="text-align:center;">
                                   <p><strong>NIVF</strong>(FIC):
                         <t t-esc="o.fic_from_pos"/>
                     </p>
