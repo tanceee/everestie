@@ -21,10 +21,10 @@
                                     <center><span>FATURE TATIMORE SHITJE</span></center>
                                 </b>
                             </div>
-                            <div class='row' style="font-size: 19px;">
-                                <div class="col-4"><b>No.Fature: <span t-field='o.name'/></b></div>
+                            <div class='row' style="font-size: 14px;">
+                                <div class="col-4"><b>No. Fature :<span t-field='o.name'/></b></div>
                                 <div class='col-4'/>
-                                <div class='col-4'><b>Dt: <span t-esc="get_date(o)"/></b></div>
+                                <div class='col-4'><b>Date : <span t-esc="get_date(o)"/></b></div>
                             </div>
                             <div style="font-size:20px;">
                             <t t-if="company.name">
@@ -230,8 +230,7 @@
                                 </th>
                             </tr>
                         </table>
-
-                        <div class="row" style="text-align:center; margin-top: 30px; font-size:18px;">
+ <div class="row" style="text-align:center; margin-top: 30px; font-size:18px;">
 <data inherit_id="account.report_invoice_document">
             <xpath expr="//div[@id='qrcode']" position="before">
                 <div t-if="o.fic_number">
@@ -273,6 +272,7 @@
                             </div>
                         </div>
 
+                      
                         <div class="row" style="text-align:center;margin-top: 80px; font-size:18px;">
                             <div class="col-4">
                                 <span>Kopje 1: Bleresi</span><br/>
@@ -308,8 +308,8 @@
                                 _____________________
                             </div>
                         </div>
-                        <div class="footer o_standard_footer" style="font-size:15px;">
-                            <hr style="height:3px; border-top:1px solid black;"/>
+                        <div class="text-center" style="font-size:15px;">
+                        <hr style="height:3px; border-top:1px solid black;"/>
                         <div class="text-center">
                             <div class="col-12">
                                 <div>
