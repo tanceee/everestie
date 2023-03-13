@@ -235,7 +235,7 @@
                          <div t-if='not o.skip_fiscalization' class="row" style="margin-top: 30px; font-size:18px;">
                         <data inherit_id="account.report_invoice_document">
             <xpath expr="//div[@id='qrcode']" position="before">
-                <div t-if="o.fic_number">
+                 <div t-if="o.fic_number">
                     <p><strong>NIVF</strong>(FIC):
                         <t t-esc="o.fic_number"/>
                     </p>
