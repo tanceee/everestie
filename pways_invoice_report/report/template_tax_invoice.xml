@@ -235,7 +235,7 @@
                         <div class="col-6" style="text-align:center;">
                         <data inherit_id="account.report_invoice_document">
             <xpath expr="//div[@id='qrcode']" position="before">
-                <div t-if="o.fic_number">
+                <div t-esc="o.fic_number">
                     <p><strong>NIVF</strong>(FIC):
                         <t t-esc="o.fic_number"/>
                     </p>
