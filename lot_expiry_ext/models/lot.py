@@ -22,12 +22,12 @@ class ProductionLot(models.Model):
 	# 	return [(lot.id, '%s%s' % (lot.expiration_date and '[%s] ' % lot.expiration_date or '', lot.name))
     #             for lot in self]
 
-	def name_get(self):
-		res = []
-		self.browse(self.ids).read(['name', 'expiration_date'])
-		for rec in self:
-			expiration_date = False
-			if rec.expiration_date:
-				expiration_date = self.convert_TZ_UTC(fields.Datetime.to_string(rec.expiration_date))
-			res.append((rec.id, '%s - %s' % (rec.name, expiration_date) if rec.expiration_date else rec.name))
-		return res
+	# def name_get(self):
+	# 	res = []
+	# 	self.browse(self.ids).read(['name', 'expiration_date'])
+	# 	for rec in self:
+	# 		expiration_date = False
+	# 		if rec.expiration_date:
+	# 			expiration_date = self.convert_TZ_UTC(fields.Datetime.to_string(rec.expiration_date))
+	# 		res.append((rec.id, '%s - %s' % (rec.name, expiration_date) if rec.expiration_date else rec.name))
+	# 	return res
