@@ -256,7 +256,7 @@
 
                             
 
-                        <div class="col-6" style="margin-top: 30px; font-size:18px;">
+                        <!-- <div class="col-6" style="margin-top: 30px; font-size:18px;"> -->
                          <div t-if="o.from_pos" class="col-6" style="text-align:center; margin-top: 30px;float:center;">
                                  <p><strong>NIVF</strong>(FIC):
                         <t t-esc="o.fic_from_pos"/>
@@ -271,7 +271,7 @@
                     <div t-if="o.qrcode_from_pos">
                                 <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode_from_pos)" width="140px" height="140px"/>
                             </div>
-                        </div>
+                        <!-- </div> -->
 
                             <!-- </div> -->
                         </div>
