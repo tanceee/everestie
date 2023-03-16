@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="pos_wallet_odoo_template" inherit_id="point_of_sale.template" xml:space="preserve">
+	<t t-name="PwaysAlertPopUp" owl="1">
+        <div class="modal-dialog">
+            <div class="popup popup-alert" style="background-color:#ed8787;">
+                <p class="title" style="font-size:30px;">
+                    <t t-esc="props.title || 'Alert' "/>
+                </p>
+                <p class="body text-center">
+                    <t t-esc=" props.body || 'Alert' "/>
+                </p>
+                <div class="footer">
+                    <div class="button cancel" t-on-click="cancel">
+			            Ok
+			        </div>
+                </div>
+            </div>
+        </div>
+    </t>
+	<t t-name="EditListPopup" t-inherit="point_of_sale.EditListPopup" t-inherit-mode="extension" owl="1">
+		<xpath expr="//main[hasclass('list-lines')]" position="replace">
+			<main class="list-lines" t-on-remove-item="removeItem"
+				  t-on-create-new-item="createNewItem">
+				<select class="lots barcode_selector" id="lots" name="lots"
+					t-on-change="selectLot">
+					<option> Select a Serial/Lot Number </option>
+					<t t-foreach="barcodes" t-as="brcd" t-key="brcd.id">
+						<option t-att-value="brcd.name">
+							(<t t-esc='brcd.name'/> - <t t-esc="brcd.loc_qty"/>)
+						</option>
+					</t>
+				</select>
+				<t t-foreach="state.array" t-as="item" t-key="item._id">
+					<EditListInput item="item" />
+				</t>
+			</main>
+		</xpath> 
+	</t>
+
+</templates>
+	
+	
