@@ -267,7 +267,7 @@
                     <p><strong>Operator</strong>: <t t-esc="o.user_id.operator_code"/>
                     </p>
                     <div t-if="o.qrcode_from_pos">
-                                <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode_from_pos)" width="140px" height="140px"/>
+                                <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode_from_pos)" width="250px" height="250px"/>
                             </div>
                         <!-- </div> -->
 
