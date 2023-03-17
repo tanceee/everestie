@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <templates id="pos_wallet_odoo_template" inherit_id="point_of_sale.template" xml:space="preserve">
+	
 	<t t-name="PwaysAlertPopUp" owl="1">
         <div class="modal-dialog">
             <div class="popup popup-alert" style="background-color:#ed8787;">
@@ -18,6 +19,7 @@
             </div>
         </div>
     </t>
+    
 	<t t-name="EditListPopup" t-inherit="point_of_sale.EditListPopup" t-inherit-mode="extension" owl="1">
 		<xpath expr="//main[hasclass('list-lines')]" position="replace">
 			<main class="list-lines" t-on-remove-item="removeItem"

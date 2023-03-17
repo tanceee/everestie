@@ -29,14 +29,20 @@ odoo.define('pways_pos_lot_selection.models', function(require) {
 
 			result.forEach(function(quant) {
 				var all_qty = {}
-				var fullDate = new Date(Date.parse(quant.expiration_date));
-				var twoDigitMonth = fullDate.getMonth() + 1 + "";
-				if (twoDigitMonth.length == 1)
-				    twoDigitMonth = "0" + twoDigitMonth;
-				var twoDigitDate = fullDate.getDate() + "";
-				if (twoDigitDate.length == 1)
-				    twoDigitDate = "0" + twoDigitDate;
-				var ExpDate = twoDigitDate + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
+				var fullDate = new Date(quant.expiration_date);
+
+				var newDate = new Date(fullDate.getTime() + fullDate.getTimezoneOffset()*60*1000);
+			    var offset = fullDate.getTimezoneOffset();
+			    var hours = fullDate.getHours();
+			    newDate.setHours(hours - offset);
+
+				// var twoDigitMonth = fullDate.getMonth() + 1 + "";
+				// if (twoDigitMonth.length == 1)
+				//     twoDigitMonth = "0" + twoDigitMonth;
+				// var twoDigitDate = fullDate.getDate() + "";
+				// if (twoDigitDate.length == 1)
+				//     twoDigitDate = "0" + twoDigitDate;
+				// var ExpDate = twoDigitDate + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
 
 				if(quant.reserve_quant <= quant.quantity){
 					if(quant.is_expired == false){
@@ -46,7 +52,7 @@ odoo.define('pways_pos_lot_selection.models', function(require) {
 						quant.name = quant.lot_id[1];
 						quant.lot_name = quant.lot_id[1];
 						quant.product_qty = quant.quantity;
-						quant.expiration_date = ExpDate;
+						quant.expiration_date = newDate.toLocaleString();
 						quants.push(quant);
 					}
 				}
@@ -161,14 +167,12 @@ odoo.define('pways_pos_lot_selection.models', function(require) {
 					if(is_valid > -1 ){
 						lot_brcd.push(line);
 					}
-					// console.log('JSONNNNNNNNNNN', lot_brcd);
 				});
 			}
 			self.lots = lots;
 			self.lots_barcode = lot_brcd || [];
 			json.lots = lots|| [];
 			json.lots_barcode = lot_brcd|| [];
-			// console.log('JSONNNNNNNNNNN', json);
 			return json;
 		},
 		
