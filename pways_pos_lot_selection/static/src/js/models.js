@@ -6,6 +6,7 @@ odoo.define('pways_pos_lot_selection.models', function(require) {
 	var core = require('web.core');	
 	var QWeb = core.qweb;
 	var _t = core._t;
+	
 	models.load_fields('product.product', ['type']);
 	models.load_models({
         model: 'stock.quant',
@@ -160,12 +161,14 @@ odoo.define('pways_pos_lot_selection.models', function(require) {
 					if(is_valid > -1 ){
 						lot_brcd.push(line);
 					}
+					// console.log('JSONNNNNNNNNNN', lot_brcd);
 				});
 			}
 			self.lots = lots;
 			self.lots_barcode = lot_brcd || [];
 			json.lots = lots|| [];
 			json.lots_barcode = lot_brcd|| [];
+			// console.log('JSONNNNNNNNNNN', json);
 			return json;
 		},
 		

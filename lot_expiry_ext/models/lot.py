@@ -29,12 +29,12 @@ class ProductionLot(models.Model):
 			time = datetime.strftime(pytz.utc.localize(datetime.strptime(TZ_datetime, DEFAULT_SERVER_DATETIME_FORMAT)).astimezone(local),"%m/%d/%Y %H:%M:%S")
 			return time
 
-	def name_get(self):
-		res = []
-		self.browse(self.ids).read(['name', 'expiration_date'])
-		for rec in self:
-			expiration_date = False
-			if rec.expiration_date:
-				expiration_date = self.convert_TZ_UTC(fields.Datetime.to_string(rec.expiration_date))
-			res.append((rec.id, '%s - %s' % (rec.name, expiration_date) if rec.expiration_date else rec.name))
-		return res
+	# def name_get(self):
+	# 	res = []
+	# 	self.browse(self.ids).read(['name', 'expiration_date'])
+	# 	for rec in self:
+	# 		expiration_date = False
+	# 		if rec.expiration_date:
+	# 			expiration_date = self.convert_TZ_UTC(fields.Datetime.to_string(rec.expiration_date))
+	# 		res.append((rec.id, '%s - %s' % (rec.name, expiration_date) if rec.expiration_date else rec.name))
+	# 	return res

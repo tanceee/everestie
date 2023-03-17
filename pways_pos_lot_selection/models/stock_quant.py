@@ -11,6 +11,14 @@ class PosConfig(models.Model):
 class StockQuant(models.Model):
 	_inherit = 'stock.quant'
 
+
+	def convert_TZ_UTC(self, TZ_datetime):
+		user_tz = self.env.user.tz or pytz.utc
+		local = pytz.timezone(user_tz)
+		if local:
+			time = datetime.strftime(pytz.utc.localize(datetime.strptime(TZ_datetime, DEFAULT_SERVER_DATETIME_FORMAT)).astimezone(local),"%m/%d/%Y %H:%M:%S")
+			return time
+	
 	reserve_quant = fields.Float('Reserved')
 	expiration_date = fields.Datetime(related="lot_id.expiration_date", store=True)
 	is_expired = fields.Boolean(compute='_compute_is_expired')
