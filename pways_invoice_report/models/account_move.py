@@ -7,12 +7,18 @@ try:
    import base64
 except ImportError:
    base64 = None
+
 from io import BytesIO
+
+
+from datetime import datetime
+import pytz
+
+from odoo import api, fields, models
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from collections import defaultdict
 from odoo.exceptions import UserError
 
-from collections import defaultdict
-
-from odoo import fields, models, api, _
 from odoo.tools import float_is_zero, float_compare
 from odoo.tools.misc import formatLang
 
@@ -119,6 +125,13 @@ class AccountMove(models.Model):
         if self.user_id and not self.transportuesi:
                 self.transportuesi = self.env['res.users'].search([('partner_id.name', 'ilike', self.user_id.name)]).mapped('partner_id')
 
+    def convert_TZ_UTC(self, TZ_datetime):
+        user_tz = self.env.user.tz or pytz.utc
+        local = pytz.timezone(user_tz)
+        if local:
+            time = datetime.strftime(pytz.utc.localize(datetime.strptime(TZ_datetime, DEFAULT_SERVER_DATETIME_FORMAT)).astimezone(local),"%m/%d/%Y %H:%M:%S")
+            return time
+
     def _get_invoiced_lot_values(self):
         """ Get and prepare data to show a table of invoiced lot on the invoice's report. """
         self.ensure_one()
@@ -177,7 +190,7 @@ class AccountMove(models.Model):
                             'quantity': line.qty if lot.product_id.tracking == 'lot' else 1.0,
                             'uom_name': line.product_uom_id.name,
                             'lot_name': lot.lot_name,
-                            'expiry_date': lot_id.expiration_date.strftime('%d/%m/%Y') if lot_id and lot_id.expiration_date else False, 
+                            'expiry_date': self.convert_TZ_UTC(fields.Datetime.to_string(lot_id.expiration_date)) if lot_id and lot_id.expiration_date else False, 
                         })
         else:
             for lot, qty in qties_per_lot.items():
@@ -196,7 +209,7 @@ class AccountMove(models.Model):
                     'uom_name': lot.product_uom_id.name,
                     'lot_name': lot.name,
                     'lot_id': lot.id,
-                    'expiry_date': lot.expiration_date.strftime('%d/%m/%Y') if lot.expiration_date else False
+                    'expiry_date': self.convert_TZ_UTC(fields.Datetime.to_string(lot_id.expiration_date)) if lot.expiration_date else False
                 })
         return res
 
