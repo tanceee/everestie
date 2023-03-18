@@ -29,20 +29,11 @@ odoo.define('pways_pos_lot_selection.models', function(require) {
 
 			result.forEach(function(quant) {
 				var all_qty = {}
-				var fullDate = new Date(quant.expiration_date);
-
-				var newDate = new Date(fullDate.getTime() + fullDate.getTimezoneOffset()*60*1000);
-			    var offset = fullDate.getTimezoneOffset();
-			    var hours = fullDate.getHours();
-			    newDate.setHours(hours - offset);
-
-				// var twoDigitMonth = fullDate.getMonth() + 1 + "";
-				// if (twoDigitMonth.length == 1)
-				//     twoDigitMonth = "0" + twoDigitMonth;
-				// var twoDigitDate = fullDate.getDate() + "";
-				// if (twoDigitDate.length == 1)
-				//     twoDigitDate = "0" + twoDigitDate;
-				// var ExpDate = twoDigitDate + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
+				// date convert
+				
+				var dateInUtc = new Date(Date.parse(quant.expiration_date +" UTC"));
+				var newDate = new Date(dateInUtc.getTime() - dateInUtc.getTimezoneOffset());
+				// console.log("NEWWWWWWWWWWW", newDate.toLocaleString());
 
 				if(quant.reserve_quant <= quant.quantity){
 					if(quant.is_expired == false){
