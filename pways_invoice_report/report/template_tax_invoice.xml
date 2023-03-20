@@ -18,9 +18,9 @@
 
                             <div style="font-size:24px;">
                                 <t t-if="o.move_type == 'out_invoice' ">
-                                    <b>
+                                    <!-- <b>
                                         <center><span>FATURE TATIMORE SHITJE</span></center>
-                                    </b>
+                                    </b> -->
                                 </t>
                                 <t t-if="o.move_type != 'out_invoice' ">
                                     <b>
@@ -29,7 +29,7 @@
                                 </t>
 
                             </div>
-                            <div class='row' style="font-size: 18px;">
+                            <!-- <div class='row' style="font-size: 18px;">
                                 <div class="col-4"><b>Nr.Fature:<span t-field='o.name'/></b></div>
                                 <div class='col-4'/>
                                 <div class='col-4'><b>Dt: <span t-esc="get_date(o)"/></b></div>
@@ -52,8 +52,96 @@
                                     <span t-field="company.country_id.name"/>
                                 </t>
                             </div><br/>
-                        </div>
+                        </div> -->
 
+                         <div class="row">
+                        <div class="col-7">
+                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                                 style="max-width: 250px;max-height: 250px;"/>
+                        </div>
+                        <div class="col-5" style="font-size:24px;">
+                            <div style="font-size:24px;">
+                                <b>
+                                    <span t-esc="company.name"/>
+                                </b>
+                            </div>
+                            <div style="font-size:20px;">
+                                <span t-field="company.street"/>,<span t-field="company.street2"/>,
+                                <span t-if="company.city">
+                                    <span t-field="company.city"/>
+                                </span>
+                                <span t-if="company.country_id">,
+                                    <span t-field="company.country_id.name"/>
+                                </span>
+                            </div>
+                            <div style="font-size:20px;word-wrap: break-word;">
+                                Vat :
+                                <span t-field="company.vat"/>
+                            </div>
+                            <div style="font-size:20px;word-wrap: break-word;">
+                                Phone:
+                                <span t-field="company.phone"/>
+                            </div>
+                            <div style="font-size:18px;word-wrap: break-word;">
+                                <span t-if="company.email">Email:
+                                    <span t-field="company.email"/>
+                                </span>
+                            </div>
+                            <div style="font-size:20px;word-wrap: break-word;">
+                                <span t-if="company.website">Website:
+                                    <span t-field="company.website"/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<hr style="border-top: 1px solid #85C1E9;"/>
+                <h2 style="text-align:center;margin-top:15px">FATURE TATIMORE SHITJE</h2>
+                <table width="50%" style="font-size:22px;margin-left: 1px;">
+                    <tr>
+                        <td width="25%">
+                            <b>Invoice Number</b>
+                        </td>
+                        <td width="1%"/>
+                        <td width="24%">
+                            <span t-if="o.name">
+                                <span t-field="o.name"/>
+                            </span>
+                        </td>
+                    </tr>
+                    <!--                    <tr>-->
+                    <!--                        <td>-->
+                    <!--                            <b>Serial Number:</b>-->
+                    <!--                        </td>-->
+                    <!--                        <td/>-->
+                    <!--                        <td>-->
+                    <!--                            <t t-if="o.number">-->
+                    <!--                                <span t-field="o.number"/>-->
+                    <!--                            </t>-->
+                    <!--                        </td>-->
+                    <!--                    </tr>-->
+                    <tr>
+                        <td>
+                            <b>Date</b>
+                        </td>
+                        <td/>
+                        <td>
+                            <span t-esc="get_date(o)"/>
+                        </td>
+                    </tr>
+                    <!-- <tr>
+                        <td>
+                            <b>Dok.Referues :</b>
+                        </td>
+                        <td/>
+                        <td>
+                            <t t-if="o.origin">
+                                <span t-field="o.origin"/>
+                            </t>
+                        </td>
+                    </tr> -->
+                </table>
                         <hr style="border-top: 1px dashed black"/>
                         <!--customer section-->
                         <div style="font-size:20px;">
