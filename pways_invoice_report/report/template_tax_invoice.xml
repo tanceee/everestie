@@ -18,14 +18,12 @@
 
                             <div style="font-size:24px;">
                                 <t t-if="o.move_type == 'out_invoice' ">
-                                    <!-- <b>
-                                        <center><span>FATURE TATIMORE SHITJE</span></center>
-                                    </b> -->
+                                    <hr style="border-top: 1px solid #85C1E9;"/>
+                <h2 style="text-align:center;margin-top:15px">FATURE TATIMORE SHITJE</h2>
                                 </t>
                                 <t t-if="o.move_type != 'out_invoice' ">
-                                    <b>
-                                        <center><span>Faturë Kthimi</span></center>
-                                    </b>
+                                     <hr style="border-top: 1px solid #85C1E9;"/>
+                <h2 style="text-align:center;margin-top:15px">FATURË KTHIMI</h2>
                                 </t>
 
                             </div>
@@ -96,8 +94,6 @@
                     </div>
                 </div>
 
-<hr style="border-top: 1px solid #85C1E9;"/>
-                <h2 style="text-align:center;margin-top:15px">FATURE TATIMORE SHITJE</h2>
                 <table width="50%" style="font-size:22px;margin-left: 1px;">
                     <tr>
                         <td width="25%">
