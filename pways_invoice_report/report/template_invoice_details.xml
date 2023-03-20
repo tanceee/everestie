@@ -455,12 +455,60 @@
                                     <center><span>DETAJE FATURE</span></center>
                                 </b>
                             </div>
-                            <div class='row' style="font-size: 18px;">
+                            <!-- <div class='row' style="font-size: 18px;">
                                 <div class="col-4"><b>Nr.Fature:<span t-field='o.name'/></b></div>
                                 <div class='col-4'/>
                                 <div class='col-4'><b>Dt: <span t-esc="get_date(o)"/></b></div>
-                            </div>
+                            </div> -->
+<table width="50%" style="font-size:22px;margin-left: 1px;">
+                    <tr>
+                        <td width="25%">
+                            <b>Invoice Number</b>
+                        </td>
+                        <td width="1%"/>
+                        <td width="24%">
+                            <span t-if="o.name">
+                                <span t-field="o.name"/>
+                            </span>
+                        </td>
+                    </tr>
+                    <!--                    <tr>-->
+                    <!--                        <td>-->
+                    <!--                            <b>Serial Number:</b>-->
+                    <!--                        </td>-->
+                    <!--                        <td/>-->
+                    <!--                        <td>-->
+                    <!--                            <t t-if="o.number">-->
+                    <!--                                <span t-field="o.number"/>-->
+                    <!--                            </t>-->
+                    <!--                        </td>-->
+                    <!--                    </tr>-->
+                    <tr>
+                        <td>
+                            <b>Date</b>
+                        </td>
+                        <td/>
+                        <td>
+                            <span t-esc="get_date(o)"/>
+                        </td>
+                    </tr>
+                    <!-- <tr>
+                        <td>
+                            <b>Dok.Referues :</b>
+                        </td>
+                        <td/>
+                        <td>
+                            <t t-if="o.origin">
+                                <span t-field="o.origin"/>
+                            </t>
+                        </td>
+                    </tr> -->
+                </table>
+
                             <div style="font-size:20px;">
+                            <t t-if="company.name">
+                                    <span t-field="company.name"/>,
+                                </t>
                                 <t t-if="company.street">
                                     <span t-field="company.street"/>,
                                 </t>
