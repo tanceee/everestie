@@ -16,12 +16,12 @@ class SaleTaxInvioiceReport110(models.AbstractModel):
     @api.model
     def get_amounts(self, invoice_line):
         taxable_without_discount = 0.0
-        unit_price = invoice_line.price_unit
-        if invoice_line.tax_ids:
-            if invoice_line.tax_ids.price_include:
-                tax_from_price = invoice_line.price_unit * invoice_line.tax_ids.amount / 100
-                unit_price = invoice_line.price_unit /  ( 1+ invoice_line.tax_ids.amount / 100 )
-                
+        unit_price = invoice_line.price_unit if invoice_line.move_id.move_type == 'out_invoice' else - invoice_line.price_unit
+        if invoice_line.tax_ids and invoice_line.tax_ids.price_include:
+            tax_from_price = invoice_line.price_unit * invoice_line.tax_ids.amount / 100
+            unit_price = invoice_line.price_unit /  ( 1+ invoice_line.tax_ids.amount / 100 )
+            unit_price = unit_price if invoice_line.move_id.move_type == 'out_invoice' else - unit_price
+
         taxable_without_discount = unit_price * invoice_line.quantity
         taxable_amount = taxable_without_discount
         if invoice_line.discount:
@@ -95,11 +95,11 @@ class SaleTaxInvioiceReportDetails(models.AbstractModel):
     @api.model
     def get_amounts(self, invoice_line):
         taxable_without_discount = 0.0
-        unit_price = invoice_line.price_unit
-        if invoice_line.tax_ids:
-            if invoice_line.tax_ids.price_include:
-                tax_from_price = invoice_line.price_unit * invoice_line.tax_ids.amount / 100
-                unit_price = invoice_line.price_unit /  ( 1+ invoice_line.tax_ids.amount / 100 )
+        unit_price = invoice_line.price_unit if invoice_line.move_id.move_type == 'out_invoice' else - invoice_line.price_unit
+        if invoice_line.tax_ids and invoice_line.tax_ids.price_include:
+            tax_from_price = invoice_line.price_unit * invoice_line.tax_ids.amount / 100
+            unit_price = invoice_line.price_unit /  ( 1+ invoice_line.tax_ids.amount / 100 )
+            unit_price = unit_price if invoice_line.move_id.move_type == 'out_invoice' else - unit_price
                 
         taxable_without_discount = unit_price * invoice_line.quantity
         taxable_amount = taxable_without_discount

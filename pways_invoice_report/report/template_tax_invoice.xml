@@ -17,9 +17,17 @@
                             </t>
 
                             <div style="font-size:24px;">
-                                <b>
-                                    <center><span>FATURE TATIMORE SHITJE</span></center>
-                                </b>
+                                <t t-if="o.move_type == 'out_invoice' ">
+                                    <b>
+                                        <center><span>FATURE TATIMORE SHITJE</span></center>
+                                    </b>
+                                </t>
+                                <t t-if="o.move_type != 'out_invoice' ">
+                                    <b>
+                                        <center><span>Faturë Kthimi</span></center>
+                                    </b>
+                                </t>
+
                             </div>
                             <div class='row' style="font-size: 18px;">
                                 <div class="col-4"><b>Nr.Dok:<span t-field='o.name'/></b></div>
