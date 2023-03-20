@@ -105,8 +105,8 @@
                         </td>
                         <td width="1%"/>
                         <td width="24%">
-                            <span t-if="o.number">
-                                <span t-field="o.number"/>
+                            <span t-if="o.name">
+                                <span t-field="o.name"/>
                             </span>
                         </td>
                     </tr>
