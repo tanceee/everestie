@@ -130,7 +130,7 @@
                             <span t-esc="get_date(o)"/>
                         </td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td>
                             <b>Dok.Referues :</b>
                         </td>
@@ -140,7 +140,7 @@
                                 <span t-field="o.origin"/>
                             </t>
                         </td>
-                    </tr>
+                    </tr> -->
                 </table>
 
 
