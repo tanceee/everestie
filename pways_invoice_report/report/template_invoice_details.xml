@@ -17,9 +17,9 @@
                             </t>
                             <div style="font-size:24px;">
                                 <t t-if="o.move_type == 'out_invoice' ">
-                                    <b>
+                                    <!-- <b>
                                         <center><span>FATURE TATIMORE SHITJE</span></center>
-                                    </b>
+                                    </b> -->
                                 </t>
                                 <t t-if="o.move_type != 'out_invoice' ">
                                     <b>
@@ -97,7 +97,7 @@
                 </div>
 
  <hr style="border-top: 1px solid #85C1E9;"/>
-                <h2 style="text-align:center;margin-top:15px">Sale Tax Invoice</h2>
+                <h2 style="text-align:center;margin-top:15px">FATURE TATIMORE SHITJE</h2>
                 <table width="50%" style="font-size:22px;margin-left: 1px;">
                     <tr>
                         <td width="25%">
@@ -331,7 +331,7 @@
 
                      
                         <div t-if='not o.skip_fiscalization' class="row" style="margin-top: 30px; font-size:18px;">
-                        <div class="col-7" style="text-align:center;margin-top: 30px; font-size:18px;">
+                        <div class="row" style="text-align:center;margin-top: 30px; font-size:18px;">
 <data inherit_id="account.report_invoice_document">
             <xpath expr="//div[@id='qrcode']" position="before">
                 <div t-if="o.fic_number">
@@ -355,8 +355,8 @@
 
                             
 
-                        <div class="col-7" style="margin-top: 30px; font-size:18px;">
-                         <div t-if="o.from_pos" class="col-7" style="text-align:center; margin-top: 30px;float:center;">
+                        <div class="row" style="margin-top: 30px; font-size:18px;">
+                         <div t-if="o.from_pos" class="row" style="text-align:center; margin-top: 30px;float:center;">
                                  <p><strong>NIVF</strong>(FIC):
                         <t t-esc="o.fic_from_pos"/>
                     </p>
