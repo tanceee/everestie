@@ -456,9 +456,9 @@
                                 </b>
                             </div>
                             <div class='row' style="font-size: 22px;">
-                                <div class="col-6"><b>Nr.Fature:<span t-field='o.name'/></b></div>
+                                <div class="col-4"><b>Nr.Fature:<span t-field='o.name'/></b></div>
                                 <div class='col-4'/>
-                                <div class='col-6'><b>Dt: <span t-esc="get_date(o)"/></b></div>
+                                <div class='col-4'><b>Dt: <span t-esc="get_date(o)"/></b></div>
                             </div>
 
                             <div style="font-size:20px;">
