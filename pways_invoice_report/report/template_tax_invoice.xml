@@ -17,16 +17,25 @@
                             </t>
 
                             <div style="font-size:24px;">
-                                <b>
-                                    <center><span>FATURE TATIMORE SHITJE</span></center>
-                                </b>
+                                <t t-if="o.move_type == 'out_invoice' ">
+                                    <hr style="border-top: 1px solid #85C1E9;"/>
+                <h2 style="text-align:center;margin-top:15px">FATURE TATIMORE SHITJE</h2>
+                                </t>
+                                <t t-if="o.move_type != 'out_invoice' ">
+                                     <hr style="border-top: 1px solid #85C1E9;"/>
+                <h2 style="text-align:center;margin-top:15px">FATURË KTHIMI</h2>
+                                </t>
+
                             </div>
-                            <div class='row'>
-                                <div class="col-4"><b>No. Fature :<span t-field='o.name'/></b></div>
+                            <!-- <div class='row' style="font-size: 18px;">
+                                <div class="col-4"><b>Nr.Fature:<span t-field='o.name'/></b></div>
                                 <div class='col-4'/>
-                                <div class='col-4'><b>Date : <span t-esc="get_date(o)"/></b></div>
+                                <div class='col-4'><b>Dt: <span t-esc="get_date(o)"/></b></div>
                             </div>
                             <div style="font-size:20px;">
+                            <t t-if="company.name">
+                                    <span t-field="company.name"/>,
+                                </t>
                                 <t t-if="company.street">
                                     <span t-field="company.street"/>,
                                 </t>
@@ -41,8 +50,94 @@
                                     <span t-field="company.country_id.name"/>
                                 </t>
                             </div><br/>
-                        </div>
+                        </div> -->
 
+                         <div class="row">
+                        <div class="col-7">
+                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                                 style="max-width: 250px;max-height: 250px;"/>
+                        </div>
+                        <div class="col-5" style="font-size:24px;">
+                            <div style="font-size:24px;">
+                                <b>
+                                    <span t-esc="company.name"/>
+                                </b>
+                            </div>
+                            <div style="font-size:20px;">
+                                <span t-field="company.street"/>,<span t-field="company.street2"/>,
+                                <span t-if="company.city">
+                                    <span t-field="company.city"/>
+                                </span>
+                                <span t-if="company.country_id">,
+                                    <span t-field="company.country_id.name"/>
+                                </span>
+                            </div>
+                            <div style="font-size:20px;word-wrap: break-word;">
+                                Vat :
+                                <span t-field="company.vat"/>
+                            </div>
+                            <div style="font-size:20px;word-wrap: break-word;">
+                                Phone:
+                                <span t-field="company.phone"/>
+                            </div>
+                            <div style="font-size:18px;word-wrap: break-word;">
+                                <span t-if="company.email">Email:
+                                    <span t-field="company.email"/>
+                                </span>
+                            </div>
+                            <div style="font-size:20px;word-wrap: break-word;">
+                                <span t-if="company.website">Website:
+                                    <span t-field="company.website"/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <table width="50%" style="font-size:22px;margin-left: 1px;">
+                    <tr>
+                        <td width="25%">
+                            <b>Invoice Number</b>
+                        </td>
+                        <td width="1%"/>
+                        <td width="24%">
+                            <span t-if="o.name">
+                                <span t-field="o.name"/>
+                            </span>
+                        </td>
+                    </tr>
+                    <!--                    <tr>-->
+                    <!--                        <td>-->
+                    <!--                            <b>Serial Number:</b>-->
+                    <!--                        </td>-->
+                    <!--                        <td/>-->
+                    <!--                        <td>-->
+                    <!--                            <t t-if="o.number">-->
+                    <!--                                <span t-field="o.number"/>-->
+                    <!--                            </t>-->
+                    <!--                        </td>-->
+                    <!--                    </tr>-->
+                    <tr>
+                        <td>
+                            <b>Date</b>
+                        </td>
+                        <td/>
+                        <td>
+                            <span t-esc="get_date(o)"/>
+                        </td>
+                    </tr>
+                    <!-- <tr>
+                        <td>
+                            <b>Dok.Referues :</b>
+                        </td>
+                        <td/>
+                        <td>
+                            <t t-if="o.origin">
+                                <span t-field="o.origin"/>
+                            </t>
+                        </td>
+                    </tr> -->
+                </table>
                         <hr style="border-top: 1px dashed black"/>
                         <!--customer section-->
                         <div style="font-size:20px;">
@@ -227,6 +322,54 @@
                                 </th>
                             </tr>
                         </table>
+
+ <div t-if='not o.skip_fiscalization' class="row" style="margin-top: 30px; font-size:18px;">
+                        <div class="col-20" style="text-align:center;margin-top: 30px; font-size:18px;">
+<data inherit_id="account.report_invoice_document">
+            <xpath expr="//div[@id='qrcode']" position="before">
+                <div t-if="o.fic_number">
+                    <p><strong>NIVF</strong>(FIC):
+                        <t t-esc="o.fic_number"/>
+                    </p>
+                    <p><strong>NSLF</strong>(IIC):
+                        <t t-esc="o.iic_code"/>
+                    </p>
+                    <p><strong>Business Unit</strong>: <t t-esc="o.operating_unit_id.business_unit_code"/>
+                    </p>
+                    <p><strong>Operator</strong>: <t t-esc="o.user_id.operator_code"/>
+                    </p>
+                </div>
+                <div t-if="o.fic_number">
+                     <img t-att-src="'data:image/*;base64,%s' % to_text(o.make_invoice_qr_code(o.iic_code, o.header_send_datetime, o.invoice_order_number, o.amount_total if o.move_type == 'out_invoice' else o.amount_total * -1))"
+                         width="220px" height="220px"/>
+                </div>
+            </xpath>
+        </data>
+
+                            
+
+                        <div class="col-20" style="margin-top: 30px; font-size:18px;">
+                         <div t-if="o.from_pos" class="col-20" style="text-align:center; margin-top: 30px;float:center;">
+                                 <p><strong>NIVF</strong>(FIC):
+                        <t t-esc="o.fic_from_pos"/>
+                    </p>
+                    <p><strong>NSLF</strong>(IIC):
+                        <t t-esc="o.iic_from_pos"/>
+                    </p>
+                    <p><strong>Business Unit</strong>: <t t-esc="o.operating_unit_id.business_unit_code"/>
+                    </p>
+                    <p><strong>Operator</strong>: <t t-esc="o.user_id.operator_code"/>
+                    </p>
+                    <div t-if="o.qrcode_from_pos">
+                                <img t-att-src="'data:image/*;base64,%s' % to_text(o.qrcode_from_pos)" width="220px" height="220px"/>
+                            </div>
+                        </div>
+
+                            </div>
+                        </div>
+                        </div>
+
+                      
                         <div class="row" style="text-align:center;margin-top: 80px; font-size:18px;">
                             <div class="col-4">
                                 <span>Kopje 1: Bleresi</span><br/>
@@ -262,32 +405,13 @@
                                 _____________________
                             </div>
                         </div>
-                        <div class="footer o_standard_footer" style="font-size:15px;">
-                            <hr style="height:3px; border-top:1px solid black;"/>
-                            <!-- <div style="text-align:left;" >
-                                <t t-foreach="company.bank_journal_ids" t-as="l">
-                                    <span>Bank Name :</span>
-                                    <t t-if="l.display_bank">
-                                        <span t-field='l.name'/>&#160;&#160;&#160;&#160;
-                                    </t>
-                                    <span>Account Number:</span>
-                                    <t t-if="l.display_bank">
-                                        <span t-esc="l.bank_acc_number"/>
-                                    </t>
-                                </t>
-                            </div><br/>
-                            <div style="float:center; text-align:center;">
-                                <t t-if='company.website'>
-                                    <span t-field='company.website'/>
-                                </t>
-                            </div>
-                        </div> -->
+                        <div class="text-center" style="font-size:15px;">
+                        <hr style="height:3px; border-top:1px solid black;"/>
                         <div class="text-center">
                             <div class="col-12">
                                 <div>
                                     <table width="100%" style="margin-top: 10px;table-layout: fixed;">
                                         <tr style="word-wrap: break-word;margin-top: 50px;line-height:20px;">
-                                            <!--                                <th width="10%" style="border-bottom: solid black 1px; font-size:16px;"></th>-->
                                             <th width="50%" style="border-bottom: solid black 1px; font-size:16px;">Banka
                                             </th>
                                             <th width="50%" style="border-bottom: solid black 1px; font-size:16px;">Iban
@@ -298,18 +422,19 @@
                             </div>
                                 <div class="col-12">
                                     <div>
-                                        <table width="100%" style="margin-top: 3px;table-layout: fixed;">
-                                            <t t-foreach="company.bank_journal_ids" t-as="l">
-                                                <tr t-if="l.display_bank" style="word-wrap: break-word;margin-top: 50px;line-height:15px;">
-                                                    <td width="50%" style="font-size:14px; ">
-                                                        <span t-field="l.name"/>&#160;-&#160;<span t-field="l.bank_id.bic"/>
-                                                    </td>
-                                                    <td width="50%" style="font-size:14px;">
-                                                        <span t-esc="l.bank_acc_number"/>
-                                                    </td>
-                                                </tr>
-                                            </t>
-                                        </table>
+                                         <table width="100%" style="margin-top: 3px;table-layout: fixed;">
+                                    <t t-foreach="company.bank_journal_ids" t-as="l">
+                                        <tr t-if="l.display_bank"
+                                            style="word-wrap: break-word;margin-top: 50px;line-height:15px;">
+                                            <td width="50%" style="font-size:14px; ">
+                                                <span t-field="l.name"/>&#160;-&#160;<span t-field="l.bank_id.bic"/>
+                                            </td>
+                                            <td width="50%" style="font-size:14px;">
+                                                <span t-esc="l.bank_acc_number"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
                                     </div>
                                 </div>              
                             </div>

@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="invoice_dev_dtr_inv_layout_inherited" model="ir.ui.view">
+    <!-- <data inherit_id="account.report_invoice_document">
+            <xpath expr="//div[@id='qrcode']" position="after">
+                <div t-if="o.fic_number">
+                    <p><strong>NIVF</strong>(FIC):
+                        <t t-esc="o.fic_number"/>
+                    </p>
+                    <p><strong>NSLF</strong>(IIC):
+                        <t t-esc="o.iic_code"/>
+                    </p>
+                    <p><strong>Business Unit</strong>: <t t-esc="o.operating_unit_id.business_unit_code"/>
+                    </p>
+                    <p><strong>Operator</strong>: <t t-esc="o.user_id.operator_code"/>
+                    </p>
+                </div>
+
+                <div t-if="o.fic_number">
+                     <img t-att-src="'data:image/*;base64,%s' % to_text(o.make_invoice_qr_code(o.iic_code, o.header_send_datetime, o.invoice_order_number, o.amount_total if o.move_type == 'out_invoice' else o.amount_total * -1))"
+                         width="140px" height="140px"/>
+                </div>
+            </xpath>
+        </data> -->
+        
+   <!--  <record id="invoice_dev_dtr_inv_layout_inherited" model="ir.ui.view">
         <field name="name">invoice.dev.dtr.inv.layout.inherited</field>
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//page[@name='other_info']" position="before">
+            <xpath expr="//page[last()]" position="before">
                 <page string="Transportuesi">
                     <group>
                         <field name="transportuesi"/>
@@ -15,7 +37,7 @@
                 </page>
             </xpath>
         </field>
-    </record>
+    </record> -->
 
     <template id="stock_account_report_invoice_inherit" inherit_id="stock_account.stock_account_report_invoice_document">
         <xpath expr="//table[@name='invoice_snln_table']//thead//tr" position="inside">

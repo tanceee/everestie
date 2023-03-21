@@ -6,6 +6,7 @@ odoo.define('pways_pos_lot_selection.models', function(require) {
 	var core = require('web.core');	
 	var QWeb = core.qweb;
 	var _t = core._t;
+	
 	models.load_fields('product.product', ['type']);
 	models.load_models({
         model: 'stock.quant',
@@ -28,14 +29,11 @@ odoo.define('pways_pos_lot_selection.models', function(require) {
 
 			result.forEach(function(quant) {
 				var all_qty = {}
-				var fullDate = new Date(Date.parse(quant.expiration_date));
-				var twoDigitMonth = fullDate.getMonth() + 1 + "";
-				if (twoDigitMonth.length == 1)
-				    twoDigitMonth = "0" + twoDigitMonth;
-				var twoDigitDate = fullDate.getDate() + "";
-				if (twoDigitDate.length == 1)
-				    twoDigitDate = "0" + twoDigitDate;
-				var ExpDate = twoDigitDate + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
+				// date convert
+				
+				var dateInUtc = new Date(Date.parse(quant.expiration_date +" UTC"));
+				var newDate = new Date(dateInUtc.getTime() - dateInUtc.getTimezoneOffset());
+				// console.log("NEWWWWWWWWWWW", newDate.toLocaleString());
 
 				if(quant.reserve_quant <= quant.quantity){
 					if(quant.is_expired == false){
@@ -45,7 +43,7 @@ odoo.define('pways_pos_lot_selection.models', function(require) {
 						quant.name = quant.lot_id[1];
 						quant.lot_name = quant.lot_id[1];
 						quant.product_qty = quant.quantity;
-						quant.expiration_date = ExpDate;
+						quant.expiration_date = newDate.toLocaleString();
 						quants.push(quant);
 					}
 				}
