@@ -98,11 +98,11 @@
  <div style="font-size:18px;">
                                 <t t-if="o.move_type == 'out_invoice' ">
                                     <hr style="border-top: 1px solid #85C1E9;"/>
-                <h2 style="text-align:center;margin-top:15px">FATURE TATIMORE SHITJE</h2>
+                <h2 style="text-align:center;margin-top:10px">FATURË TATIMORE SHITJE</h2>
                                 </t>
                                 <t t-if="o.move_type != 'out_invoice' ">
                                   <hr style="border-top: 1px solid #85C1E9;"/>
-                                 <h2 style="text-align:center;margin-top:15px">FATURË KTHIMI</h2>
+                                 <h2 style="text-align:center;margin-top:10px">FATURË KTHIMI</h2>
                                 </t>
 
                             </div>
