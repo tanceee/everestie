@@ -113,8 +113,8 @@
                                 <div class='col-5'><b>Dt: <span t-esc="get_date(o)"/></b></div>
                             </div>
  
-                <!-- <table width="50%" style="font-size:22px;margin-left: 1px;">
-                    <tr>
+                <!-- <table width="50%" style="font-size:22px;margin-left: 1px;"> -->
+                    <!-- <tr>
                         <td width="25%">
                             <b>Invoice Number</b>
                         </td>
@@ -124,7 +124,7 @@
                                 <span t-field="o.name"/>
                             </span>
                         </td>
-                    </tr>
+                    </tr> -->
                     <!--                    <tr>-->
                     <!--                        <td>-->
                     <!--                            <b>Serial Number:</b>-->
@@ -136,7 +136,7 @@
                     <!--                            </t>-->
                     <!--                        </td>-->
                     <!--                    </tr>-->
-                    <tr>
+                    <!-- <tr>
                         <td>
                             <b>Date</b>
                         </td>
@@ -144,7 +144,7 @@
                         <td>
                             <span t-esc="get_date(o)"/>
                         </td>
-                    </tr>
+                    </tr> -->
                     <!-- <tr>
                         <td>
                             <b>Dok.Referues :</b>
@@ -156,7 +156,7 @@
                             </t>
                         </td>
                     </tr> -->
-                </table> -->
+                <!-- </table> -->
 
 
                         <hr style="border-top: 1px dashed black"/>
