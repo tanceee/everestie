@@ -15,7 +15,7 @@
                             <t t-if="not o or not 'company_id' in o">
                                 <t t-set="company" t-value="res_company"/>
                             </t>
-                            <div style="font-size:24px;">
+                            <!-- <div style="font-size:24px;">
                                 <t t-if="o.move_type == 'out_invoice' ">
                                     <hr style="border-top: 1px solid #85C1E9;"/>
                 <h2 style="text-align:center;margin-top:15px">FATURE TATIMORE SHITJE</h2>
@@ -25,7 +25,7 @@
                                  <h2 style="text-align:center;margin-top:15px">FATURË KTHIMI</h2>
                                 </t>
 
-                            </div>
+                            </div> -->
                             <!-- <div class='row' style="font-size: 18px;">
                                 <div class="col-4"><b>Nr.Fature:<span t-field='o.name'/></b></div>
                                 <div class='col-4'/>
@@ -94,9 +94,27 @@
                     </div>
                 </div>
 
+
+ <div style="font-size:18px;">
+                                <t t-if="o.move_type == 'out_invoice' ">
+                                    <hr style="border-top: 1px solid #85C1E9;"/>
+                <h2 style="text-align:center;margin-top:15px">FATURE TATIMORE SHITJE</h2>
+                                </t>
+                                <t t-if="o.move_type != 'out_invoice' ">
+                                  <hr style="border-top: 1px solid #85C1E9;"/>
+                                 <h2 style="text-align:center;margin-top:15px">FATURË KTHIMI</h2>
+                                </t>
+
+                            </div>
+
+                            <div class='row' style="font-size:20px;">
+                                <div class="col-7"><b>Nr.Fature:<span t-field='o.name'/></b></div>
+                                <!-- <div class='col-6'/> -->
+                                <div class='col-6'><b>Dt: <span t-esc="get_date(o)"/></b></div>
+                            </div>
  
-                <table width="50%" style="font-size:22px;margin-left: 1px;">
-                    <tr>
+                <!-- <table width="50%" style="font-size:22px;margin-left: 1px;"> -->
+                    <!-- <tr>
                         <td width="25%">
                             <b>Invoice Number</b>
                         </td>
@@ -106,7 +124,7 @@
                                 <span t-field="o.name"/>
                             </span>
                         </td>
-                    </tr>
+                    </tr> -->
                     <!--                    <tr>-->
                     <!--                        <td>-->
                     <!--                            <b>Serial Number:</b>-->
@@ -118,7 +136,7 @@
                     <!--                            </t>-->
                     <!--                        </td>-->
                     <!--                    </tr>-->
-                    <tr>
+                    <!-- <tr>
                         <td>
                             <b>Date</b>
                         </td>
@@ -126,7 +144,7 @@
                         <td>
                             <span t-esc="get_date(o)"/>
                         </td>
-                    </tr>
+                    </tr> -->
                     <!-- <tr>
                         <td>
                             <b>Dok.Referues :</b>
@@ -138,7 +156,7 @@
                             </t>
                         </td>
                     </tr> -->
-                </table>
+                <!-- </table> -->
 
 
                         <hr style="border-top: 1px dashed black"/>
@@ -452,11 +470,11 @@
                                     <center><span>DETAJE FATURE</span></center>
                                 </b>
                             </div>
-                            <div class='row' style="font-size: 20px;">
+                            <!-- <div class='row' style="font-size: px;">
                                 <div class="col-4"><b>Nr.Fature:<span t-field='o.name'/></b></div>
                                 <div class='col-4'/>
                                 <div class='col-4'><b>Dt: <span t-esc="get_date(o)"/></b></div>
-                            </div>
+                            </div> -->
 
                             <div style="font-size:20px;">
                             <t t-if="company.name">
@@ -477,6 +495,12 @@
                                 </t>
                             </div><br/>
                         </div>
+
+<div class='row' style="font-size:20px;">
+                                <div class="col-7"><b>Nr.Fature:<span t-field='o.name'/></b></div>
+                                <!-- <div class='col-6'/> -->
+                                <div class='col-6'><b>Dt: <span t-esc="get_date(o)"/></b></div>
+                            </div>
 
                         <hr style="border-top: 1px dashed black"/>
                         <!--customer section-->
