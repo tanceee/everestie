@@ -110,7 +110,7 @@
                              <div class='row' style="font-size:20px;">
                                 <div class="col-7"><b>Nr.Fature:<span t-field='o.name'/></b></div>
                                 <!-- <div class='col-6'/> -->
-                                <div><b>Dt: <span t-esc="get_date(o)"/></b></div>
+                                <div class='col-7'><b>Dt: <span t-esc="get_date(o)"/></b></div>
                             </div>
                             
 
