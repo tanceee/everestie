@@ -113,6 +113,10 @@
                                 <div class='col-6'><b>Dt: <span t-esc="get_date(o)"/></b></div>
                             </div>
 
+                           <div class='row' style="font-size:20px;">
+                                <div class="col-7"><b>KODI/EMRI I LLOJIT TË PUNËS:<span t-field='o.bussines_process'/></b></div>
+                                </div>
+
                 <!-- <table width="50%" style="font-size:22px;margin-left: 1px;"> -->
                     <!-- <tr>
                         <td width="25%">
