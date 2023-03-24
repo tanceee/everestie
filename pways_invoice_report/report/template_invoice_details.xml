@@ -110,7 +110,7 @@
                             <div class='row' style="font-size:18px;">
                                 <div class="col-7"><b>Nr.Fature:<span t-field='o.name'/></b></div>
                                 <!-- <div class='col-4'/> -->
-                                <div class='col-5'><b>Dt: <span t-esc="get_date(o)"/></b></div>
+                                <div class='col-4'><b>Dt: <span t-esc="get_date(o)"/></b></div>
                             </div>
  
                 <!-- <table width="50%" style="font-size:22px;margin-left: 1px;"> -->
@@ -499,7 +499,7 @@
 <div class='row' style="font-size:18px;">
                                 <div class="col-7"><b>Nr.Fature:<span t-field='o.name'/></b></div>
                                 <!-- <div class='col-4'/> -->
-                                <div class='col-5'><b>Dt: <span t-esc="get_date(o)"/></b></div>
+                                <div class='col-4'><b>Dt: <span t-esc="get_date(o)"/></b></div>
                             </div>
 
                         <hr style="border-top: 1px dashed black"/>
