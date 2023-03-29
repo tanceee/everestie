@@ -56,6 +56,9 @@ odoo.define('skip_pos_fiscalization', function (require) {
             else if (this.pos.config.disable_fiscalization == true && this.pos.disable_fiscalization == false) {
                 this.pos.config.disable_fiscalization = false
             }
+            if (skip_fiscalization){
+                this.set_to_skip_pos_fisclization_only(true);
+            }
         },
 
         is_skip_fiscalization: function () {

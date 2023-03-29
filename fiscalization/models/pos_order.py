@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 from dateutil import tz
 
-from odoo import api, fields, models, http
+from odoo import api, fields, models, http, _
 from ..services.http_calls.request import make_http_call
 from ..services.http_calls.response import parse_response
 from ..services.invoice import make_invoice
@@ -151,6 +151,7 @@ class PosOrder(models.Model):
     license_plate_no = fields.Char()
     delivery_datetime = fields.Datetime()
     push_datetime = fields.Datetime(default=fields.Datetime.now(), copy=False)
+    skip_pos_fisclization_only = fields.Boolean()
 
     @api.model
     def _order_fields(self, ui_order):
@@ -163,6 +164,7 @@ class PosOrder(models.Model):
             fields['iic_code'] = ui_order.get('iic_code', 0)
         fields["transporter_id"] = ui_order.get("transporter")
         fields["license_plate_no"] = ui_order.get("license")
+        fields["skip_pos_fisclization_only"] = ui_order.get('skip_pos_fisclization_only')
         delivery_time = ui_order.get("delivery_datetime")
         if delivery_time:
             delivery_time = delivery_time.replace("T", " ")
@@ -173,7 +175,6 @@ class PosOrder(models.Model):
     @api.model
     def _process_order(self, order, draft, existing_order):
         pos_order = super(PosOrder, self)._process_order(order, draft, existing_order)
-        print("<<<<<< process_order>>>>>>>>", pos_order)
         if pos_order:
             order_id = self.browse(pos_order)
             if order_id.to_invoice and order_id.state == 'invoiced' and order_id.account_move:
@@ -181,6 +182,47 @@ class PosOrder(models.Model):
                 order_id.account_move.license_plate_no = order_id.license_plate_no
                 order_id.account_move.delivery_datetime = order_id.delivery_datetime
         return pos_order
+
+    def _generate_pos_order_invoice(self):
+        moves = self.env['account.move']
+
+        for order in self:
+            # Force company for all SUPERUSER_ID action
+            if order.account_move:
+                moves += order.account_move
+                continue
+
+            if not order.partner_id:
+                raise UserError(_('Please provide a partner for the sale.'))
+
+            move_vals = order._prepare_invoice_vals()
+            new_move = order._create_invoice(move_vals)
+
+            order.write({'account_move': new_move.id, 'state': 'invoiced'})
+            new_move.sudo().with_company(order.company_id)._post()
+            if order.skip_pos_fisclization_only:
+                if hasattr(order, "skip_fiscalization") and order.skip_fiscalization:
+                    new_move.enable_fiscalization = False
+                new_move.onchange_currency_id_rate()
+                new_move.check_and_perform_fiscalization()
+
+            moves += new_move
+            order._apply_invoice_payments()
+
+        if not moves:
+            return {}
+
+        return {
+            'name': _('Customer Invoice'),
+            'view_mode': 'form',
+            'view_id': self.env.ref('account.view_move_form').id,
+            'res_model': 'account.move',
+            'context': "{'move_type':'out_invoice'}",
+            'type': 'ir.actions.act_window',
+            'nodestroy': True,
+            'target': 'current',
+            'res_id': moves and moves.ids[0] or False,
+        }
 
     #
     # @api.model
@@ -392,6 +434,7 @@ class PosOrder(models.Model):
 
     @api.model
     def create(self, vals_list):
+        print("vals_list", vals_list)
         res = super(PosOrder, self).create(vals_list)
 
         ord_num = res.config_id.sequence_id.get_next_without_consume()
@@ -401,40 +444,42 @@ class PosOrder(models.Model):
     @api.model
     def create_from_ui(self, orders, draft=False):
         order_ids = super(PosOrder, self).create_from_ui(orders, draft)
-        print("<<<<<<<<<<,create_from_ui >>>>>>>>", order_ids)
+        print("order_ids ", order_ids)
         if order_ids:
             order_ids_map = map(lambda i: i["id"], order_ids)
             order_ids_ls = list(order_ids_map)
             order_obj_ids = self.search([("id", "in", order_ids_ls)])
             for order_id in order_obj_ids:
+
                 if len(order_ids) == 1 and not order_id.is_fiscalized:
                     order_id.fiscalize()
         return order_ids
 
     def fiscalize(self):
-        print("<<<<<<<<<<fiscalize >>>>>>>>", self)
-        if not self.config_id.disable_fiscalization:
+        if not self.config_id.disable_fiscalization and not self.skip_pos_fisclization_only:
             tcr_code = self.config_id.tcr_code
-            
+
             # INVOICE
             res = self
             # TODO When submitting after create it is taking it again from ir sequence.
+
+            # res['invoice_order_number'] = self.config_id.sequence_id.get_next_without_consume() - 1
             res['invoice_order_number'] = self.ord_num
             if not self.ord_num:
                 res['invoice_order_number'] = self.config_id.sequence_id.get_next_without_consume()
 
-            if  res['invoice_order_number']:
-                res['invoice_number'] = res['invoice_order_number'] + '/' + str(
-                datetime.now().astimezone().replace(microsecond=0).year) + '/' + tcr_code
-            else:
-                 res['invoice_number'] = self.ord_num
-            
+            res['invoice_number'] = res['invoice_order_number'] + '/' + str(
+                datetime.now().astimezone().replace(
+                    microsecond=0).year) + '/' + tcr_code
             # HEADER
             res['header_UUID'] = uuid.uuid4()
-            res['header_send_datetime'] = datetime.utcnow().replace(tzinfo=from_zone).astimezone(to_zone).replace(microsecond=0).isoformat()
+            res['header_send_datetime'] = datetime.utcnow().replace(
+                tzinfo=from_zone).astimezone(to_zone).replace(
+                microsecond=0).isoformat()
 
             company_id = self.env.user.company_id
             invoice_issuer_nuis = company_id.vat
+            # invoice_busin_unit_code = company_id.business_unit_code
             invoice_busin_unit_code = None
             if self.config_id.allow_operating_unit:
                 invoice_busin_unit_code = self.config_id.operating_unit_id.business_unit_code
@@ -455,12 +500,16 @@ class PosOrder(models.Model):
                 for line in res['lines']:
                     if not line.tax_ids_after_fiscal_position:
                         tax_free_amount += line.price_subtotal_incl
-            
             temp_dict['invoice_tax_free_amount'] = str("{:.2f}".format(tax_free_amount * coff))
+
             temp_dict['type_of_invoice'] = dict(self._fields['type_of_invoice'].selection).get(res['type_of_invoice'])
-            temp_dict['type_of_self_iss'] = dict(self._fields['type_of_self_iss'].selection).get(res['type_of_self_iss'])
+            temp_dict['type_of_self_iss'] = dict(self._fields['type_of_self_iss'].selection).get(
+                res['type_of_self_iss'])
             temp_dict['pay_method_type'] = dict(self._fields['pay_method_type'].selection).get(res['pay_method_type'])
-            order_create_datetime_iso = res.push_datetime.replace(tzinfo=from_zone).astimezone(to_zone).replace( microsecond=0).isoformat()
+            # current_datetime_iso = datetime.utcnow().replace(tzinfo=from_zone).astimezone(to_zone).replace(
+            #     microsecond=0).isoformat()
+            order_create_datetime_iso = res.push_datetime.replace(tzinfo=from_zone).astimezone(to_zone).replace(
+                microsecond=0).isoformat()
 
             time_difference = (datetime.now() - res.push_datetime).total_seconds() / 60.0
             res['invoice_issue_date_time'] = temp_dict['invoice_issue_date_time'] = order_create_datetime_iso
@@ -470,91 +519,49 @@ class PosOrder(models.Model):
             else:
                 temp_dict["online"] = False
 
-            temp_dict['invoice_seller_id_type'] = dict(self._fields['invoice_seller_id_type'].selection).get(res['invoice_seller_id_type'])
+            # res['invoice_issue_date_time'] = temp_dict['invoice_issue_date_time'] = datetime.utcnow().replace(
+            #     tzinfo=from_zone).astimezone(to_zone).replace(
+            #     microsecond=0).isoformat()
+            temp_dict['invoice_seller_id_type'] = dict(self._fields['invoice_seller_id_type'].selection).get(
+                res['invoice_seller_id_type'])
+            # temp_dict['invoice_buyer_id_type'] = dict(self._fields['invoice_buyer_id_type'].selection).get(
+            #     res['invoice_buyer_id_type'])
             temp_dict['invoice_buyer_id_type'] = res['invoice_buyer_id_type']
-            temp_dict['invoice_same_tax_type_of_exempt_from_vat'] = dict(self._fields['invoice_same_tax_type_of_exempt_from_vat'].selection).get(res['invoice_same_tax_type_of_exempt_from_vat'])
+
+            temp_dict['invoice_same_tax_type_of_exempt_from_vat'] = dict(
+                self._fields['invoice_same_tax_type_of_exempt_from_vat'].selection).get(
+                res['invoice_same_tax_type_of_exempt_from_vat'])
+
             temp_dict['invoice_order_number'] = res['invoice_order_number']
-            temp_dict['invoice_number'] = res['invoice_order_number'] + '/' + str(datetime.now().astimezone().replace(microsecond=0).year) + '/' + tcr_code
+            temp_dict['invoice_number'] = res['invoice_order_number'] + '/' + str(
+                datetime.now().astimezone().replace(
+                    microsecond=0).year) + '/' + tcr_code
             temp_dict['company_id_is_in_vat'] = company_id.company_id_is_in_vat
-            temp_dict['invoice_total_amount_without_vat'] = str("{:.2f}".format(float(sum([line['price_subtotal'] for line in res['lines']]))))
+            temp_dict['invoice_total_amount_without_vat'] = str(
+                "{:.2f}".format(float(sum([line['price_subtotal'] for line in res['lines']]))))
+            print("ccccccccccccc", temp_dict['invoice_total_amount_without_vat'])
             temp_dict['is_reverse_charge'] = 'false'
+
             temp_dict['pay_method_amount'] = str("{:.2f}".format(float(res['amount_paid'])))
-            temp_dict['vat_amt'] = str("{:.2f}".format(float(sum([line['price_subtotal_incl'] - line['price_subtotal'] for line in res['lines']]))))
+
+            temp_dict['vat_amt'] = str("{:.2f}".format(
+                float(sum([line['price_subtotal_incl'] - line['price_subtotal'] for line in res['lines']]))))
+
+            # temp_dict['invoice_same_tax_number_of_items'] = str(len(set([getattr(line, 'tax_id', 0) for line in res['lines'] if getattr(line, 'tax_id', 0) != 0])))
             temp_dict['invoice_same_tax_price_before_vat'] = temp_dict['invoice_total_amount_without_vat']
             temp_dict['invoice_same_tax_vat_amount'] = temp_dict['vat_amt']
+            # temp_dict['invoice_same_tax_vat_rate'] = str("{:.2f}".format(float(res['company_id']['vat_rate'])))
             temp_dict['invoice_same_tax_vat_rate'] = str("{:.2f}".format(float(0)))
+
             temp_dict['exrate'] = '123.50'
             temp_dict['invoice_seller_id_country'] = 'ALB'
             temp_dict['invoice_buyer_id_country'] = 'ALB'
             temp_dict['invoice_seller_id_number'] = temp_dict['issuer_nuis']
+
             temp_dict['is_simplified_invoice'] = self.config_id.is_simplify_inv
-           
-            # commented code is place below
-            if res['amount_total'] < 0 and res.refunded_order_ids:
-                pos_order = res.refunded_order_ids[0]
-                if pos_order:
-                    iic_code = pos_order.iic_code
-                    invoice_issue_date_time = pos_order.invoice_issue_date_time
-                    if iic_code and invoice_issue_date_time:
-                        res['is_corrective_invoice'] = 'true'
-                        res['invoice_corrective_iic_ref'] = iic_code
-                        res['invoice_corrective_issue_date_time'] = invoice_issue_date_time
-                        res['invoice_corrective_type'] = 'credit'
-
-
-            vals_dict = {field: getattr(self, field, None) for field in dir(self)}
-            vals_dict.update(temp_dict)
-            company_p12_certificate = company_id.p12_certificate
-            
-
-            if company_p12_certificate:
-                company_p12_certificate = base64.b64decode(company_p12_certificate)
-                certificate_password = company_id.certificate_password.encode('utf-8')
-
-            res['xml'], res['iic_input'], res['iic_code'], res['iic_signature'] = make_invoice(data=vals_dict, company_p12_certificate=company_p12_certificate, certificate_password=certificate_password)
-            inv_check_api_endpoint = company_id.invoice_check_endpoint
-            res['qr_code'] = make_invoice_qr_code(inv_check_api_endpoint=inv_check_api_endpoint,
-                                                  invoice_iic=res['iic_code'],
-                                                  invoice_issuer_nuis=vals_dict['issuer_nuis'],
-                                                  invoice_issue_date_time=vals_dict['invoice_issue_date_time'],
-                                                  invoice_inv_ord_num=vals_dict['invoice_order_number'],
-                                                  invoice_busin_unit_code=vals_dict['busin_unit_code'],
-                                                  invoice_tcr_code=vals_dict['tcr_code'],
-                                                  invoice_soft_code=vals_dict['soft_code'],
-                                                  invoice_tot_price=str("{:.2f}".format(float(vals_dict['amount_total'])))
-                                                )
-
-            response_parsed = ''
-            try:
-                url = company_id.fiscalization_endpoint
-                response = make_http_call(res['xml'], url, timeout=7.5)
-                response_parsed = parse_response(response)
-            except requests.Timeout as e:
-                _logger.error("Timeout: %s" % e)
-            except requests.exceptions.RequestException as e:
-                _logger.error("RequestException: %s" % e)
-            except Exception as e:
-                _logger.error("\n\n There is some unexpected error, halt and check: %s \n\n" % e)
-            finally:
-                res["fiscalization_tries"] += 1
-            if response_parsed and not isinstance(response_parsed, dict):
-                res['fic'] = response_parsed
-                res['is_fiscalized'] = True
-                res['fiscalization_time'] = datetime.now()
-                res['fiscalization_error'] = None
-            if isinstance(response_parsed, dict):
-                res['fic'] = None
-                res['is_fiscalized'] = False
-                res['fiscalization_error'] = response_parsed['Error']
-
-        
-
-
-
-
-            # old code from above
 
             # For Summary invoice
+
             # if session_id.config_id.module_pos_restaurant:
             #     kitchen_order_ids = self.env["pos.kitchen.order"].search([("pos_reference", "=", res.pos_reference)])
             #     if kitchen_order_ids:
@@ -586,7 +593,78 @@ class PosOrder(models.Model):
             #     iic_code = pos_order.returned_order_id.iic_code
             #     invoice_issue_date_time = pos_order.returned_order_id.invoice_issue_date_time
             # else:
+            if res['amount_total'] < 0 and res.refunded_order_ids:
 
+                pos_order = res.refunded_order_ids[0]
+                if pos_order:
+                    iic_code = pos_order.iic_code
+                    invoice_issue_date_time = pos_order.invoice_issue_date_time
+                    if iic_code and invoice_issue_date_time:
+                        res['is_corrective_invoice'] = 'true'
+                        res['invoice_corrective_iic_ref'] = iic_code
+                        res['invoice_corrective_issue_date_time'] = invoice_issue_date_time
+                        res['invoice_corrective_type'] = 'credit'
+
+            # vals_dict.update(temp_dict)
+            # res.update(vals_dict)
+
+            vals_dict = {field: getattr(self, field, None) for field in dir(self)}
+
+            vals_dict.update(temp_dict)
+
+            company_p12_certificate = company_id.p12_certificate
+            if company_p12_certificate:
+                company_p12_certificate = base64.b64decode(company_p12_certificate)
+                certificate_password = company_id.certificate_password.encode('utf-8')
+
+            res['xml'], res['iic_input'], res['iic_code'], res['iic_signature'] = make_invoice(data=vals_dict,
+                                                                                               company_p12_certificate=company_p12_certificate,
+                                                                                               certificate_password=certificate_password)
+            print("PAYLOAD ----->", res['xml'])
+            # _logger.info("PAYLOAD -----> \n\n%s" % res["xml"])
+            inv_check_api_endpoint = company_id.invoice_check_endpoint
+
+            res['qr_code'] = make_invoice_qr_code(inv_check_api_endpoint=inv_check_api_endpoint,
+                                                  invoice_iic=res['iic_code'],
+                                                  invoice_issuer_nuis=vals_dict['issuer_nuis'],
+                                                  invoice_issue_date_time=vals_dict['invoice_issue_date_time'],
+                                                  invoice_inv_ord_num=vals_dict['invoice_order_number'],
+                                                  invoice_busin_unit_code=vals_dict['busin_unit_code'],
+                                                  invoice_tcr_code=vals_dict['tcr_code'],
+                                                  invoice_soft_code=vals_dict['soft_code'],
+                                                  invoice_tot_price=str(
+                                                      "{:.2f}".format(float(vals_dict['amount_total'])))
+                                                  )
+
+            response_parsed = ''
+            try:
+                url = company_id.fiscalization_endpoint
+                response = make_http_call(res['xml'], url, timeout=7.5)
+                print("RESPONSE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", response)
+                # _logger.info("RESPONSE -----> \n\n%s" % response)
+                response_parsed = parse_response(response)
+            except requests.Timeout as e:
+                _logger.error("Timeout: %s" % e)
+                print("Timeout", e)
+            except requests.exceptions.RequestException as e:
+                _logger.error("RequestException: %s" % e)
+                print("11111111", e)
+            except Exception as e:
+                _logger.error("\n\n There is some unexpected error, halt and check: %s \n\n" % e)
+            finally:
+                res["fiscalization_tries"] += 1
+                print("?????????????????????????@@@@", res.fiscalization_tries)
+            if response_parsed and not isinstance(response_parsed, dict):
+                res['fic'] = response_parsed
+                res['is_fiscalized'] = True
+                res['fiscalization_time'] = datetime.now()
+                res['fiscalization_error'] = None
+            if isinstance(response_parsed, dict):
+                res['fic'] = None
+                res['is_fiscalized'] = False
+                res['fiscalization_error'] = response_parsed['Error']
+        if self.skip_pos_fisclization_only:
+            self.fiscalization_tries = 5
 
         # ******************* OLD Implementation ********************
         # self.ensure_one()
@@ -744,7 +822,7 @@ class PosOrder(models.Model):
 
     def _export_for_ui(self, order):
         res = super(PosOrder, self)._export_for_ui(order)
-        print("<<<<<<<_export_for_ui>>>>>>>>>>", order)
+        # print("order", order.iic_code)
         res.update({
             # Added fields for fiscalization
             'nslf': order.iic_code,
@@ -754,7 +832,8 @@ class PosOrder(models.Model):
             'operator_code': order.operator_code,
             'fiscalization_url': order.fiscalization_url,
             'invoice_issue_date_time': order.invoice_issue_date_time,
-            'business_unit_address': order.config_id.operating_unit_id.partner_id._display_address(without_company=True),
+            'business_unit_address': order.config_id.operating_unit_id.partner_id._display_address(
+                without_company=True),
             'partner_name': order.partner_id.name,
             'vat': order.partner_id.vat,
             'street': order.partner_id.street,

@@ -598,7 +598,7 @@ class AccountInvoice(models.Model):
         # password = os.getenv('PRIVATE_PASSWORD').encode('utf-8')
         # p12 = open(certificate, 'rb').read()
         # print("paswd", password)
-        # print("p12", p12)
+        print("p12", vals_dict)
 
         res['xml'] = make_invoice(data=vals_dict, company_p12_certificate=company_p12_certificate,
                                   certificate_password=certificate_password)
@@ -654,12 +654,15 @@ class AccountInvoice(models.Model):
                     rec.invoice_order_number = inv_seq_number
                     rec.invoice_number = str(inv_seq_number) + '/' + str(
                         datetime.now().astimezone().replace(microsecond=0).year)
+            pos_e_invoice = False
             if hasattr(self, "pos_order_ids"):
                 pos_order_ids = self.pos_order_ids
+                if pos_order_ids and pos_order_ids.skip_pos_fisclization_only:
+                    pos_e_invoice = True
             else:
-                pos_order_ids = False
+                pos_e_invoice = True
 
-            if self.enable_fiscalization and not pos_order_ids:
+            if self.enable_fiscalization and pos_e_invoice:
                 # self.enable_fiscalization = True
                 # Skip pos order invoices
                 # TODO check
@@ -684,7 +687,6 @@ class AccountInvoice(models.Model):
     def e_invoice_reg(self):
         xml_ubl_invoice_content = self.generate_ubl_xml_string().decode('utf-8')
         print("Registering E-invoice", xml_ubl_invoice_content)
-        _logger.info(">>>>>>>>> XML CONTENT %s" % xml_ubl_invoice_content)
         company_id = self.env.user.company_id
         company_p12_certificate = company_id.p12_certificate
         company_p12_certificate = base64.b64decode(company_p12_certificate)
@@ -1336,7 +1338,7 @@ class AccountInvoice(models.Model):
 
         if self.currency_id.name != "ALL":
             currency_exchange_rate_note = etree.SubElement(parent_node, ns['cbc'] + 'Note')
-            currency_exchange_rate_note.text = "CurrencyExchangeRate=" + '%0.*f' % (2, self.currency_id.inverse_rate)
+            currency_exchange_rate_note.text = "CurrencyExchangeRate=" + '%0.*f' % (2, self.currency_rate)
 
         if self.narration:
             note = etree.SubElement(parent_node, ns['cbc'] + 'Note')
