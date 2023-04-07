@@ -204,6 +204,7 @@ class PosOrder(models.Model):
                 if hasattr(order, "skip_fiscalization") and order.skip_fiscalization:
                     new_move.enable_fiscalization = False
                 new_move.onchange_currency_id_rate()
+                new_move._onchange_invoice_line_ids_2()
                 new_move.check_and_perform_fiscalization()
 
             moves += new_move

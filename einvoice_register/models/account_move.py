@@ -598,7 +598,7 @@ class AccountInvoice(models.Model):
         # password = os.getenv('PRIVATE_PASSWORD').encode('utf-8')
         # p12 = open(certificate, 'rb').read()
         # print("paswd", password)
-        print("p12", vals_dict)
+        # print("p12", vals_dict)
 
         res['xml'] = make_invoice(data=vals_dict, company_p12_certificate=company_p12_certificate,
                                   certificate_password=certificate_password)
@@ -657,11 +657,15 @@ class AccountInvoice(models.Model):
             pos_e_invoice = False
             if hasattr(self, "pos_order_ids"):
                 pos_order_ids = self.pos_order_ids
-                if pos_order_ids and pos_order_ids.skip_pos_fisclization_only:
+                if pos_order_ids :
+                    if pos_order_ids.skip_pos_fisclization_only:
+                        pos_e_invoice = True
+                else:
                     pos_e_invoice = True
+
             else:
                 pos_e_invoice = True
-
+            print("pos_e_invoice", pos_e_invoice)
             if self.enable_fiscalization and pos_e_invoice:
                 # self.enable_fiscalization = True
                 # Skip pos order invoices
