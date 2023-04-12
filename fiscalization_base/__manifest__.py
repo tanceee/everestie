@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Fiscalization Base ",
+    'name': "Fiscalization Base",
 
     'summary': """Base Module for E-Invoice Fiscalization""",
 
