@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <!--    Tree View of Header Model-->
+    <record id="fiscalization_header_tree" model="ir.ui.view">
+        <field name="name">fiscalization.header.tree</field>
+        <field name="model">fiscalization.header</field>
+        <field name="arch" type="xml">
+            <tree string="Headers">
+                <field name="header_UUID"/>
+                <field name="header_send_datetime"/>
+                <field name="header_subseq_delivery_type"/>
+                <field name="invoice_order_number"/>
+                <field name="invoice_number"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--    Form View of Header Model-->
+    <record id="fiscalization_header_form" model="ir.ui.view">
+        <field name="name">fiscalization.header.form</field>
+        <field name="model">fiscalization.header</field>
+        <field name="arch" type="xml">
+            <form string="Headers">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="header_UUID"/>
+                        </group>
+                        <group>
+                            <field name="header_send_datetime"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="header_subseq_delivery_type"/>
+                    </group>
+                    <group>
+                        <field name="invoice_order_number"/>
+                    </group>
+                    <group>
+                        <field name="invoice_number"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--action of the headers menu-->
+    <record id="action_fiscalization_header" model="ir.actions.act_window">
+        <field name="name">Headers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">fiscalization.header</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your First Header!
+            </p>
+        </field>
+    </record>
+
+    <record id="sequence_number" model="ir.sequence">
+        <field name="name">Order Number Sequence Number</field>
+        <field name="code">pos.order.sequence.number</field>
+<!--        <field name="prefix">DDT/</field>-->
+        <field name="padding">1</field>
+        <field name="comonay_id" eval="False"/>
+    </record>
+
+    <menuitem id="fiscalization_header_root" name="Fiscalization" sequence="1" groups="base.group_user"
+              web_icon="fiscalization, static/description/icon.png"/>
+    <menuitem id="fiscalization_header" name="Headers" parent="fiscalization_header_root"
+              action="action_fiscalization_header"/>
+    <!--Fiscalization Root Menu-->
+<!--    <menuitem-->
+<!--            id="root_menu_fiscalization"-->
+<!--            name="Fiscalization"-->
+<!--            groups="base.group_user"-->
+<!--            web_icon="fiscalization, static/description/icon.png"-->
+<!--            sequence="1"/>-->
+</odoo>

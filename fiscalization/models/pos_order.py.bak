@@ -1,0 +1,284 @@
+import uuid
+from datetime import datetime
+
+from dateutil import tz
+
+from odoo import api, fields, models
+from ..services.http_calls.request import make_http_call
+from ..services.http_calls.response import parse_response
+from ..services.invoice import make_invoice
+from ..services.qr_codes.make_invoice_qr_code import make_invoice_qr_code
+
+from_zone = tz.gettz('UTC')
+to_zone = tz.gettz('Europe/Tirane')
+
+class PosOrder(models.Model):
+    _inherit = "pos.order"
+
+    # HEADER
+    header_UUID = fields.Char(string="Header UUID", readonly=True)
+    header_send_datetime = fields.Char("Header Date Time", readonly=True)
+    header_subseq_delivery_type = fields.Selection(selection=[('no_internet', 'NOINTERNET'),
+                                                              ('bound_book', 'BOUNDBOOK'),
+                                                              ('service', 'SERVICE'),
+                                                              ('technical_error', 'TECHNICALERROR')], default='service')
+
+    # INVOICE
+    type_of_invoice = fields.Selection(selection=[('C', 'CASH'), ('N', 'NONCASH')], default='C')
+    type_of_self_iss = fields.Selection(selection=[('agreement', 'AGREEMENT'),
+                                                   ('domestic', 'DOMESTIC'),
+                                                   ('abroad', 'ABROAD'),
+                                                   ('self', 'SELF'),
+                                                   ('other', 'OTHER')], default=None)
+    is_simplified_invoice = fields.Char("Is simplified invoice?", selection=[('true', 'true'), ('false', 'false')], default='true')
+    invoice_number = fields.Char("Invoice Order Number")
+    invoice_order_number = fields.Char("Order Number")
+    invoice_tax_free_amount = fields.Float(digits=(12, 2))  # optional
+    invoice_markup_amount = fields.Float(digits=(12, 2))  # optional
+    invoice_goods_exported_amount = fields.Float(digits=(12, 2))  # optional
+    invoice_total_amount_without_vat = fields.Float(digits=(12, 2)) # compute
+    invoice_total_amount = fields.Float(digits=(12, 2))
+    invoice_total_price = fields.Float(digits=(12, 2))
+    invoice_import_custom_declare_number = fields.Char("Numri i deklarates doganore te importit", size=50)
+    iic_code = fields.Char("Kodi Identifikues i fatures (NSLF)", size=32, readonly=True)
+    iic_signature = fields.Char("Parametrat e Kodit Identifikues te fatures", size=512)
+    invoice_issue_date_time = fields.Char('Invoice Issue Date Time')
+
+    # CORRECTIVE INVOICE
+    is_corrective_invoice = fields.Char('Is corrective invoice?', selection=[('true', 'true'), ('false', 'false')], default='false')
+    invoice_corrective_iic_ref = fields.Char('Kodi Identifikues i fatures qe po korigjohet', size=32, required=False)
+    invoice_corrective_issue_date_time = fields.Char('Creation date and time of the invoice that is being corrected', required=False)
+    invoice_corrective_type = fields.Selection(selection=[('corrective', 'CORRECTIVE'),
+                                                          ('debit', 'DEBIT'),
+                                                          ('credit', 'CREDIT')], default='corrective', required=False)
+    # INVOICE PAY METHODS
+
+    pay_method_type = fields.Selection(selection=[('bank_note', 'BANKNOTE'),
+                                                  ('card', 'CARD'),
+                                                  ('check', 'CHECK'),
+                                                  ('s_voucher', 'SVOUCHER'),
+                                                  ('company', 'COMPANY'),
+                                                  ('order', 'ORDER')], default='bank_note')
+    pay_method_amount = fields.Float(digits=(12, 2))
+
+    # INVOICE CURRENCY
+
+    invoice_currency_code = fields.Char(related='pricelist_id.currency_id.name')
+    # invoice_currency_exchange_rate = fields.Float(digits=(12, 3))  # related='pricelist_id.currency_id.inverse_rate'
+    invoice_currency_is_buying = fields.Char(selection=[('true', 'true'), ('false', 'false')], default='false')
+
+    # INVOICE SELLER
+
+    invoice_seller_id_number = fields .Char(related='company_id.vat', size=20)
+    invoice_seller_id_type = fields.Selection(selection=[('nuis', 'NUIS'),
+                                                         ('id', 'ID'),
+                                                         ('pass', 'PASS'),
+                                                         ('vat', 'VAT'),
+                                                         ('tax', 'TAX'),
+                                                         ('soc', 'SOC')], default='nuis')
+    invoice_seller_id_name = fields.Char(related='company_id.name', size=100)
+    invoice_seller_id_address = fields.Char(related='company_id.street', size=200)
+    invoice_seller_id_city = fields.Char(related='company_id.city', size=100)
+    invoice_seller_id_country = fields.Char(related='company_id.country_id.code')
+
+    # INVOICE BUYER
+
+    invoice_buyer_id_number = fields.Char(related='partner_id.vat', size=20)
+    invoice_buyer_id_type = fields.Selection(selection=[('nuis', 'NUIS'),
+                                                        ('id', 'ID'),
+                                                        ('pass', 'PASS'),
+                                                        ('vat', 'VAT'),
+                                                        ('tax', 'TAX'),
+                                                        ('soc', 'SOC')], default=False)
+    invoice_buyer_id_name = fields.Char(related='partner_id.name', size=100)
+    invoice_buyer_id_address = fields.Char(related='partner_id.street', size=200)
+    invoice_buyer_id_city = fields.Char(related='partner_id.city', size=100)
+    invoice_buyer_id_country = fields.Char(related='partner_id.country_id.name')
+
+    # INVOICE SAME TAXES
+
+    invoice_same_tax_number_of_items = fields.Integer()  # to be computed
+    invoice_same_tax_price_before_vat = fields.Float(digits=(12, 2))
+    invoice_same_tax_vat_rate = fields.Float(digits=(12, 2))
+    invoice_same_tax_type_of_exempt_from_vat = fields.Selection(selection=[('type_1', 'TYPE_1'),
+                                                                           ('type_2', 'TYPE_2')],
+                                                                default='type_1')
+    invoice_same_tax_vat_amount = fields.Float(digits=(12, 2))
+
+    xml = fields.Char(help='Generated XML for the fiscalization process')
+    qr_code = fields.Binary("QR Code", attachment=True)
+    iic_input = fields.Char(help='IIC input used for multiple purposes')
+    fic = fields.Char("Kodi Unik i fatures se fiskalizuar (NIVF)", readonly=True)
+    is_fiscalized = fields.Boolean(default=False, readonly=True)
+    fiscalization_error = fields.Char(help='The error message received received when an invoice is not being fiscalized properly', default=None, readonly=True)
+
+    @api.model
+    def create(self, vals):
+        res = super(PosOrder, self).create(vals)
+        # INVOICE
+        res['invoice_order_number'] = self.env['ir.sequence'].next_by_code(
+            'pos.order.sequence.number')
+        res['invoice_number'] = res['invoice_order_number'] + '/' + str(
+            datetime.now().astimezone().replace(
+                microsecond=0).year) + '/' + "vc813ms173"
+        # HEADER
+        res['header_UUID'] = uuid.uuid4()
+        res['header_send_datetime'] = datetime.utcnow().replace(
+            tzinfo=from_zone).astimezone(to_zone).replace(
+            microsecond=0).isoformat()
+
+
+
+
+        temp_dict = {'issuer_nuis': 'L62316009V', "busin_unit_code": "ll996sf167", "tcr_code": "vc813ms173", "soft_code": "bi558ej110", "operator_code": "pb999gp965"}
+        temp_dict['type_of_invoice'] = dict(self._fields['type_of_invoice'].selection).get(res['type_of_invoice'])
+        temp_dict['type_of_self_iss'] = dict(self._fields['type_of_self_iss'].selection).get(res['type_of_self_iss'])
+        temp_dict['pay_method_type'] = dict(self._fields['pay_method_type'].selection).get(res['pay_method_type'])
+        res['invoice_issue_date_time'] = temp_dict['invoice_issue_date_time'] = datetime.utcnow().replace(
+            tzinfo=from_zone).astimezone(to_zone).replace(
+            microsecond=0).isoformat()
+        temp_dict['invoice_seller_id_type'] = dict(self._fields['invoice_seller_id_type'].selection).get(res['invoice_seller_id_type'])
+
+        temp_dict['invoice_same_tax_type_of_exempt_from_vat'] = dict(self._fields['invoice_same_tax_type_of_exempt_from_vat'].selection).get(res['invoice_same_tax_type_of_exempt_from_vat'])
+
+
+        temp_dict['invoice_order_number'] = res['invoice_order_number']
+        temp_dict['invoice_number'] = res['invoice_number']
+        temp_dict['company_id_is_in_vat'] = res['company_id']['company_id_is_in_vat']
+        temp_dict['invoice_total_amount_without_vat'] = str("{:.2f}".format(float(sum([line['price_subtotal'] for line in res['lines']]))))
+        temp_dict['is_reverse_charge'] = res['company_id']['is_reverse_charge']
+        temp_dict['pay_method_amount'] = str("{:.2f}".format(float(res['amount_paid'])))
+
+        temp_dict['vat_amt'] = str("{:.2f}".format(float(sum([line['price_subtotal_incl'] - line['price_subtotal'] for line in res['lines']]))))
+
+        # temp_dict['invoice_same_tax_number_of_items'] = str(len(set([getattr(line, 'tax_id', 0) for line in res['lines'] if getattr(line, 'tax_id', 0) != 0])))
+        temp_dict['invoice_same_tax_price_before_vat'] = temp_dict['invoice_total_amount_without_vat']
+        temp_dict['invoice_same_tax_vat_amount'] = temp_dict['vat_amt']
+        temp_dict['invoice_same_tax_vat_rate'] = str("{:.2f}".format(float(res['company_id']['vat_rate'])))
+
+        temp_dict['exrate'] = '123.50'
+        temp_dict['invoice_seller_id_country'] = 'ALB'
+        temp_dict['invoice_seller_id_number'] = temp_dict['issuer_nuis']
+        vals_dict = {field: getattr(res, field, None) for field in dir(res)}
+
+        vals_dict.update(temp_dict)
+        vals.update(vals_dict)
+        res['xml'], res['iic_input'], res['iic_code'], res['iic_signature'] = make_invoice(data=vals)
+        res['qr_code'] = make_invoice_qr_code(
+            invoice_iic=res['iic_code'],
+            invoice_issuer_nuis=vals_dict['issuer_nuis'],
+            invoice_issue_date_time=vals_dict['invoice_issue_date_time'],
+            invoice_inv_ord_num=vals_dict['invoice_order_number'],
+            invoice_busin_unit_code=vals_dict['busin_unit_code'],
+            invoice_tcr_code=vals_dict['tcr_code'],
+            invoice_soft_code=vals_dict['soft_code'],
+            invoice_tot_price=str(
+                "{:.2f}".format(float(vals_dict['amount_total'])))
+        )
+
+        response = make_http_call(res['xml'])
+        response_parsed = parse_response(response)
+        if response_parsed and not isinstance(response_parsed, dict):
+            res['fic'] = response_parsed
+            res['is_fiscalized'] = True
+            res['fiscalization_error'] = None
+        if isinstance(response_parsed, dict):
+            res['fic'] = None
+            res['is_fiscalized'] = False
+            res['fiscalization_error'] = response_parsed['Error']
+        return res
+
+
+
+    @api.multi
+    def fiscalize(self, cr, context=None):
+        self.ensure_one()
+        self['header_UUID'] = uuid.uuid4()
+        self['header_send_datetime'] = datetime.utcnow().replace(
+            tzinfo=from_zone).astimezone(to_zone).replace(
+            microsecond=0).isoformat()
+
+        temp_dict = {'issuer_nuis': 'L62316009V',
+                     "busin_unit_code": "ll996sf167", "tcr_code": "vc813ms173",
+                     "soft_code": "bi558ej110", "operator_code": "pb999gp965"}
+        temp_dict['type_of_invoice'] = dict(
+            self._fields['type_of_invoice'].selection).get(
+            self['type_of_invoice'])
+        temp_dict['type_of_self_iss'] = dict(
+            self._fields['type_of_self_iss'].selection).get(
+            self['type_of_self_iss'])
+        temp_dict['pay_method_type'] = dict(
+            self._fields['pay_method_type'].selection).get(
+            self['pay_method_type'])
+
+        temp_dict['invoice_seller_id_type'] = dict(
+            self._fields['invoice_seller_id_type'].selection).get(
+            self['invoice_seller_id_type'])
+
+        temp_dict['invoice_same_tax_type_of_exempt_from_vat'] = dict(
+            self._fields[
+                'invoice_same_tax_type_of_exempt_from_vat'].selection).get(
+            self['invoice_same_tax_type_of_exempt_from_vat'])
+
+        temp_dict['invoice_order_number'] = self['invoice_order_number']
+        temp_dict['invoice_number'] = self['invoice_number']
+        temp_dict['company_id_is_in_vat'] = self['company_id'][
+            'company_id_is_in_vat']
+        temp_dict['invoice_total_amount_without_vat'] = str("{:.2f}".format(
+            float(sum([line['price_subtotal'] for line in self['lines']]))))
+        temp_dict['is_reverse_charge'] = self['company_id'][
+            'is_reverse_charge']
+        temp_dict['pay_method_amount'] = str(
+            "{:.2f}".format(float(self['amount_paid'])))
+
+        temp_dict['vat_amt'] = str("{:.2f}".format(float(
+            sum([line['price_subtotal_incl'] - line['price_subtotal'] for line
+                 in self['lines']]))))
+
+        temp_dict['invoice_same_tax_price_before_vat'] = temp_dict[
+            'invoice_total_amount_without_vat']
+        temp_dict['invoice_same_tax_vat_amount'] = temp_dict['vat_amt']
+        temp_dict['invoice_same_tax_vat_rate'] = str(
+            "{:.2f}".format(float(self['company_id']['vat_rate'])))
+
+        temp_dict['exrate'] = '123.50'
+        temp_dict['invoice_seller_id_country'] = 'ALB'
+        temp_dict['invoice_seller_id_number'] = temp_dict['issuer_nuis']
+
+        # only for invoices that are not sent immediately (manual fiscalization)
+        temp_dict['header_subseq_delivery_type'] = 'NOINTERNET'
+
+
+        vals_dict = {field: getattr(self, field, None) for field in dir(self)}
+
+        vals_dict.update(temp_dict)
+
+
+
+        self['xml'], self['iic_input'], self['iic_code'], self[
+            'iic_signature'] = make_invoice(data=vals_dict)
+
+        self['qr_code'] = make_invoice_qr_code(
+            invoice_iic=self['iic_code'],
+            invoice_issuer_nuis=vals_dict['issuer_nuis'],
+            invoice_issue_date_time=vals_dict['invoice_issue_date_time'],
+            invoice_inv_ord_num=vals_dict['invoice_order_number'],
+            invoice_busin_unit_code=vals_dict['busin_unit_code'],
+            invoice_tcr_code=vals_dict['tcr_code'],
+            invoice_soft_code=vals_dict['soft_code'],
+            invoice_tot_price=str(
+                "{:.2f}".format(float(vals_dict['amount_total'])))
+        )
+
+        response = make_http_call(self['xml'])
+        response_parsed = parse_response(response)
+        if response_parsed and not isinstance(response_parsed, dict):
+            self['fic'] = response_parsed
+            self['is_fiscalized'] = True
+            self['fiscalization_error'] = None
+        if isinstance(response_parsed, dict):
+            self['fic'] = None
+            self['is_fiscalized'] = False
+            self['fiscalization_error'] = response_parsed['Error']
+        return self
+
