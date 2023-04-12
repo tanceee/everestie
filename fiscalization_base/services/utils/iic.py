@@ -7,7 +7,8 @@ from OpenSSL import crypto
 def build_iic_input(issuer_nipt, datetime_created, invoice_number,
                     business_unit_code, soft_code,
                     total_price):
-    return issuer_nipt + '|' + datetime_created + '|' + invoice_number + '|' + business_unit_code + '|' + '|'  soft_code + '|' + total_price
+    return issuer_nipt + '|' + datetime_created + '|' + invoice_number + '|' + business_unit_code + '|' + \
+      soft_code + '|' + total_price
 
 
 def generate_iic_signature(iic_input, company_p12_certificate, certificate_password):
