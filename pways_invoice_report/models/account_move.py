@@ -209,7 +209,7 @@ class AccountMove(models.Model):
                     'uom_name': lot.product_uom_id.name,
                     'lot_name': lot.name,
                     'lot_id': lot.id,
-                    'expiry_date': self.convert_TZ_UTC(fields.Datetime.to_string(lot_id.expiration_date)) if lot.expiration_date else False
+                    'expiry_date': self.convert_TZ_UTC(fields.Datetime.to_string(lot.expiration_date)) if lot.expiration_date else False
                 })
         return res
 
