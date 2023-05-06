@@ -190,7 +190,7 @@ class AccountMove(models.Model):
                             'quantity': line.qty if lot.product_id.tracking == 'lot' else 1.0,
                             'uom_name': line.product_uom_id.name,
                             'lot_name': lot.lot_name,
-                            'expiry_date': self.convert_TZ_UTC(fields.Datetime.to_string(lot.expiration_date)) if lot_id and lot_id.expiration_date else False, 
+                            'expiry_date': self.convert_TZ_UTC(fields.Datetime.to_string(lot_id.expiration_date)) if lot_id and lot_id.expiration_date else False, 
                         })
         else:
             for lot, qty in qties_per_lot.items():
