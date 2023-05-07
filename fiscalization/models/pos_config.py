@@ -1,6 +1,7 @@
 import datetime
 
 from odoo import api, fields, models, exceptions
+from odoo.exceptions import ValidationError
 from ..services.tcr import make_tcr
 from ..services.http_calls.response import parse_response
 from ..services.http_calls.request import make_http_call
@@ -15,13 +16,55 @@ class PosConfig(models.Model):
     tcr_type = fields.Selection(string="TCR type", selection=[('REGULAR', 'REGULAR'), ('VENDING', 'VENDING')],
                                 default='REGULAR')
     tcr_code = fields.Char("TCR Code", size=10)
-    disable_fiscalization = fields.Boolean("Discable Fiscalization")
+    disable_fiscalization = fields.Boolean("Disable Fiscalization")
     is_simplify_inv = fields.Boolean(string="IsSimplifiedInv")
     business_unit_code = fields.Char(related='operating_unit_id.business_unit_code')
     show_company_logo = fields.Boolean("Show Company Logo")
     enable_transporter = fields.Boolean()
+
     # image_check = fields.Binary(string="Image (jpg)")
     # image_size = fields.Integer("Image Size(bytes)")
+
+    # ---- pos e-invoice default value fields ----
+    # enable_e_invoice = fields.Boolean()
+    # business_process = fields.Selection(
+    #     [('P1', '[P1] Invoicing the supply of goods and services ordered on a contract basis'),
+    #      ('P2', '[P2] Periodic invoicing of contract-based delivery'),
+    #      ('P3', '[P3] Invoicing delivery over unforeseen orders'),
+    #      ('P4', '[P4] Advance Payment'),
+    #      ('P5', '[P5] Spot payment'),
+    #      ('P6', '[P6] Payment before delivery on the based on a purchase order'),
+    #      ('P7', '[P7] Invoices with reference to a dispatch note'),
+    #      ('P8', '[P8] Invoices with reference to dispatch and receipt'),
+    #      ('P9', '[P9] Approval or Negative Invoicing'),
+    #      ('P10', '[P10] Corrective Invoicing'),
+    #      ('P11', '[P11] Partial and final invoicing'),
+    #      ], default="P1", required=True, )
+    #
+    # type_code = fields.Selection(
+    #     [("80", "[80] Debit note related to goods or services"),
+    #      ("82", "[82] Metered services invoice"),
+    #      ("84", "[84] Debit note related to financial adjustments"),
+    #      ("380", "[380] Commercial invoice"),
+    #      ("383", "[383] Debit note"),
+    #      ("384", "[384] Corrective invoice"),
+    #      ("386", "[386] Prepayment invoice"),
+    #      ("388", "[388] Tax invoice"),
+    #      ("393", "[393] Factored invoice"),
+    #      ("395", "[395] Consignment invoice"),
+    #      ("575", "[575] Forwarder's invoice"),
+    #      ("780", "[780] Freight invoice"),
+    #      ("81", "[81] Credit note related to goods or services"),
+    #      ("83", "[83] Credit note related to financial adjustments"),
+    #      ("381", "[381] Credit note"),
+    #      ("396", "[396] Factored credit note"),
+    #      ("532", "[532] Forwarder's credit note"),
+    #      ], default="388")
+
+    # @api.onchange("enable_e_invoice")
+    # def check_module_account(self):
+    #     if not self.module_account and self.enable_e_invoice:
+    #         raise ValidationError("Enable Invoicing to use POS E-Invoicing!")
 
     def generate_tcr_code(self):
         self.ensure_one()
@@ -60,3 +103,9 @@ class PosConfig(models.Model):
             return True
         else:
             raise exceptions.ValidationError('TCR already exists!')
+
+
+class PaymentMethod(models.Model):
+    _inherit = "pos.payment.method"
+
+    create_e_invoice = fields.Boolean()

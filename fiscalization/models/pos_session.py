@@ -81,8 +81,10 @@ class PosSession(models.Model):
             return super(PosSession, self).action_pos_session_closing_control()
 
     def set_cashbox_pos(self, cashbox_value, notes, is_initial_cash):
-        print("CASH BOX", cashbox_value, is_initial_cash)
+        # print("CASH BOX", cashbox_value, is_initial_cash)
         res = "OK"
+        if not cashbox_value:
+            cashbox_value = 0
         if is_initial_cash:
             res = ""
             vals_dict = {}
@@ -112,11 +114,11 @@ class PosSession(models.Model):
             try:
                 url = company_id.fiscalization_endpoint
                 response = make_http_call(cash_deposit_xml, url)
-                print("RESPONSE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", response)
+                # print("RESPONSE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", response)
                 # _logger.info("RESPONSE -----> \n\n%s" % response)
                 response_parsed = parse_response(response)
                 if response_parsed and not isinstance(response_parsed, dict):
-                    print("Transferred")
+                    # print("Transferred")
                     res = "OK"
                     super(PosSession, self).set_cashbox_pos(cashbox_value, notes)
 
@@ -125,15 +127,16 @@ class PosSession(models.Model):
                     raise exceptions.ValidationError(res)
             except requests.Timeout as e:
                 _logger.error("Timeout: %s" % e)
-                print("Timeout", e)
+                # print("Timeout", e)
             except requests.exceptions.RequestException as e:
                 _logger.error("RequestException: %s" % e)
-                print("11111111", e)
+                # print("11111111", e)
             except Exception as e:
                 _logger.error("\n\n There is some unexpected error, halt and check: %s \n\n" % e)
             finally:
                 return json.dumps({"response": res})
         else:
+            # print("cashbox_value0", cashbox_value, notes)
             super(PosSession, self).set_cashbox_pos(cashbox_value, notes)
             return json.dumps({"response": res})
         # response_parsed = parse_response(response)

@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 from dateutil import tz
 
-from odoo import api, fields, models, http
+from odoo import api, fields, models, http, _
 from ..services.http_calls.request import make_http_call
 from ..services.http_calls.response import parse_response
 from ..services.invoice import make_invoice
@@ -151,6 +151,7 @@ class PosOrder(models.Model):
     license_plate_no = fields.Char()
     delivery_datetime = fields.Datetime()
     push_datetime = fields.Datetime(default=fields.Datetime.now(), copy=False)
+    skip_pos_fisclization_only = fields.Boolean()
 
     @api.model
     def _order_fields(self, ui_order):
@@ -163,6 +164,7 @@ class PosOrder(models.Model):
             fields['iic_code'] = ui_order.get('iic_code', 0)
         fields["transporter_id"] = ui_order.get("transporter")
         fields["license_plate_no"] = ui_order.get("license")
+        fields["skip_pos_fisclization_only"] = ui_order.get('skip_pos_fisclization_only')
         delivery_time = ui_order.get("delivery_datetime")
         if delivery_time:
             delivery_time = delivery_time.replace("T", " ")
@@ -180,6 +182,48 @@ class PosOrder(models.Model):
                 order_id.account_move.license_plate_no = order_id.license_plate_no
                 order_id.account_move.delivery_datetime = order_id.delivery_datetime
         return pos_order
+
+    def _generate_pos_order_invoice(self):
+        moves = self.env['account.move']
+
+        for order in self:
+            # Force company for all SUPERUSER_ID action
+            if order.account_move:
+                moves += order.account_move
+                continue
+
+            if not order.partner_id:
+                raise UserError(_('Please provide a partner for the sale.'))
+
+            move_vals = order._prepare_invoice_vals()
+            new_move = order._create_invoice(move_vals)
+
+            order.write({'account_move': new_move.id, 'state': 'invoiced'})
+            new_move.sudo().with_company(order.company_id)._post()
+            if order.skip_pos_fisclization_only:
+                if hasattr(order, "skip_fiscalization") and order.skip_fiscalization:
+                    new_move.enable_fiscalization = False
+                new_move.onchange_currency_id_rate()
+                new_move._onchange_invoice_line_ids_2()
+                new_move.check_and_perform_fiscalization()
+
+            moves += new_move
+            order._apply_invoice_payments()
+
+        if not moves:
+            return {}
+
+        return {
+            'name': _('Customer Invoice'),
+            'view_mode': 'form',
+            'view_id': self.env.ref('account.view_move_form').id,
+            'res_model': 'account.move',
+            'context': "{'move_type':'out_invoice'}",
+            'type': 'ir.actions.act_window',
+            'nodestroy': True,
+            'target': 'current',
+            'res_id': moves and moves.ids[0] or False,
+        }
 
     #
     # @api.model
@@ -413,7 +457,7 @@ class PosOrder(models.Model):
         return order_ids
 
     def fiscalize(self):
-        if not self.config_id.disable_fiscalization:
+        if not self.config_id.disable_fiscalization and not self.skip_pos_fisclization_only:
             tcr_code = self.config_id.tcr_code
 
             # INVOICE
@@ -620,6 +664,8 @@ class PosOrder(models.Model):
                 res['fic'] = None
                 res['is_fiscalized'] = False
                 res['fiscalization_error'] = response_parsed['Error']
+        if self.skip_pos_fisclization_only:
+            self.fiscalization_tries = 5
 
         # ******************* OLD Implementation ********************
         # self.ensure_one()
