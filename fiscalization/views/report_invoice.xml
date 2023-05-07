@@ -4,15 +4,15 @@
         <template id="report_invoice_document" inherit_id="account.report_invoice_document">
             <xpath expr="//div[@id='qrcode']" position="after">
                 <div t-if="o.from_pos">
-                    <p t-if="o.fic_from_pos"><strong>NIVF</strong>(FIC):
+                    <p><strong>NIVF</strong>(FIC):
                         <t t-esc="o.fic_from_pos"/>
                     </p>
-                    <p t-if="o.iic_from_pos"><strong>NSLF</strong>(IIC):
+                    <p><strong>NSLF</strong>(IIC):
                         <t t-esc="o.iic_from_pos"/>
                     </p>
-                    <p t-if="o.fic_from_pos"><strong>Business Unit</strong>: <t t-esc="o.operating_unit_id.business_unit_code"/>
+                    <p><strong>Business Unit</strong>: <t t-esc="o.operating_unit_id.business_unit_code"/>
                     </p>
-                    <p t-if="o.fic_from_pos"><strong>Operator</strong>: <t t-esc="o.user_id.operator_code"/>
+                    <p><strong>Operator</strong>: <t t-esc="o.user_id.operator_code"/>
                     </p>
                 </div>
 

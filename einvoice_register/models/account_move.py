@@ -598,7 +598,7 @@ class AccountInvoice(models.Model):
         # password = os.getenv('PRIVATE_PASSWORD').encode('utf-8')
         # p12 = open(certificate, 'rb').read()
         # print("paswd", password)
-        # print("p12", vals_dict)
+        # print("p12", p12)
 
         res['xml'] = make_invoice(data=vals_dict, company_p12_certificate=company_p12_certificate,
                                   certificate_password=certificate_password)
@@ -654,19 +654,12 @@ class AccountInvoice(models.Model):
                     rec.invoice_order_number = inv_seq_number
                     rec.invoice_number = str(inv_seq_number) + '/' + str(
                         datetime.now().astimezone().replace(microsecond=0).year)
-            pos_e_invoice = False
             if hasattr(self, "pos_order_ids"):
                 pos_order_ids = self.pos_order_ids
-                if pos_order_ids :
-                    if pos_order_ids.skip_pos_fisclization_only:
-                        pos_e_invoice = True
-                else:
-                    pos_e_invoice = True
-
             else:
-                pos_e_invoice = True
-            print("pos_e_invoice", pos_e_invoice)
-            if self.enable_fiscalization and pos_e_invoice:
+                pos_order_ids = False
+
+            if self.enable_fiscalization and not pos_order_ids:
                 # self.enable_fiscalization = True
                 # Skip pos order invoices
                 # TODO check
@@ -1342,7 +1335,7 @@ class AccountInvoice(models.Model):
 
         if self.currency_id.name != "ALL":
             currency_exchange_rate_note = etree.SubElement(parent_node, ns['cbc'] + 'Note')
-            currency_exchange_rate_note.text = "CurrencyExchangeRate=" + '%0.*f' % (2, self.currency_rate)
+            currency_exchange_rate_note.text = "CurrencyExchangeRate=" + '%0.*f' % (2, self.currency_id.inverse_rate)
 
         if self.narration:
             note = etree.SubElement(parent_node, ns['cbc'] + 'Note')

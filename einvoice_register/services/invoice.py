@@ -122,7 +122,6 @@ def make_invoice(data, company_p12_certificate, certificate_password):
         invoice_dictionary['TotVATAmt'] = invoice_tot_vat_amt
 
     invoice_tot_price = data.get('amount_total')
-    print(">>>>>>>>>>>>> total", invoice_tot_price)
     # if invoice_tot_price:
     invoice_dictionary['TotPrice'] = str(
         "{:.2f}".format(float(invoice_tot_price) * coff * data.get('currency_rate')))

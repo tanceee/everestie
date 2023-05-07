@@ -32,16 +32,9 @@
                         <field name="business_unit_code" invisible="1"/>
                         <button name="generate_tcr_code" type="object" string="Generate TCR"
                                 action="generate_tcr_code"/>
-                        <!--                        <field name="image_check" widget="image"/>-->
-                        <!--                        <field name="image_size"/>-->
-<!--                        <field name="enable_e_invoice"/>-->
-
+<!--                        <field name="image_check" widget="image"/>-->
+<!--                        <field name="image_size"/>-->
                     </group>
-<!--                    <group string="POS E-Invoice Default Values"-->
-<!--                           attrs="{'invisible': [('enable_e_invoice', '=', False)]}">-->
-<!--                        <field name="business_process"/>-->
-<!--                        <field name="type_code"/>-->
-<!--                    </group>-->
                 </sheet>
             </xpath>
 
@@ -67,23 +60,13 @@
         </field>
     </record>
 
-    <record id="fiscalization_pos_payment_method" model="ir.ui.view">
-        <field name="name">fiscalization.pos.payment.method.form</field>
-        <field name="model">pos.payment.method</field>
-        <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='company_id']" position="after">
-                <field name="create_e_invoice"/>
-            </xpath>
-        </field>
-    </record>
-    <!--    -->
-    <!--    <template id="pos_receipt_fiscalization" name="pos_receipt_fiscalization assets" inherit_id="point_of_sale.assets">-->
-    <!--        <xpath expr="." position="inside">-->
-    <!--            <script type="text/javascript" src="/fiscalization/static/src/lib/notify.min.js"/>-->
-    <!--            <script type="text/javascript" src="/fiscalization/static/src/js/qrious.min.js"/>-->
-    <!--            <script type="text/javascript" src="/fiscalization/static/src/js/forge.min.js"/>-->
-    <!--            <script type="text/javascript" src="/fiscalization/static/src/js/pos_receipt.js"/>-->
-    <!--        </xpath>-->
-    <!--    </template>-->
+<!--    -->
+<!--    <template id="pos_receipt_fiscalization" name="pos_receipt_fiscalization assets" inherit_id="point_of_sale.assets">-->
+<!--        <xpath expr="." position="inside">-->
+<!--            <script type="text/javascript" src="/fiscalization/static/src/lib/notify.min.js"/>-->
+<!--            <script type="text/javascript" src="/fiscalization/static/src/js/qrious.min.js"/>-->
+<!--            <script type="text/javascript" src="/fiscalization/static/src/js/forge.min.js"/>-->
+<!--            <script type="text/javascript" src="/fiscalization/static/src/js/pos_receipt.js"/>-->
+<!--        </xpath>-->
+<!--    </template>-->
 </odoo>

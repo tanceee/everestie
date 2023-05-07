@@ -13,11 +13,7 @@ odoo.define('fiscalization', function (require) {
     var hasEnoughSpeed = true
     var conSpeed
 
-    models.load_fields("pos.payment.method", ['create_e_invoice']);
-    models.load_fields("pos.order", ['skip_pos_fisclization_only']);
-
     models.load_fields("res.users", ['operator_code']);
-
     models.load_fields("res.partner", ['is_transporter', 'license_plate_no']);
     // models.load_fields("operating.unit", ['partner_id']);
 
@@ -38,94 +34,6 @@ odoo.define('fiscalization', function (require) {
 
     var _super = models.Order;
     var _superPosModel = models.PosModel;
-    var _posmodel_super = models.PosModel.prototype;
-
-    models.PosModel = models.PosModel.extend({
-        initialize: function () {
-            _posmodel_super.initialize.apply(this, arguments);
-            this.ready.then(() => {
-                this.disable_fiscalization = this.config.disable_fiscalization
-            });
-        },
-    });
-
-    const ProductScreenCustom = ProductScreen => class extends ProductScreen {
-        async _onClickPay() {
-            var skip_pos_fisclization_only = this.currentOrder.is_skip_pos_fisclization_only()
-            if (skip_pos_fisclization_only && this.env.pos.config.disable_fiscalization == false) {
-                this.env.pos.config.disable_fiscalization = true
-            }
-            else if (!skip_pos_fisclization_only && this.env.pos.config.disable_fiscalization == true && this.env.pos.disable_fiscalization == false) {
-                this.env.pos.config.disable_fiscalization = false
-            }
-            else if (this.env.pos.config.disable_fiscalization == true && this.env.pos.disable_fiscalization == false) {
-                this.env.pos.config.disable_fiscalization = false
-            }
-            super._onClickPay()
-        }
-    }
-
-    const PosPaymentScreenCustom = (PaymentScreen) => class extends PaymentScreen {
-        addNewPaymentLine({ detail: paymentMethod }) {
-            const order = this.env.pos.get_order();
-
-            if (this.paymentLines.length) {
-                var create_e_invoice = false
-                var method_name = ""
-                for (let index = 0; index < this.paymentLines.length; index++) {
-                    const paymentLine = this.paymentLines[index];
-                    if (paymentLine.payment_method.create_e_invoice) {
-                        create_e_invoice = true
-                        method_name = paymentLine.payment_method.name
-                    }
-                }
-                if (create_e_invoice && !paymentMethod.create_e_invoice) {
-                    alert(`${paymentMethod.name} payment method can not be used with ${method_name}, It will create a E-Invoice.`)
-                    return
-                }
-                if (!create_e_invoice && paymentMethod.create_e_invoice) {
-                    alert(`${paymentMethod.name} payment method can only be used with E-Invoice methods, It will create a E-Invoice.`)
-                    return
-                }
-            }
-            else {
-                if (paymentMethod.create_e_invoice && this.currentOrder.is_to_invoice() && !this.currentOrder.skip_fiscalization) {
-                    this.currentOrder.set_to_skip_pos_fisclization_only(true);
-                }
-                else {
-                    this.currentOrder.set_to_skip_pos_fisclization_only(false);
-
-                }
-
-            }
-
-            super.addNewPaymentLine(...arguments);
-
-        }
-
-        toggleIsToInvoice() {
-            super.toggleIsToInvoice(...arguments);
-            var create_e_invoice = false
-
-            for (let index = 0; index < this.paymentLines.length; index++) {
-                const paymentLine = this.paymentLines[index];
-                if (paymentLine.payment_method.create_e_invoice) {
-                    create_e_invoice = true
-                }
-            }
-            if (this.currentOrder.is_to_invoice() && create_e_invoice && !this.currentOrder.skip_fiscalization){
-                this.currentOrder.set_to_skip_pos_fisclization_only(true);
-            }
-            if (!this.currentOrder.is_to_invoice() && create_e_invoice) {
-                this.currentOrder.set_to_skip_pos_fisclization_only(false);
-
-            }
-
-
-        }
-    }
-    Registries.Component.extend(PaymentScreen, PosPaymentScreenCustom);
-    Registries.Component.extend(ProductScreen, ProductScreenCustom);
 
 
     models.Order = models.Order.extend({
@@ -147,8 +55,6 @@ odoo.define('fiscalization', function (require) {
                 this.license = false
                 this.delivery_datetime = false
                 this.push_datetime = false
-                this.skip_pos_fisclization_only = false
-
             }
         },
 
@@ -210,7 +116,6 @@ odoo.define('fiscalization', function (require) {
                 this.license = json.license
                 this.delivery_datetime = json.delivery_datetime
                 this.push_datetime = json.push_datetime
-                this.skip_pos_fisclization_only = json.skip_pos_fisclization_only
 
             }
             _super.prototype.init_from_JSON.apply(this, arguments);
@@ -226,29 +131,8 @@ odoo.define('fiscalization', function (require) {
                 json.license = this.license
                 json.delivery_datetime = this.delivery_datetime
                 json.push_datetime = this.push_datetime
-
             }
-            json.skip_pos_fisclization_only = this.skip_pos_fisclization_only
-
             return json
-        },
-        set_to_skip_pos_fisclization_only: function (skip_pos_fisclization_only) {
-            this.assert_editable();
-
-            this.skip_pos_fisclization_only = skip_pos_fisclization_only;
-            if (skip_pos_fisclization_only && this.pos.config.disable_fiscalization == false) {
-                this.pos.config.disable_fiscalization = true
-            }
-            else if (!skip_pos_fisclization_only && this.pos.config.disable_fiscalization == true && this.pos.disable_fiscalization == false) {
-                this.pos.config.disable_fiscalization = false
-            }
-            else if (this.pos.config.disable_fiscalization == true && this.pos.disable_fiscalization == false) {
-                this.pos.config.disable_fiscalization = false
-            }
-        },
-
-        is_skip_pos_fisclization_only: function () {
-            return this.skip_pos_fisclization_only;
         },
 
         //@Override
@@ -461,16 +345,16 @@ odoo.define('fiscalization', function (require) {
                         conSpeed = speedKbps
                         // console.log("speedKbps >>>>>>>>>>>>>>>>>", speedKbps)
                         if (speedKbps > 200) {
-                            //                            if (!hasEnoughSpeed) {
-                            //                                $.notify('Connection Restored', "success");
-                            //                            }
+//                            if (!hasEnoughSpeed) {
+//                                $.notify('Connection Restored', "success");
+//                            }
                             hasEnoughSpeed = true
                         }
                         else {
                             // console.log(">>>>>>>>>>>>>>LOAD FAILED")
-                            //                            if (hasEnoughSpeed) {
-                            //                                $.notify('Connection is Down, You will face delay in order fiscalization!', "warn");
-                            //                            }
+//                            if (hasEnoughSpeed) {
+//                                $.notify('Connection is Down, You will face delay in order fiscalization!', "warn");
+//                            }
                             hasEnoughSpeed = false
 
                         }
@@ -491,7 +375,7 @@ odoo.define('fiscalization', function (require) {
 
                     download.onerror = function (err, msg) {
                         // console.error("ERROR: ", err, msg)
-                        //                        $.notify('Network Offline, Order will not fiscalize!', "warn");
+//                        $.notify('Network Offline, Order will not fiscalize!', "warn");
                         // ShowProgressMessage("Invalid image, or error downloading");
                     }
 
@@ -535,7 +419,6 @@ odoo.define('fiscalization', function (require) {
     const FiscalizationPaymentScreen = PaymentScreen => class extends PaymentScreen {
         //@Override
         async _finalizeValidation() {
-            console.log(">>>>>>>>>>>>>>>>>>>>>>>>_finalizeValidation", this.env.pos.config.disable_fiscalization)
             if (this.env.pos.config.disable_fiscalization == false) {
                 if ((this.currentOrder.is_paid_with_cash() || this.currentOrder.get_change()) && this.env.pos.config.iface_cashdrawer) {
                     this.env.pos.proxy.printer.open_cashbox();
@@ -637,8 +520,8 @@ odoo.define('fiscalization', function (require) {
                 var operator_code
                 var cashier = self.env.pos.get_cashier()
                 for (let index = 0; index < self.env.pos.users.length; index++) {
-                    var usr = self.env.pos.users[index];
-                    if (usr.id == cashier.user_id[0]) {
+                    var  usr = self.env.pos.users[index];
+                    if (usr.id == cashier.user_id[0]){
                         operator_code = usr.operator_code
                         break;
                     }
