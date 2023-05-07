@@ -10,10 +10,7 @@ odoo.define("pos_qr_show.PaymentScreen", function (require) {
             super(...arguments);
             this.invoice_report = false;
             this.invoice_detais = false;
-            if (this.env.pos.config.enable_invoice_selection === 'default_invoice') {this.toggleIsinvoice_report();}
-            if (this.env.pos.config.enable_invoice_selection === 'default_detail') {this.toggleIsinvoicedetails_report();}
-        }
-
+            }
 
         toggleIsinvoice_report() {
             if (this.invoice_report == true) {
@@ -26,6 +23,7 @@ odoo.define("pos_qr_show.PaymentScreen", function (require) {
         }
 
         toggleIsinvoicedetails_report() {
+            console.log("this.invoice_detais", this.invoice_detais)
             if (this.invoice_detais == true) {
                this.invoice_detais = false;
             }
