@@ -46,10 +46,10 @@ class SaleOrderLine(models.Model):
 		self.lot_id = False
 		return res
 
-	@api.onchange("lot_id")
-	def lot_id_onchange(self):
-		if self.lot_id:
-			self.expiration_date = self.lot_id.expiration_date
+	# @api.onchange("lot_id")
+	# def lot_id_onchange(self):
+	# 	if self.lot_id:
+	# 		self.expiration_date = self.lot_id.expiration_date
 
 	@api.onchange("product_id")
 	def _onchange_product_id_set_lot_domain(self):
@@ -80,6 +80,6 @@ class StockMove(models.Model):
 
 	def _prepare_move_line_vals(self, quantity=None, reserved_quant=None):
 		vals = super()._prepare_move_line_vals(quantity=quantity, reserved_quant=reserved_quant)
-		if reserved_quant and self.sale_line_id.lot_id and self.sale_line_id.expiration_date:
-			vals.update({"lot_id" : self.sale_line_id.lot_id.id, 'expiration_date' : self.sale_line_id.expiration_date})
+		if reserved_quant and self.sale_line_id.lot_id:
+			vals.update({"lot_id" : self.sale_line_id.lot_id.id, 'expiration_date' : self.sale_line_id.lot_id.expiration_date})
 		return vals
