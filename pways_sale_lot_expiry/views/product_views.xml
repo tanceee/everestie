@@ -11,7 +11,7 @@
                 <field
                     name="lot_id"
                     domain="[('product_id','=', product_id)]"
-                    context="{'default_product_id': product_id}"
+                    context="{'default_product_id': product_id,  'default_model': 'sale.order.line'}"
                     groups="stock.group_production_lot"/>
                 <!-- <field name="expiration_date" readonly='1' force_save="1"/> -->
             </xpath>
@@ -21,7 +21,7 @@
                 <field
                     name="lot_id"
                     domain="[('product_id','=', product_id)]"
-                    context="{'default_product_id': product_id}"
+                    context="{'default_product_id': product_id, 'default_model': 'sale.order.line'}"
                     groups="stock.group_production_lot"/>
                 <!-- <field name="expiration_date" readonly='1' force_save="1"/> -->
             </xpath>
