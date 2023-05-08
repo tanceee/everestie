@@ -218,10 +218,16 @@ class LineInherit(models.AbstractModel):
     
     tax_subtotal = fields.Monetary(string='Amount with Tax', compute='_compute_only_taxes', help="Tax Subtotal for each line")
 
+    # @api.depends('tax_ids', 'price_subtotal', 'tax_subtotal')
+    # def _compute_only_taxes(self):
+    #     if self.tax_ids and not self.tax_ids[0].amount == 0:
+    #         self.tax_subtotal = self.price_subtotal
+
     @api.depends('tax_ids', 'price_subtotal', 'tax_subtotal')
     def _compute_only_taxes(self):
-        if self.tax_ids and not self.tax_ids[0].amount == 0:
-            self.tax_subtotal = self.price_subtotal
+        for rec in self:
+            if rec.tax_ids and not rec.tax_ids[0].amount == 0:
+                rec.tax_subtotal = rec.price_subtotal
 
 class JournalInherit(models.AbstractModel):
     _inherit = 'account.journal'
