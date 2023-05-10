@@ -33,6 +33,12 @@ class PosOrder(models.Model):
                         line[2]['operating_unit_id'] = operating_unit_id.id
         return res
 
+    def _prepare_invoice_vals(self):
+        res = super()._prepare_invoice_vals()
+        if self.operating_unit_id:
+            res.update({"operating_unit_id": self.operating_unit_id.id})
+        return res
+
 
 class PosOrderLine(models.Model):
     _inherit = "pos.order.line"
