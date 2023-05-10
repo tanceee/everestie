@@ -102,6 +102,7 @@ odoo.define('pos_internal_transfer', function (require) {
                 }).then(function (result) {
                     alert("Your Picking number is : "+result)
                     self.pos.delete_current_order();
+                    self.pos.add_new_order();
                     self2.trigger('close-popup');  
                 });
             }
