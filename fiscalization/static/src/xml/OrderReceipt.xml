@@ -2,9 +2,14 @@
 <templates id="template" xml:space="preserve">
 
     <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('pos-receipt-contact')]/t[@t-if='receipt.company.vat']" position="after">
+                <t t-if="receipt.business_unit_address">
+                    <div><t t-esc="receipt.business_unit_address" /></div>
+                </t>
+        </xpath>
         <xpath expr="//div[hasclass('pos-receipt-contact')]" position="inside">
             <t t-if="env.pos.config.disable_fiscalization == false">
-                -----------------------------
+                --------------------------------
                 <div t-if="receipt.tcr_code">
                      TCR Code: <t t-esc="receipt.tcr_code"/>
                 </div>
@@ -15,6 +20,20 @@
                 <div t-if="receipt.business_unit_code">
                     Business Unit Code: <t t-esc="receipt.business_unit_code"/>
                 </div>
+                <t t-if="receipt.client_name">
+                    --------------------------------
+                    <div style="font-weight:bold;">Buyer Info</div>
+
+                    <div>
+                     Emri: <t t-esc="receipt.client_name"/>
+                    </div>
+                    <div>
+                     NIPT: <t t-esc="receipt.client_vat"/>
+                    </div>
+                    <div>
+                     Adresa: <t t-esc="receipt.client_address"/>
+                    </div>
+                </t>
             </t>
 
         </xpath>

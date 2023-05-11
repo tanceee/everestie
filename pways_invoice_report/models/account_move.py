@@ -14,7 +14,7 @@ from io import BytesIO
 from datetime import datetime
 import pytz
 
-from odoo import api, fields, models
+from odoo import api, fields, models,_
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from collections import defaultdict
 from odoo.exceptions import UserError
@@ -228,6 +228,9 @@ class LineInherit(models.AbstractModel):
         for rec in self:
             if rec.tax_ids and not rec.tax_ids[0].amount == 0:
                 rec.tax_subtotal = rec.price_subtotal
+            else:
+                rec.tax_subtotal = 0
+
 
 class JournalInherit(models.AbstractModel):
     _inherit = 'account.journal'

@@ -75,13 +75,12 @@ class PosConfig(models.Model):
             mantainer_code = self['company_id']['maintainer_code'] or 'ds402gh507'
             int_id = self['name'] or str(uuid.uuid4()).replace('-', '')[:10]
             valid_from = str(datetime.date.today())
-            valid_to = str(datetime.date.today() + datetime.timedelta(days=365))
+            # valid_to = str(datetime.date.today() + datetime.timedelta(days=365))
             tcr_type = self['tcr_type'] or 'REGULAR'
             data = {'IssuerNUIS': issuer_nuis,
                     'BusinUnitCode': busin_unit_code, 'TCRIntID': int_id,
                     'SoftCode': soft_code, 'MaintainerCode': mantainer_code,
-                    'ValidFrom': valid_from, 'ValidTo': valid_to,
-                    'Type': tcr_type}
+                    'ValidFrom': valid_from, 'Type': tcr_type}
 
             company_id = self.env.user.company_id
 

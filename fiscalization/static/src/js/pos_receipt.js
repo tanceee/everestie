@@ -18,7 +18,7 @@ odoo.define('fiscalization', function (require) {
 
     models.load_fields("res.users", ['operator_code']);
 
-    models.load_fields("res.partner", ['is_transporter', 'license_plate_no']);
+    models.load_fields("res.partner", ['is_transporter', 'license_plate_no', 'vat_type']);
     // models.load_fields("operating.unit", ['partner_id']);
 
     models.load_fields("res.company", ['p12_certificate', 'invoice_check_endpoint', 'software_code', 'certificate_password']);
@@ -52,7 +52,7 @@ odoo.define('fiscalization', function (require) {
     const ProductScreenCustom = ProductScreen => class extends ProductScreen {
         async _onClickPay() {
             var skip_pos_fisclization_only = this.currentOrder.is_skip_pos_fisclization_only()
-            if (skip_pos_fisclization_only && this.env.pos.config.disable_fiscalization == false) {
+            if (skip_pos_fisclization_only) {
                 this.env.pos.config.disable_fiscalization = true
             }
             else if (!skip_pos_fisclization_only && this.env.pos.config.disable_fiscalization == true && this.env.pos.disable_fiscalization == false) {
@@ -89,6 +89,7 @@ odoo.define('fiscalization', function (require) {
                 }
             }
             else {
+//                console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@")
                 if (paymentMethod.create_e_invoice && this.currentOrder.is_to_invoice() && !this.currentOrder.skip_fiscalization) {
                     this.currentOrder.set_to_skip_pos_fisclization_only(true);
                 }
@@ -113,7 +114,7 @@ odoo.define('fiscalization', function (require) {
                     create_e_invoice = true
                 }
             }
-            if (this.currentOrder.is_to_invoice() && create_e_invoice && !this.currentOrder.skip_fiscalization){
+            if (this.currentOrder.is_to_invoice() && create_e_invoice && !this.currentOrder.skip_fiscalization) {
                 this.currentOrder.set_to_skip_pos_fisclization_only(true);
             }
             if (!this.currentOrder.is_to_invoice() && create_e_invoice) {
@@ -187,8 +188,18 @@ odoo.define('fiscalization', function (require) {
                 receipt.delivery_datetime = formatted_delivery_datetime
                 // console.log(">>>>>>>>>>>>123", receipt, this)
                 receipt.business_unit_code = this.business_unit_code
+                receipt.business_unit_address = this.pos.business_unit_address
                 receipt.tcr_code = this.pos.config.tcr_code
                 receipt.operator_code = this.operator_code
+                //                console.log("client", this.get_client())
+                if (this.get_client()) {
+                    var client = this.get_client()
+                    if (client.vat_type == "NUIS") {
+                        receipt.client_name = client.name
+                        receipt.client_vat = client.vat
+                        receipt.client_address = client.address
+                    }
+                }
 
             }
             return receipt
@@ -232,11 +243,11 @@ odoo.define('fiscalization', function (require) {
 
             return json
         },
+
         set_to_skip_pos_fisclization_only: function (skip_pos_fisclization_only) {
             this.assert_editable();
-
             this.skip_pos_fisclization_only = skip_pos_fisclization_only;
-            if (skip_pos_fisclization_only && this.pos.config.disable_fiscalization == false) {
+            if (skip_pos_fisclization_only) {
                 this.pos.config.disable_fiscalization = true
             }
             else if (!skip_pos_fisclization_only && this.pos.config.disable_fiscalization == true && this.pos.disable_fiscalization == false) {
@@ -245,6 +256,8 @@ odoo.define('fiscalization', function (require) {
             else if (this.pos.config.disable_fiscalization == true && this.pos.disable_fiscalization == false) {
                 this.pos.config.disable_fiscalization = false
             }
+//            console.log(":::::::::::::::::::::::::::::::", this.pos.config.disable_fiscalization)
+
         },
 
         is_skip_pos_fisclization_only: function () {
@@ -535,7 +548,7 @@ odoo.define('fiscalization', function (require) {
     const FiscalizationPaymentScreen = PaymentScreen => class extends PaymentScreen {
         //@Override
         async _finalizeValidation() {
-            console.log(">>>>>>>>>>>>>>>>>>>>>>>>_finalizeValidation", this.env.pos.config.disable_fiscalization)
+//            console.log(">>>>>>>>>>>>>>>>>>>>>>>>_finalizeValidation", this.env.pos.config.disable_fiscalization, this.env.pos.config)
             if (this.env.pos.config.disable_fiscalization == false) {
                 if ((this.currentOrder.is_paid_with_cash() || this.currentOrder.get_change()) && this.env.pos.config.iface_cashdrawer) {
                     this.env.pos.proxy.printer.open_cashbox();
@@ -549,7 +562,25 @@ odoo.define('fiscalization', function (require) {
                 try {
 
                     if (this.currentOrder.is_to_invoice()) {
-                        syncedOrderBackendIds = await this.env.pos.push_and_invoice_order(this.currentOrder);
+                        if (this.invoice_report & this.invoice_detais) {
+                            syncedOrderBackendIds = await this.env.pos.invoice_report_multiple(
+                                this.currentOrder);
+                        }
+                        else if (this.invoice_report) {
+                            syncedOrderBackendIds = await this.env.pos.invoice_report(
+                                this.currentOrder
+                            );
+                        }
+                        else if (this.invoice_detais) {
+                            syncedOrderBackendIds = await this.env.pos.invoice_detais(
+                                this.currentOrder
+                            );
+                        } else {
+                            syncedOrderBackendIds = await this.env.pos.push_and_invoice_order(
+                                this.currentOrder
+                            );
+                        }
+                        // syncedOrderBackendIds = await this.env.pos.push_and_invoice_order(this.currentOrder);
                     }
                     else {
                         syncedOrderBackendIds = await this.env.pos.push_single_order(this.currentOrder);
@@ -558,6 +589,7 @@ odoo.define('fiscalization', function (require) {
 
                 }
                 catch (error) {
+//                    console.log("error-----------", error)
                     if (error.code == 700)
                         this.error = true;
 

@@ -9,6 +9,8 @@ odoo.define('CashOpeningPopupExtend', function(require) {
         constructor() {
             super(...arguments);
             this.state = useState({
+                notes: "",
+                openingCash: this.env.pos.bank_statement.balance_start || 0,
                 is_initial_cash: true,
             });
         }
@@ -16,13 +18,13 @@ odoo.define('CashOpeningPopupExtend', function(require) {
         startSession() {
             this.env.pos.bank_statement.balance_start = this.state.openingCash;
             this.env.pos.pos_session.state = 'opened';
-            var self = this 
+            var self = this
             this.rpc({
                    model: 'pos.session',
                     method: 'set_cashbox_pos',
                     args: [this.env.pos.pos_session.id, this.state.openingCash, this.state.notes, this.state.is_initial_cash],
                 }).then(function(res){
-                    console.log("res", res)
+//                    console.log("res", res)
                     var res = JSON.parse(res)
                     if(res.response == "OK"){
                         $("#cash_reg_res").html(`<span style='color:green'>${res.response}</span>`)

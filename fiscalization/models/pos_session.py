@@ -136,7 +136,6 @@ class PosSession(models.Model):
             finally:
                 return json.dumps({"response": res})
         else:
-            # print("cashbox_value0", cashbox_value, notes)
             super(PosSession, self).set_cashbox_pos(cashbox_value, notes)
             return json.dumps({"response": res})
         # response_parsed = parse_response(response)

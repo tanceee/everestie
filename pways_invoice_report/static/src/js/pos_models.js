@@ -123,7 +123,7 @@ models.PosModel = models.PosModel.extend({
                                 args: [server_ids, ['account_move']],
                                 kwargs: { load: false },
                             });
-                            console.log(orderWithInvoice.account_move, "kkkk")
+//                            console.log(orderWithInvoice.account_move, "kkkk")
                             await self
                                 .do_action('pways_invoice_report.action_report_invoice_report_details_inherit', {
                                     additional_context: {

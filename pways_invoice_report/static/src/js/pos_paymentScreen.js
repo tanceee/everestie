@@ -3,6 +3,8 @@ odoo.define("pos_qr_show.PaymentScreen", function (require) {
 
     const PaymentScreen = require("point_of_sale.PaymentScreen");
     const Registries = require("point_of_sale.Registries");
+    const { isConnectionError } = require('point_of_sale.utils');
+
 
     const PosQRShowPaymentScreen = (PaymentScreen) =>
         class extends PaymentScreen {
