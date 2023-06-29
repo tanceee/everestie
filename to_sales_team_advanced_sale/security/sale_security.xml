@@ -128,9 +128,25 @@
 		</record>
 
 		<!-- Account Move -->
+		<record id="account_move_salesman_own_rule" model="ir.rule">
+			<field name="name">Account Sales Person Invoice</field>
+			<field ref="account.model_account_move" name="model_id" />
+			<field name="domain_force">['|', ('invoice_user_id','=',user.id),('invoice_user_id','=',False)]
+			</field>
+			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_account_salesman_own_leads'))]" />
+		</record>
+
+		<record id="account_move_line_salesman_own_rule" model="ir.rule">
+			<field name="name">Account Sales Person Invoice Lines</field>
+			<field ref="account.model_account_move_line" name="model_id" />
+			<field name="domain_force">['|', ('move_id.invoice_user_id','=',user.id),('move_id.invoice_user_id','=',False)]
+			</field>
+			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_account_salesman_own_leads'))]" />
+		</record>
+
 		<record id="account_move_team_leader_rule" model="ir.rule">
 			<field name="name">Team Leader Invoice</field>
-			<field ref="model_account_move" name="model_id" />
+			<field ref="account.model_account_move" name="model_id" />
 			<field name="domain_force">[
 				('move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')),
 				'|', '|', '|', '|',
@@ -139,15 +155,17 @@
 					('team_id.member_ids', 'in', [user.id]),
 					('team_id.user_id', '=', user.id),
 					'&amp;',
-						('team_id', '=', False),
-						('crm_team_region_id', '=', False)]
+						('team_id.user_id', '=', False),
+						('crm_team_region_id', '=', False)
+
+				]
 			</field>
-			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_sale_team_leader'))]" />
+			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_account_team_leader'))]" />
 		</record>
 
 		<record id="account_move_regional_manager_rule" model="ir.rule">
 			<field name="name">Regional Manager Invoice</field>
-			<field ref="model_account_move" name="model_id" />
+			<field ref="account.model_account_move" name="model_id" />
 			<field name="domain_force">[
 				('move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')),
 				'|', '|', '|', '|', '|', '|', '|',
@@ -160,13 +178,13 @@
 					('crm_team_region_id.recursive_assistant_ids', 'in', [user.id]),
 					('crm_team_region_id', '=', False)]
 			</field>
-			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_sale_regional_manager'))]" />
+			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_account_regional_manager'))]" />
 		</record>
 
 		<!-- Account Move Line -->
 		<record id="account_move_line_team_leader_rule" model="ir.rule">
 			<field name="name">Team Leader Invoice Lines</field>
-			<field ref="sale.model_account_move_line" name="model_id" />
+			<field ref="account.model_account_move_line" name="model_id" />
 			<field name="domain_force">[
 				('move_id.move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')),
 				'|', '|', '|', '|',
@@ -178,12 +196,12 @@
 						('move_id.team_id', '=', False),
 						('move_id.crm_team_region_id', '=', False)]
 			</field>
-			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_sale_team_leader'))]" />
+			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_account_team_leader'))]" />
 		</record>
 
 		<record id="account_move_line_regional_manager_rule" model="ir.rule">
 			<field name="name">Regional Manager Invoice Lines</field>
-			<field ref="sale.model_account_move_line" name="model_id" />
+			<field ref="account.model_account_move_line" name="model_id" />
 			<field name="domain_force">[
 				('move_id.move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')),
 				'|', '|', '|', '|', '|', '|', '|',
@@ -196,7 +214,7 @@
 					('move_id.crm_team_region_id.recursive_assistant_ids', 'in', [user.id]),
 					('move_id.crm_team_region_id', '=', False)]
 			</field>
-			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_sale_regional_manager'))]" />
+			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_account_regional_manager'))]" />
 		</record>
 	</data>
 </odoo>
