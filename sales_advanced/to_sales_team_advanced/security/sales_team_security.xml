@@ -1,0 +1,123 @@
+<odoo>
+	<!-- Groups -->
+	<record id="group_sale_team_leader" model="res.groups">
+		<field name="name">Sales Team Leader</field>
+		<field name="category_id" ref="base.module_category_sales_sales" />
+		<field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman'))]" />
+		<field name="comment">the user will have access to his records and his team's records</field>
+	</record>
+
+	<record id="group_sale_regional_manager" model="res.groups">
+		<field name="name">Regional Manager</field>
+		<field name="category_id" ref="base.module_category_sales_sales" />
+		<field name="implied_ids" eval="[(4, ref('to_sales_team_advanced.group_sale_team_leader'))]" />
+		<field name="comment">the user will have access to his records and his teams's records</field>
+	</record>
+
+	<record id="sales_team.group_sale_salesman_all_leads" model="res.groups">
+		<field name="category_id" ref="base.module_category_sales_sales" />
+		<field name="implied_ids"
+			eval="[(6, 0, [ref('to_sales_team_advanced.group_sale_regional_manager')])]" />
+		<field name="comment">the user will have access to all records of everyone
+			in the sales application.
+		</field>
+	</record>
+
+<!-- Accounting Groups -->
+
+	<record id="group_account_salesman_own_leads" model="res.groups">
+		<field name="name">Account Sales Person</field>
+		<field name="category_id" ref="base.module_category_accounting_accounting" />
+		 <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+		<field name="comment">the user will have access to all records of everyone
+			in the sales application.
+		</field>
+	</record>
+
+	<record id="group_account_team_leader" model="res.groups">
+		<field name="name">Account Team Leader</field>
+        <field name="category_id" ref="base.module_category_accounting_accounting"/>
+        <field name="implied_ids" eval="[(4, ref('to_sales_team_advanced.group_account_salesman_own_leads'))]"/>
+		<field name="comment">the user will have access to his records and his team's records</field>
+	</record>
+
+	<record id="group_account_regional_manager" model="res.groups">
+		<field name="name">Account Regional Manager</field>
+		<field name="category_id" ref="base.module_category_accounting_accounting"/>
+		<field name="implied_ids" eval="[(4, ref('to_sales_team_advanced.group_account_team_leader'))]" />
+		<field name="comment">the user will have access to his records and his teams's records</field>
+	</record>
+
+
+	<data>
+		<!-- CRM Teams -->
+		<record id="crm_team_rule_salesman" model="ir.rule">
+			<field name="name">Personal Teams</field>
+			<field ref="model_crm_team" name="model_id" />
+			<field name="domain_force">[('member_ids','in',[user.id])]</field>
+			<field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]" />
+			<field eval="1" name="perm_read" />
+			<field eval="0" name="perm_write" />
+			<field eval="0" name="perm_unlink" />
+			<field eval="0" name="perm_create" />
+		</record>
+
+		<record id="crm_team_rule_team_leader" model="ir.rule">
+			<field name="name">Team Leader: Teams</field>
+			<field ref="model_crm_team" name="model_id" />
+			<!-- <field name="domain_force">[
+				'|', '|',
+				('user_id','=',user.id),
+				('member_ids', 'in', [user.id]),
+				'&amp;',
+					('user_id','=',False),
+					('crm_team_region_id','=',False)]
+			</field> -->
+			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_sale_team_leader'))]" />
+			<field eval="1" name="perm_read" />
+			<field eval="1" name="perm_write" />
+			<field eval="0" name="perm_unlink" />
+			<field eval="0" name="perm_create" />
+		</record>
+
+		<record id="crm_team_rule_regional_manager" model="ir.rule">
+			<field name="name">Regional Manager: Teams</field>
+			<field ref="model_crm_team" name="model_id" />
+			<!-- <field name="domain_force">['|', '|',
+				('crm_team_region_id.recursive_user_ids','in',[user.id]),
+				('crm_team_region_id.recursive_assistant_ids', 'in', [user.id]),
+				('regional_manager_id','=',False)]
+			</field> -->
+			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_sale_regional_manager'))]" />
+		</record>
+
+		<record id="crm_team_rule_all_leads" model="ir.rule">
+			<field name="name">Sales, All Documents: Teams</field>
+			<field ref="model_crm_team" name="model_id" />
+			<field name="domain_force">[(1,'=',1)]</field>
+			<field name="groups" eval="[(4, ref('sales_team.group_sale_salesman_all_leads'))]" />
+		</record>
+		
+		<!-- CRM Team Members -->
+		<record id="crm_team_member_rule_team_leader" model="ir.rule">
+			<field name="name">Sales Team Leader: See your team members</field>
+			<field ref="sales_team.model_crm_team_member" name="model_id"/>
+			<field name="domain_force">[('crm_team_id.user_id', '=', user.id)]</field>
+			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_sale_team_leader'))]"/>
+		</record>
+
+		<record id="crm_team_member_rule_regional_manager" model="ir.rule">
+			<field name="name">Sales, Regional Manager: See your region members</field>
+			<field ref="sales_team.model_crm_team_member" name="model_id"/>
+			<field name="domain_force">[('crm_team_id.regional_manager_id', '=', user.id)]</field>
+			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_sale_regional_manager'))]"/>
+		</record>
+
+		<record id="crm_team_member_rule_all_leads" model="ir.rule">
+			<field name="name">Sales, All Documents: Team Members</field>
+			<field ref="sales_team.model_crm_team_member" name="model_id" />
+			<field name="domain_force">[(1,'=',1)]</field>
+			<field name="groups" eval="[(4, ref('sales_team.group_sale_salesman_all_leads'))]" />
+		</record>
+	</data>
+</odoo> 

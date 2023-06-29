@@ -1,0 +1,400 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* to_sales_team_advanced
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-04 07:56+0000\n"
+"PO-Revision-Date: 2022-11-04 07:56+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__active
+msgid "Active"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model_terms:ir.ui.view,arch_db:to_sales_team_advanced.crm_team_region_view_form
+msgid "All Members"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__display_member_ids
+msgid "All Sales Persons"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model_terms:ir.ui.view,arch_db:to_sales_team_advanced.crm_team_region_view_form
+#: model_terms:ir.ui.view,arch_db:to_sales_team_advanced.crm_team_salesteam_regions_search
+msgid "Archived"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__child_ids
+#: model_terms:ir.ui.view,arch_db:to_sales_team_advanced.crm_team_region_view_form
+msgid "Child Regions"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model_terms:ir.actions.act_window,help:to_sales_team_advanced.sales_team_region_config_action
+msgid "Click here to define a new sales region."
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model_terms:ir.ui.view,arch_db:to_sales_team_advanced.crm_team_salesteam_regions_search
+msgid "Group By..."
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__id
+msgid "ID"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,help:to_sales_team_advanced.field_crm_team_region__message_needaction
+#: model:ir.model.fields,help:to_sales_team_advanced.field_crm_team_region__message_unread
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,help:to_sales_team_advanced.field_crm_team_region__message_has_error
+#: model:ir.model.fields,help:to_sales_team_advanced.field_crm_team_region__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__user_id
+msgid "Manager"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model_terms:ir.ui.view,arch_db:to_sales_team_advanced.crm_team_salesteam_regions_search
+msgid "My Regions"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__name
+msgid "Name"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,help:to_sales_team_advanced.field_crm_team_region__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,help:to_sales_team_advanced.field_crm_team_region__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,help:to_sales_team_advanced.field_crm_team_region__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__parent_id
+msgid "Parent Region"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__recursive_assistant_ids
+msgid "Recursive Assistants"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__recursive_child_ids
+msgid "Recursive Children"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__recursive_user_ids
+msgid "Recursive Managers"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__recursive_parent_ids
+msgid "Recursive Parent"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team__crm_team_region_id
+msgid "Region"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team__regional_manager_id
+#: model:res.groups,name:to_sales_team_advanced.group_sale_regional_manager
+#: model_terms:ir.ui.view,arch_db:to_sales_team_advanced.crm_team_salesteam_regions_search
+msgid "Regional Manager"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__user_assistant_ids
+msgid "Regional Manager Assistant"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__member_ids
+msgid "Sales Persons"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model,name:to_sales_team_advanced.model_crm_team_region
+#: model_terms:ir.ui.view,arch_db:to_sales_team_advanced.crm_team_region_view_form
+msgid "Sales Region"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_res_users__sales_region_assistant_ids
+msgid "Sales Region Assistant"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_res_users__sales_region_manager_ids
+msgid "Sales Region Direct Manager"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model_terms:ir.ui.view,arch_db:to_sales_team_advanced.crm_team_salesteam_regions_search
+msgid "Sales Region Search"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model_terms:ir.ui.view,arch_db:to_sales_team_advanced.crm_team_region_view_form
+msgid "Sales Region name..."
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.actions.act_window,name:to_sales_team_advanced.sales_team_region_config_action
+msgid "Sales Regions"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model,name:to_sales_team_advanced.model_crm_team
+#: model_terms:ir.ui.view,arch_db:to_sales_team_advanced.crm_team_region_view_tree
+msgid "Sales Team"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:res.groups,name:to_sales_team_advanced.group_sale_team_leader
+msgid "Sales Team Leader"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_res_users__sales_team_manager_ids
+msgid "Sales Team Manager"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team__user_id
+msgid "Team Leader"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model_terms:ir.ui.view,arch_db:to_sales_team_advanced.crm_team_region_view_form
+msgid "Teams"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__team_ids
+msgid "Teams / Channels"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,help:to_sales_team_advanced.field_crm_team__regional_manager_id
+msgid ""
+"The one who has the rights to approve sales targets for the team and the "
+"team members"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,help:to_sales_team_advanced.field_crm_team_region__user_id
+msgid "The one who manages sales operations and activities in this region"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,help:to_sales_team_advanced.field_crm_team_region__user_assistant_ids
+msgid ""
+"The ones who help the manager manage sales operations and activities in this"
+" region"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,help:to_sales_team_advanced.field_crm_team_region__parent_id
+msgid "The parent region to which this region belongs."
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,help:to_sales_team_advanced.field_crm_team_region__recursive_assistant_ids
+msgid "The recursive assistant of this sales region."
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,help:to_sales_team_advanced.field_crm_team_region__recursive_child_ids
+msgid "The recursive children of this sales region."
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,help:to_sales_team_advanced.field_crm_team_region__recursive_user_ids
+msgid "The recursive managers of this sales region."
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,help:to_sales_team_advanced.field_crm_team__crm_team_region_id
+msgid "The region to which this sales team belongs"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model_terms:ir.actions.act_window,help:to_sales_team_advanced.sales_team_region_config_action
+msgid ""
+"Use sales regions to organize your different sales teams/channel\n"
+"\t\t\t\t\tinto\n"
+"\t\t\t\t\tdifferent regions"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model,name:to_sales_team_advanced.model_res_users
+msgid "Users"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,field_description:to_sales_team_advanced.field_crm_team_region__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:ir.model.fields,help:to_sales_team_advanced.field_crm_team_region__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: code:addons/to_sales_team_advanced/models/crm_team_region.py:0
+#, python-format
+msgid "You cannot create recursive region."
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: code:addons/to_sales_team_advanced/models/crm_team.py:0
+#, python-format
+msgid ""
+"You don't have the rights to do this action. Only the members of the group "
+"`%s` can do it."
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:res.groups,comment:to_sales_team_advanced.group_sale_team_leader
+msgid "the user will have access to his records and his team's records"
+msgstr ""
+
+#. module: to_sales_team_advanced
+#: model:res.groups,comment:to_sales_team_advanced.group_sale_regional_manager
+msgid "the user will have access to his records and his teams's records"
+msgstr ""

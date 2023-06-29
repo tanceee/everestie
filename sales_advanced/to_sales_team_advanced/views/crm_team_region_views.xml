@@ -1,0 +1,130 @@
+<odoo>
+	<data>
+		<!-- Sales Region Search view -->
+		<record id="crm_team_salesteam_regions_search"
+			model="ir.ui.view">
+			<field name="name">Sales Region - Search</field>
+			<field name="model">crm.team.region</field>
+			<field name="arch" type="xml">
+				<search string="Sales Region Search">
+					<filter name="personal" string="My Regions"
+						domain="['|', '|', ('member_ids', '=', uid), ('user_id', '=', uid), ('user_assistant_ids', 'in', uid)]" />
+					<separator />
+					<filter string="Archived" name="inactive"
+						domain="[('active','=',False)]" />
+					<field name="name" />
+					<field name="user_id" />
+					<field name="user_assistant_ids" />
+					<group expand="0" string="Group By...">
+						<filter name="" string="Regional Manager" domain="[]"
+							context="{'group_by':'user_id'}" />
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<!-- Case Sales Region Form View -->
+
+		<record id="crm_team_region_view_form" model="ir.ui.view">
+			<field name="name">crm.team.region.form</field>
+			<field name="model">crm.team.region</field>
+			<field name="arch" type="xml">
+				<form string="Sales Region">
+					<sheet>
+						<div class="oe_button_box" name="button_box">
+						</div>
+						<field name="active" invisible="1" />
+						<widget name="web_ribbon" title="Archived"
+							bg_color="bg-danger"
+							attrs="{'invisible': [('active', '=', True)]}" />
+						<div class="oe_title">
+							<label for="name" class="oe_edit_only"
+								string="Sales Region" />
+							<h1>
+								<field name="name" placeholder="Sales Region name..." />
+							</h1>
+						</div>
+						<group>
+							<group name="left">
+								<field name="recursive_child_ids" invisible="1"/>
+								<field name="parent_id" domain="[('id','not in', recursive_child_ids),('id','!=',id)]"/>
+								<field name="recursive_parent_ids" widget="many2many_tags" invisible="1" />
+								<field name="recursive_user_ids" widget="many2many_tags" invisible="1" />
+								<field name="user_id" />
+								<field name="user_assistant_ids" widget="many2many_tags"/>
+							</group>
+							<group name="right">
+							</group>
+						</group>
+						<separator string="Child Regions" />
+						<field name="child_ids">
+							<tree>
+								<field name="name" />
+								<field name="user_id" />
+								<field name="user_assistant_ids" widget="many2many_tags"/>
+							</tree>
+						</field>
+						<separator string="Teams" />
+						<field name="team_ids" options="{'not_delete': True}">
+							<tree create="true" delete="true">
+								<field name="name" />
+								<field name="user_id" />
+								<field name="member_ids" widget="many2many_tags" />
+								<field name="active" invisible="1" />
+							</tree>
+						</field>
+						<separator string="All Members" />
+						<field name="display_member_ids">
+							<tree >
+								<field name="name" />
+								<field name="login" />
+								<field name="phone" />
+								<field name="mobile" />
+							</tree>
+						</field>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids"   />
+						<field name="message_ids"  />
+					</div>
+				</form>
+			</field>
+		</record>
+
+		<!-- Case Sales Region Tree View -->
+		<record id="crm_team_region_view_tree" model="ir.ui.view">
+			<field name="name">crm.team.region.tree</field>
+			<field name="model">crm.team.region</field>
+			<field name="field_parent">child_ids</field>
+			<field name="arch" type="xml">
+				<tree string="Sales Team">
+					<field name="name" />
+					<field name="parent_id" />
+					<field name="active" invisible="1" />
+					<field name="user_id" />
+					<field name="user_assistant_ids" widget="many2many_tags"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="sales_team_region_config_action"
+			model="ir.actions.act_window">
+			<field name="name">Sales Regions</field>
+			<field name="res_model">crm.team.region</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{}</field>
+			<field name="view_id" ref="crm_team_salesteam_regions_search" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click here to define a new sales region.
+				</p>
+				<p>
+					Use sales regions to organize your different sales teams/channel
+					into
+					different regions
+				</p>
+			</field>
+		</record>
+
+	</data>
+</odoo>
