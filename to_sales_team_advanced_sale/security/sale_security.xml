@@ -124,7 +124,7 @@
 				('crm_team_region_id.recursive_assistant_ids', 'in', [user.id]),
 				('crm_team_region_id', '=', False)]
 			</field>
-			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_sale_regional_manager'))]" />
+			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_sale_regional_manager','account.group_sale_regional_manager'))]" />
 		</record>
 
 		<!-- Account Move -->
@@ -178,7 +178,7 @@
 					('crm_team_region_id.recursive_assistant_ids', 'in', [user.id]),
 					('crm_team_region_id', '=', False)]
 			</field>
-			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_account_regional_manager'))]" />
+			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_account_regional_manager','account.group_sale_regional_manager'))]" />
 		</record>
 
 		<!-- Account Move Line -->
@@ -214,7 +214,7 @@
 					('move_id.crm_team_region_id.recursive_assistant_ids', 'in', [user.id]),
 					('move_id.crm_team_region_id', '=', False)]
 			</field>
-			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_account_regional_manager'))]" />
+			<field name="groups" eval="[(4, ref('to_sales_team_advanced.group_account_regional_manager','account.group_sale_regional_manager'))]" />
 		</record>
 	</data>
 </odoo>
