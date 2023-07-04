@@ -11,20 +11,17 @@
             </xpath>
         </field>
     </record>
-    <record id="account_invoice_form_group_override" model="ir.ui.view">
+<!--     <record id="account_invoice_form_group_override" model="ir.ui.view">
         <field name="name">account.invoice.form.group.override</field>
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
             <xpath expr="//button[@name='action_post'][1]" position="attributes">
-                <attribute name="groups" replace="True">to_sales_team_advanced.group_account_team_leader,to_sales_team_advanced.group_account_team_leader</attribute>
+                <attribute name="groups" replace="True">to_sales_team_advanced.group_account_team_leader,to_sales_team_advanced</attribute>
             </xpath>
             <xpath expr="//button[@name='action_post'][2]" position="attributes">
                 <attribute name="groups" replace="True">to_sales_team_advanced.group_account_team_leader,to_sales_team_advanced.group_account_team_leader</attribute>
             </xpath>
-<!--             <xpath expr="//button[@name='action_register_payment'][1]" position="attributes">
-                <attribute name="groups" replace="True">to_sales_team_advanced.group_account_team_leader</attribute>
-            </xpath> -->
         </field>
-    </record>
+    </record> -->
 </odoo>

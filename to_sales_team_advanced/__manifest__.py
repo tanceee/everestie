@@ -103,7 +103,7 @@ Mô-đun này khi được cài đặt lên và chưa kết hợp với các
     'version': '1.0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['sales_team','account'],
+    'depends': ['sales_team','account_accountant','account_followup'],
 
     # always loaded
     'data': [
