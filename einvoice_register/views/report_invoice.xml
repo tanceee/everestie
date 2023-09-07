@@ -20,14 +20,14 @@
             <xpath expr="//div[@id='qrcode']" position="after">
                 <div t-if="o.fic_number">
                     <p><strong>NIVF</strong>(FIC):
-                        <t t-if="o.fic_number"/>
+                        <t t-esc="o.fic_number"/>
                     </p>
                     <p><strong>NSLF</strong>(IIC):
-                        <t t-if="o.iic_code"/>
+                        <t t-esc="o.iic_code"/>
                     </p>
-                    <p><strong>Business Unit</strong>: <t t-if="o.operating_unit_id.business_unit_code"/>
+                    <p><strong>Business Unit</strong>: <t t-esc="o.operating_unit_id.business_unit_code"/>
                     </p>
-                    <p><strong>Operator</strong>: <t t-if="o.user_id.operator_code"/>
+                    <p><strong>Operator</strong>: <t t-esc="o.user_id.operator_code"/>
                     </p>
                 </div>
 
