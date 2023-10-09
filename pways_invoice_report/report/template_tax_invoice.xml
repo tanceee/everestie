@@ -239,7 +239,7 @@
                             </div>
                              <div>
                                 <b><span>Menyre pagese :</span></b>
-                                <span t-if="o.payment_journal_id.type">
+                                <span t-if="o.pos_payment_method_id.type">
                                     <span t-field="o.pos_payment_method_id.type"/>
                                 </span>
                             </div>
