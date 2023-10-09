@@ -237,12 +237,7 @@
                                     <span t-field="o.delivery_time"/>
                                 </span>
                             </div>
-                             <div>
-                                <b><span>Menyre pagese :</span></b>
-                                <span t-if="o.pos_payment_method_id.type">
-                                    <span t-field="o.pos_payment_method_id.type"/>
-                                </span>
-                            </div>
+                           
                         </div>
 
                         <!-- Is there a discount on at least one line? -->
@@ -349,18 +344,14 @@
                                 </th>
                             </tr>
                         </table>
-                        <!-- <xpath expr="//field[@name='amount_total_in_currency_signed']" position="after">
-    <field name="payment_journal_id" optional="show"/>
-  </xpath> -->
+          
 
  <div t-if='not o.skip_fiscalization' class="row" style="margin-top: 30px; font-size:18px;">
                         <div class="col-20" style="text-align:center;margin-top: 30px; font-size:18px;">
 <data inherit_id="account.report_invoice_document">
             <xpath expr="//div[@id='qrcode']" position="before">
                 <div t-if="o.fic_number">
-                 <!-- <p><strong>Menyre pagese</strong>:
-                        <t t-esc="o.payment_journal_id.type"/>
-                    </p> -->
+               
                     <p><strong>NIVF</strong>(FIC):
                         <t t-esc="o.fic_number"/>
                     </p>
