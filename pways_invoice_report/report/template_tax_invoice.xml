@@ -237,6 +237,12 @@
                                     <span t-field="o.delivery_time"/>
                                 </span>
                             </div>
+                             <div>
+                                <b><span>Menyre pagese :</span></b>
+                                <span t-if="o.payment_journal_id.type">
+                                    <span t-field="o.payment_journal_id.type"/>
+                                </span>
+                            </div>
                         </div>
 
                         <!-- Is there a discount on at least one line? -->
@@ -352,9 +358,9 @@
 <data inherit_id="account.report_invoice_document">
             <xpath expr="//div[@id='qrcode']" position="before">
                 <div t-if="o.fic_number">
-                 <p><strong>Menyre pagese</strong>:
+                 <!-- <p><strong>Menyre pagese</strong>:
                         <t t-esc="o.payment_journal_id.type"/>
-                    </p>
+                    </p> -->
                     <p><strong>NIVF</strong>(FIC):
                         <t t-esc="o.fic_number"/>
                     </p>
