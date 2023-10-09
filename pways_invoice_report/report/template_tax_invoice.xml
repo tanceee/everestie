@@ -343,6 +343,9 @@
                                 </th>
                             </tr>
                         </table>
+                        <xpath expr="//field[@name='amount_total_in_currency_signed']" position="after">
+    <field name="payment_journal_id" optional="show"/>
+  </xpath>
 
  <div t-if='not o.skip_fiscalization' class="row" style="margin-top: 30px; font-size:18px;">
                         <div class="col-20" style="text-align:center;margin-top: 30px; font-size:18px;">
