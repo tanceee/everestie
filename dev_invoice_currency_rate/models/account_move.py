@@ -49,11 +49,10 @@ class AccountMoveLine(models.Model):
     @api.onchange('currency_id')
     def _onchange_currency(self):
         for line in self:
-            print("LINE--------------", line.move_id.currency_rate)
+            # print("LINE--------------", line.move_id.currency_rate)
             company = line.move_id.company_id
 
             if line.move_id.is_invoice(include_receipts=True):
-                print("wwwwwwwwwww")
                 if line.move_id.currency_rate:
                     line.with_context(currency_rate=line.move_id.currency_rate)._onchange_price_subtotal()
                 else:
@@ -61,7 +60,6 @@ class AccountMoveLine(models.Model):
 
             elif not line.move_id.reversed_entry_id:
                 if line.move_id.currency_rate:
-                    print("dddddddddddddddddddddd")
                     balance = line.currency_id.with_context(currency_rate=line.move_id.currency_rate)._convert(
                         line.amount_currency, company.currency_id, company,
                         line.move_id.date or fields.Date.context_today(line))
@@ -233,6 +231,10 @@ class AccountPayment(models.Model):
     inverse_currency_rate = fields.Float('Inverse Rate', digits=0)
     is_same_currency = fields.Boolean('Same Currency')
 
+    @api.onchange("currency_id")
+    def set_rate(self):
+        self.inverse_currency_rate = self.currency_id.inverse_rate
+
     def _prepare_move_line_default_vals(self, write_off_line_vals=None):
         ''' Prepare the dictionary to create the default account.move.lines for the current payment.
         :param write_off_line_vals: Optional dictionary to create a write-off account.move.line easily containing:
@@ -358,7 +360,7 @@ class AccountPaymentReg(models.TransientModel):
 
     @api.depends("currency_id")
     def compute_currency_same(self):
-        print("self._context", self._context)
+        # print("self._context", self._context)
         for rec in self:
             if rec.currency_id.id == rec.company_currency_id.id:
                 rec.is_same_currency = True
@@ -367,18 +369,62 @@ class AccountPaymentReg(models.TransientModel):
 
     @api.onchange("currency_id")
     def set_rate(self):
-        if not self.is_same_currency:
-            invoice_id = self._context.get("active_id")
-            if invoice_id:
-                invoice_id = self.env["account.move"].browse(invoice_id)
-                self.inverse_currency_rate = invoice_id.currency_id.inverse_rate
+        # if not self.is_same_currency:
+        #     invoice_id = self._context.get("active_id")
+        #     if invoice_id:
+        #         invoice_id = self.env["account.move"].browse(invoice_id)
+        #         print("invoice_id>>>>>", invoice_id)
+        #         self.inverse_currency_rate = invoice_id.currency_id.inverse_rate
+        self.inverse_currency_rate = self.currency_id.inverse_rate
 
     def _create_payment_vals_from_wizard(self):
         payment_vals = super(AccountPaymentReg, self)._create_payment_vals_from_wizard()
         payment_vals.update(
-            {"inverse_currency_rate": self.inverse_currency_rate, "currency_rate": self.inverse_currency_rate,
+            {"inverse_currency_rate": self.inverse_currency_rate, "currency_rate": 1/self.inverse_currency_rate,
              "is_same_currency": self.is_same_currency})
         return payment_vals
+
+    @api.depends('amount', 'inverse_currency_rate')
+    def _compute_payment_difference(self):
+        for wizard in self:
+            if wizard.source_currency_id == wizard.currency_id:
+                # Same currency.
+                wizard.payment_difference = wizard.source_amount_currency - wizard.amount
+            elif wizard.currency_id == wizard.company_id.currency_id:
+                # Payment expressed on the company's currency.
+                wizard.payment_difference = wizard.source_amount - wizard.amount
+            else:
+                # Foreign currency on payment different than the one set on the journal entries.
+                amount_payment_currency = wizard.company_id.currency_id.with_context(
+                    currency_rate=1 / self.inverse_currency_rate)._convert(wizard.source_amount, wizard.currency_id,
+                                                                           wizard.company_id, wizard.payment_date)
+                wizard.payment_difference = amount_payment_currency - wizard.amount
+
+    def _reconcile_payments(self, to_process, edit_mode=False):
+        """ Reconcile the payments.
+
+        :param to_process:  A list of python dictionary, one for each payment to create, containing:
+                            * create_vals:  The values used for the 'create' method.
+                            * to_reconcile: The journal items to perform the reconciliation.
+                            * batch:        A python dict containing everything you want about the source journal items
+                                            to which a payment will be created (see '_get_batches').
+        :param edit_mode:   Is the wizard in edition mode.
+        """
+        domain = [
+            ('parent_state', '=', 'posted'),
+            ('account_internal_type', 'in', ('receivable', 'payable')),
+            ('reconciled', '=', False),
+        ]
+        for vals in to_process:
+            payment_lines = vals['payment'].line_ids.filtered_domain(domain)
+            lines = vals['to_reconcile']
+
+            for account in payment_lines.account_id:
+                (payment_lines + lines)\
+                    .filtered_domain([('account_id', '=', account.id), ('reconciled', '=', False)]) \
+                    .with_context(currency_rate=1 / self.inverse_currency_rate).reconcile()
+
+
 
     # def _post_payments(self, to_process, edit_mode=False):
     #     """ Post the newly created payments.
