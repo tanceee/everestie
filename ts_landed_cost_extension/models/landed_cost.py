@@ -4,9 +4,23 @@ from odoo import api, fields, models, tools, _
 from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_is_zero
 
+class LandedCostTotal(models.Model):
+    _name = 'landed.cost.total'
+
+    def _default_account_comapny_id(self):
+        return self.env.company
+
+    stock_landed_cost_id = fields.Many2one('stock.landed.cost', 'Landed Cost')
+    cost_line_id = fields.Many2one('stock.landed.cost.lines', 'Cost Line')
+    currency_id = fields.Many2one('res.currency', related='stock_landed_cost_id.currency_id')
+    former_cost = fields.Monetary('Total')
+
 
 class LandedCost(models.Model):
     _inherit = 'stock.landed.cost'
+
+    stock_cost_line_total_ids = fields.One2many('landed.cost.total', 'stock_landed_cost_id')
+
 
     def _is_not_included(self, cost, val_line_values, cost_line):
         for valuation_line in cost.valuation_adjustment_lines:
@@ -21,7 +35,9 @@ class LandedCost(models.Model):
 
         digits = self.env['decimal.precision'].precision_get('Product Price')
         towrite_dict = {}
+        towrite_dict_plus = {}
         # for cost in self.filtered(lambda cost: cost.picking_ids):
+        vales_by_line = {}
         for cost in self.filtered(lambda cost: cost._get_targeted_move_ids()):
             total_qty = 0.0
             total_cost = 0.0
@@ -29,35 +45,51 @@ class LandedCost(models.Model):
             total_volume = 0.0
             # hide by smaak ----  total_line = 0.0
             all_val_line_values = cost.get_valuation_lines()
+            ignore_price = 0
+
             for val_line_values in all_val_line_values:
+                egnore_count = 0
+                ignore_price = 0
                 for cost_line in cost.cost_lines:
                     if cost._is_not_included(cost, val_line_values, cost_line):
-                        val_line_values.update({'former_cost': 0, 'quantity': 0, 'weight': 0, 'volume': 0})
-                        # hide by smaak ---- total_line = -1
-
+                        egnore_count += 1
                         continue
+                    former_cost = val_line_values.get('former_cost', 0.0)
+                    total_cost = tools.float_round(former_cost, precision_digits=digits) if digits else former_cost
+                    if not vales_by_line.get(cost_line):
+                        vales_by_line[cost_line] = {'total_qty': val_line_values.get('quantity', 0.0), 
+                        'total_weight': val_line_values.get('weight', 0.0), 
+                        'total_volume': val_line_values.get('volume', 0.0),
+                        'total_cost': total_cost}
+                    else:
+                        vales_by_line[cost_line]['total_qty'] += val_line_values.get('quantity', 0.0)
+                        vales_by_line[cost_line]['total_weight'] += val_line_values.get('weight', 0.0)
+                        vales_by_line[cost_line]['total_volume'] += val_line_values.get('volume', 0.0)
+                        vales_by_line[cost_line]['total_cost'] += total_cost
                     val_line_values.update({'cost_id': cost.id, 'cost_line_id': cost_line.id})
                     self.env['stock.valuation.adjustment.lines'].create(val_line_values)
-                total_qty += val_line_values.get('quantity', 0.0)
-                total_weight += val_line_values.get('weight', 0.0)
-                total_volume += val_line_values.get('volume', 0.0)
+                # if egnore_count < 1:
+                #     total_qty += val_line_values.get('quantity', 0.0)
+                #     total_weight += val_line_values.get('weight', 0.0)
+                #     total_volume += val_line_values.get('volume', 0.0)
+                    
+                #     print(total_cost)
+                #     # round this because former_cost on the valuation lines is also rounded
+                #     total_cost += tools.float_round(former_cost, precision_digits=digits) if digits else former_cost
+                #     # hide by smaak ---- total_line += 1
+                #     print("Cold ", total_cost)
 
-                former_cost = val_line_values.get('former_cost', 0.0)
-                # round this because former_cost on the valuation lines is also rounded
-                total_cost += tools.float_round(former_cost, precision_digits=digits) if digits else former_cost
-
-                # hide by smaak ---- total_line += 1
 
             for line in cost.cost_lines:
                 value_split = 0.0
-
-                #smaak code
-                line_is_included = cost.valuation_adjustment_lines.filtered(lambda x: x.is_included == True)
-                count_costing_line = line_is_included.filtered(lambda x: x.cost_line_id.id == line.id)
                 my_line_count = 0
+                ignore_lines = cost.valuation_adjustment_lines.filtered(lambda x:not  x.is_included)
+                count_ignore_cost_line = ignore_lines.filtered(lambda x: x.cost_line_id == line)
+                line_is_included = cost.valuation_adjustment_lines.filtered(lambda x: x.is_included)
+                count_costing_line = line_is_included.filtered(lambda x: x.cost_line_id == line)
+                total_line_cost = line.price_unit
                 for i in count_costing_line:
                     my_line_count +=1
-
                 #smaak code ended
                 for valuation in count_costing_line:
                     value = 0.0
@@ -65,19 +97,22 @@ class LandedCost(models.Model):
                     #     continue
                     total_line = my_line_count
                     if valuation.cost_line_id and valuation.cost_line_id.id == line.id:
-                        if line.split_method == 'by_quantity' and total_qty:
-                            per_unit = (line.price_unit / total_qty)
+                        if line.split_method == 'by_quantity' and vales_by_line[line].get('total_qty'):
+                            per_unit = (line.price_unit / vales_by_line[line].get('total_qty'))
                             value = valuation.quantity * per_unit
-                        elif line.split_method == 'by_weight' and total_weight:
-                            per_unit = (line.price_unit / total_weight)
+                        elif line.split_method == 'by_weight' and vales_by_line[line].get('total_weight'):
+                            per_unit = (line.price_unit / vales_by_line[line].get('total_weight'))
                             value = valuation.weight * per_unit
-                        elif line.split_method == 'by_volume' and total_volume:
-                            per_unit = (line.price_unit / total_volume)
+                        elif line.split_method == 'by_volume' and vales_by_line[line].get('total_volume'):
+                            per_unit = (line.price_unit / vales_by_line[line].get('total_volume'))
                             value = valuation.volume * per_unit
                         elif line.split_method == 'equal':
                             value = (line.price_unit / total_line)
-                        elif line.split_method == 'by_current_cost_price' and total_cost:
-                            per_unit = (line.price_unit / total_cost)
+                        elif line.split_method == 'by_current_cost_price' and vales_by_line[line].get('total_cost'):
+                            if count_ignore_cost_line:
+                                per_unit = (line.price_unit / vales_by_line[line].get('total_cost'))
+                            else:
+                                per_unit = (line.price_unit / vales_by_line[line].get('total_cost'))
                             value = valuation.former_cost * per_unit
                         else:
                             value = (line.price_unit / total_line)
@@ -92,8 +127,25 @@ class LandedCost(models.Model):
                             towrite_dict[valuation.id] = value
                         else:
                             towrite_dict[valuation.id] += value
+
         for key, value in towrite_dict.items():
-            AdjustementLines.browse(key).write({'additional_landed_cost': value})
+            line = AdjustementLines.browse(key)
+            line.write({'additional_landed_cost': value})
+
+            if line.cost_line_id not in towrite_dict_plus:
+                towrite_dict_plus[line.cost_line_id] = line.additional_landed_cost
+            else:
+                towrite_dict_plus[line.cost_line_id] += line.additional_landed_cost
+
+        if self.stock_cost_line_total_ids:
+            self.stock_cost_line_total_ids = [(5,0,0)]
+
+        for key, value in towrite_dict_plus.items():
+            self.env['landed.cost.total'].create({
+                'stock_landed_cost_id': self.id,
+                'cost_line_id': key.id,
+                'former_cost': value
+            }) 
         return True
 
 

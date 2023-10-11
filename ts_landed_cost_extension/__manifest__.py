@@ -11,12 +11,12 @@
     
     'depends': ['stock_landed_costs'],
     
-    'data': ['views/landed_cost.xml',],
+    'data': ['security/ir.model.access.csv',
+            'views/landed_cost.xml',
+        ],
     
     'installable': True,
     'auto_install': False,
-    'price': 15.00,
-    'currency': 'EUR',
     'images': ['static/description/image.png'],
     'license': 'AGPL-3',
 }

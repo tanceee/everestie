@@ -9,6 +9,18 @@
             <xpath expr="//field[@name='valuation_adjustment_lines']/tree/field[@name='final_cost']" position="after">
                 <field name="is_included"/>
             </xpath>
+
+            <xpath expr="//page[last()]" position="after">
+                <page name="Cost Line Details" string="Cost Line Details">
+                    <field name="stock_cost_line_total_ids" readonly='1'>
+                        <tree>
+                            <field name="currency_id" invisible="1"/>
+                            <field name='cost_line_id'/>
+                            <field name='former_cost'/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
         </field>
     </record>
 
