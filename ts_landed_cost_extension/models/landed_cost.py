@@ -21,7 +21,6 @@ class LandedCost(models.Model):
 
     stock_cost_line_total_ids = fields.One2many('landed.cost.total', 'stock_landed_cost_id')
 
-
     def _is_not_included(self, cost, val_line_values, cost_line):
         for valuation_line in cost.valuation_adjustment_lines:
             if cost_line.id == valuation_line.cost_line_id.id and val_line_values.get('product_id') == valuation_line.product_id.id:
